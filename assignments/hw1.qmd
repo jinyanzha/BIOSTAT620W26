@@ -1,0 +1,79 @@
+---
+title: "Assignment 1 - Exploratory Data Analysis"
+link-citations: true
+---
+
+# Due Date
+
+This assignment is due by 11:59pm Eastern Time on Friday, February 13th, 2026.
+
+# Learning Goals
+
+- Download, read, and get familiar with an external dataset. 
+- Step through the EDA "checklist" presented in class
+- Practice making exploratory plots
+
+# Assignment Description
+
+We will work with air pollution data from the U.S. Environmental Protection
+Agency (EPA). The EPA has a national monitoring network of air pollution sites
+that measure particulate matter (PM) concentrations. A primer on particulate
+matter air pollution can be found
+[here](https://www.epa.gov/pm-pollution/particulate-matter-pm-basics).
+
+The primary question you will answer is whether daily concentrations of
+PM$_{2.5}$ (particulate matter air pollution with aerodynamic diameter less than
+2.5 $\mu$m) decreased in Michigan over the 20 years spanning from 2005 to
+2025.
+
+Your assignment should be completed in Quarto and all code should be included.
+
+# Steps
+
+1. (20 points) Given the formulated question from the assignment description, you will now
+conduct EDA Checklist items 1-5. First, download 2005 and 2025 PM2.5 data for all
+sites in Michigan from the [EPA Air Quality Data
+website](https://www.epa.gov/outdoor-air-quality-data/download-daily-data), then
+read the data into R. For each of the two datasets, check the dimensions,
+headers, footers, variable names and variable types. Check the distribution of
+the key variable we are analyzing (PM$_{2.5}$). Write up a summary of all of
+your findings.
+
+2. (10 points) Combine the two years of data into one data frame. Use the `Date` variable to
+create a new column for year, which will serve as an identifier. Change the
+names of the key variables so that they are easier to refer to in your code.
+
+3. (20 points) Create a basic map (or maps) in either `leaflet` or `ggplot`
+showing the locations of the monitoring sites, using different colors for each
+year. Summarize the spatial distribution of the sites. Does this distribution
+change from 2005 to 2025?
+
+4. (20 points) Check for any data issues such as missing or implausible values of PM$_{2.5}$
+in the combined dataset. 
+
+Let's look more closely at the methods used for data collection. Look at the distribution of the method code variable. Examine the two most common method codes in the [EPA PM2.5 Codetable](https://aqs.epa.gov/aqsweb/documents/codetables/methods_speciation.html), and describe your findings. Calculate the proportion of missing values and method code
+for each year and report any temporal patterns you see in these observations. Why might these temporal patterns matter?
+
+5. (30 points) Explore the main question of interest at three different levels
+of spatial resolution. Create data visualizations (e.g. boxplots, histograms,
+line plots, violin plots) **and** summary statistics that best suit each level
+of the analysis. Be sure to write up explanations of what you observe at each
+level. For levels 2 and 3, include at least one spatial plot.
+
+ - Level 1: State. Examine the primary question for the entire state.
+ - Level 2: County. Examine the primary question for every county in Michigan.
+ - Level 3: City. Restrict the data to sites in Wayne county and examine the primary question for every site.
+
+Reminder: after you upload your final rendered document to GitHub, you should
+download it to make sure that it looks right! If you haven't included
+`embed-resources: true` in the YAML header, none of your figures will show up!
+
+Another reminder: GitHub is not (generally) intended for sharing data, so if you
+upload the dataset to your GitHub repo, you will lose 5 points. You can avoid
+this problem by storing the data somewhere else on your local machine (outside
+of your repo), or by adding the data file to your `.gitignore` file.
+
+---
+
+This homework has been adapted from the [case study](https://bookdown.org/rdpeng/exdata/data-analysis-case-study-changes-in-fine-particle-air-pollution-in-the-u-s-.html) in Roger Peng's [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/)
+

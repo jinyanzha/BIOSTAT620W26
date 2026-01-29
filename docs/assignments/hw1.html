@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Schedule – BIOSTAT 620</title>
+<title>Assignment 1 - Exploratory Data Analysis – BIOSTAT 620</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d1b12f2568ecbe55642fee6aa00bd082.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b2511bcbb01c2159fd96a78deb42ffd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d1b12f2568ecbe55642fee6aa00bd082.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-b2511bcbb01c2159fd96a78deb42ffd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,8 +69,37 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -80,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">BIOSTAT 620</span>
     </a>
   </div>
@@ -91,19 +120,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
+    <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./schedule.html" aria-current="page"> 
+    <a class="nav-link" href="../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./references.html"> 
+    <a class="nav-link" href="../references.html"> 
 <span class="menu-text">References</span></a>
   </li>  
 </ul>
@@ -118,15 +147,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#due-date" id="toc-due-date" class="nav-link active" data-scroll-target="#due-date">Due Date</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#assignment-description" id="toc-assignment-description" class="nav-link" data-scroll-target="#assignment-description">Assignment Description</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Schedule</h1>
+<h1 class="title">Assignment 1 - Exploratory Data Analysis</h1>
 </div>
 
 
@@ -143,150 +181,48 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Week</th>
-<th style="text-align: center;">Date</th>
-<th style="text-align: left;">Topic</th>
-<th style="text-align: center;">Slides</th>
-<th style="text-align: center;">Lab</th>
-<th style="text-align: center;">Assignment Release (not due)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1/8</td>
-<td style="text-align: left;">Syllabus and Introduction</td>
-<td style="text-align: center;"><a href="./slides/week00.html">Slides</a></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1/13-15</td>
-<td style="text-align: left;">Introduction to Data Science and R</td>
-<td style="text-align: center;"><a href="./slides/week01.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab1.html">Lab</a></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">1/20-22</td>
-<td style="text-align: left;">Version Control &amp; Reproducible Research</td>
-<td style="text-align: center;"><a href="./slides/week02.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab2.html">Lab</a></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1/27-29</td>
-<td style="text-align: left;">Exploratory data analysis</td>
-<td style="text-align: center;"><a href="./slides/week03.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab3.html">Lab</a></td>
-<td style="text-align: center;"><a href="./assignments/hw1.html">HW1</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">2/3-5</td>
-<td style="text-align: left;">Data visualization</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 4</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">2/10-12</td>
-<td style="text-align: left;">Data Cleaning and Wrangling</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 5</td>
-<td style="text-align: center;">HW2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">2/17-19</td>
-<td style="text-align: left;">Text Mining &amp; Sentiment Analysis</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 6</td>
-<td style="text-align: center;">Midterm Project</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">2/24-26</td>
-<td style="text-align: left;">Scraping, APIs, and Regular Expressions</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 7</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;">3/3-5</td>
-<td style="text-align: left;">NO CLASS - SPRING RECESS</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">3/10-12</td>
-<td style="text-align: left;">Efficiency and High Performance Computing</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 8</td>
-<td style="text-align: center;">HW3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">3/17-19</td>
-<td style="text-align: left;">SQL and Managing Big Data</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 9</td>
-<td style="text-align: center;">Final Project</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">3/24-26</td>
-<td style="text-align: left;">Interactive Visualization</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 10</td>
-<td style="text-align: center;">HW4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">3/31-4/2</td>
-<td style="text-align: left;">Building a Website with Quarto and GitHub</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 11</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">4/7-9</td>
-<td style="text-align: left;">Special Topics</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Final Project Workshop</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">13</td>
-<td style="text-align: center;">4/14-16</td>
-<td style="text-align: left;">Special Topics</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">14</td>
-<td style="text-align: center;">4/21 (NO CLASS ON 4/23)</td>
-<td style="text-align: left;">Final Project Presentations</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
+<section id="due-date" class="level1">
+<h1>Due Date</h1>
+<p>This assignment is due by 11:59pm Eastern Time on Friday, February 13th, 2026.</p>
+</section>
+<section id="learning-goals" class="level1">
+<h1>Learning Goals</h1>
+<ul>
+<li>Download, read, and get familiar with an external dataset.</li>
+<li>Step through the EDA “checklist” presented in class</li>
+<li>Practice making exploratory plots</li>
+</ul>
+</section>
+<section id="assignment-description" class="level1">
+<h1>Assignment Description</h1>
+<p>We will work with air pollution data from the U.S. Environmental Protection Agency (EPA). The EPA has a national monitoring network of air pollution sites that measure particulate matter (PM) concentrations. A primer on particulate matter air pollution can be found <a href="https://www.epa.gov/pm-pollution/particulate-matter-pm-basics">here</a>.</p>
+<p>The primary question you will answer is whether daily concentrations of PM<span class="math inline">\(_{2.5}\)</span> (particulate matter air pollution with aerodynamic diameter less than 2.5 <span class="math inline">\(\mu\)</span>m) decreased in Michigan over the 20 years spanning from 2005 to 2025.</p>
+<p>Your assignment should be completed in Quarto and all code should be included.</p>
+</section>
+<section id="steps" class="level1">
+<h1>Steps</h1>
+<ol type="1">
+<li><p>(20 points) Given the formulated question from the assignment description, you will now conduct EDA Checklist items 1-5. First, download 2005 and 2025 PM2.5 data for all sites in Michigan from the <a href="https://www.epa.gov/outdoor-air-quality-data/download-daily-data">EPA Air Quality Data website</a>, then read the data into R. For each of the two datasets, check the dimensions, headers, footers, variable names and variable types. Check the distribution of the key variable we are analyzing (PM<span class="math inline">\(_{2.5}\)</span>). Write up a summary of all of your findings.</p></li>
+<li><p>(10 points) Combine the two years of data into one data frame. Use the <code>Date</code> variable to create a new column for year, which will serve as an identifier. Change the names of the key variables so that they are easier to refer to in your code.</p></li>
+<li><p>(20 points) Create a basic map (or maps) in either <code>leaflet</code> or <code>ggplot</code> showing the locations of the monitoring sites, using different colors for each year. Summarize the spatial distribution of the sites. Does this distribution change from 2005 to 2025?</p></li>
+<li><p>(20 points) Check for any data issues such as missing or implausible values of PM<span class="math inline">\(_{2.5}\)</span> in the combined dataset.</p></li>
+</ol>
+<p>Let’s look more closely at the methods used for data collection. Look at the distribution of the method code variable. Examine the two most common method codes in the <a href="https://aqs.epa.gov/aqsweb/documents/codetables/methods_speciation.html">EPA PM2.5 Codetable</a>, and describe your findings. Calculate the proportion of missing values and method code for each year and report any temporal patterns you see in these observations. Why might these temporal patterns matter?</p>
+<ol start="5" type="1">
+<li>(30 points) Explore the main question of interest at three different levels of spatial resolution. Create data visualizations (e.g.&nbsp;boxplots, histograms, line plots, violin plots) <strong>and</strong> summary statistics that best suit each level of the analysis. Be sure to write up explanations of what you observe at each level. For levels 2 and 3, include at least one spatial plot.</li>
+</ol>
+<ul>
+<li>Level 1: State. Examine the primary question for the entire state.</li>
+<li>Level 2: County. Examine the primary question for every county in Michigan.</li>
+<li>Level 3: City. Restrict the data to sites in Wayne county and examine the primary question for every site.</li>
+</ul>
+<p>Reminder: after you upload your final rendered document to GitHub, you should download it to make sure that it looks right! If you haven’t included <code>embed-resources: true</code> in the YAML header, none of your figures will show up!</p>
+<p>Another reminder: GitHub is not (generally) intended for sharing data, so if you upload the dataset to your GitHub repo, you will lose 5 points. You can avoid this problem by storing the data somewhere else on your local machine (outside of your repo), or by adding the data file to your <code>.gitignore</code> file.</p>
+<hr>
+<p>This homework has been adapted from the <a href="https://bookdown.org/rdpeng/exdata/data-analysis-case-study-changes-in-fine-particle-air-pollution-in-the-u-s-.html">case study</a> in Roger Peng’s <a href="https://bookdown.org/rdpeng/exdata/">Exploratory Data Analysis with R</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
