@@ -228,13 +228,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="calculate-summary-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="calculate-summary-statistics">6. Calculate summary statistics</h3>
 <p>Remember to keep the initial question in mind. We want to pick out the weather station with maximum elevation and examine its windspeed and temperature.</p>
-<p>Some ideas: select the weather station with maximum elevation; within this station, look at the correlation between temperature and wind speed; look at the correlation between each of temperature and wind speed with each of hour and day.</p>
+<p>Some ideas: select the weather station with maximum elevation; within this station, look at the correlation between temperature and wind speed. Also, look at the correlation between (temp and wind.sp) and (hour and day) (four total pairwise correlations).</p>
 </section>
 <section id="exploratory-graphs" class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-graphs">7. Exploratory graphs</h3>
 <p>We should look at the distributions of all of the key variables to make sure there are no remaining issues with the data. Hint: using the hist function, make histograms of the elev, temp, and wind.sp variables.</p>
 <p>Note: one thing we should consider for later analyses (not today) is to log transform wind speed and elevation as they are very skewed.</p>
-<p>Look at where the weather station with highest elevation is located.</p>
+<p>Look at where the weather station with highest elevation is located. To do so, create a subsetted version of your dataframe with only the highest elevation, and name it <code>elev</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(elev) <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addProviderTiles</span>(<span class="st">'OpenStreetMap'</span>) <span class="sc">%&gt;%</span> </span>

@@ -66,7 +66,7 @@ Fix any problems that arise in your checks.
 
 Remember to keep the initial question in mind. We want to pick out the weather station with maximum elevation and examine its windspeed and temperature.
 
-Some ideas: select the weather station with maximum elevation; within this station, look at the correlation between temperature and wind speed; look at the correlation between each of temperature and wind speed with each of hour and day.
+Some ideas: select the weather station with maximum elevation; within this station, look at the correlation between temperature and wind speed. Also, look at the correlation between (temp and wind.sp) and (hour and day) (four total pairwise correlations).  
 
 ### 7. Exploratory graphs
 
@@ -74,7 +74,7 @@ We should look at the distributions of all of the key variables to make sure the
 
 Note: one thing we should consider for later analyses (not today) is to log transform wind speed and elevation as they are very skewed.
 
-Look at where the weather station with highest elevation is located.
+Look at where the weather station with highest elevation is located. To do so, create a subsetted version of your dataframe with only the highest elevation, and name it `elev`.
 
 ```{r, eval=FALSE}
 leaflet(elev) %>%
