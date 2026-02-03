@@ -4,7 +4,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Week\nDate\nTopic\nSlides\nLab\nAssignment Release (not due)\n\n\n\n\n0\n1/8\nSyllabus and Introduction\nSlides\n\n\n\n\n1\n1/13-15\nIntroduction to Data Science and R\nSlides\nLab\n\n\n\n2\n1/20-22\nVersion Control & Reproducible Research\nSlides\nLab\n\n\n\n3\n1/27-29\nExploratory data analysis\nSlides\nLab\nHW1\n\n\n4\n2/3-5\nData visualization\n\nLab 4\n\n\n\n5\n2/10-12\nData Cleaning and Wrangling\n\nLab 5\nHW2\n\n\n6\n2/17-19\nText Mining & Sentiment Analysis\n\nLab 6\nMidterm Project\n\n\n7\n2/24-26\nScraping, APIs, and Regular Expressions\n\nLab 7\n\n\n\n\n3/3-5\nNO CLASS - SPRING RECESS\n\n\n\n\n\n8\n3/10-12\nEfficiency and High Performance Computing\n\nLab 8\nHW3\n\n\n9\n3/17-19\nSQL and Managing Big Data\n\nLab 9\nFinal Project\n\n\n10\n3/24-26\nInteractive Visualization\n\nLab 10\nHW4\n\n\n11\n3/31-4/2\nBuilding a Website with Quarto and GitHub\n\nLab 11\n\n\n\n12\n4/7-9\nSpecial Topics\n\nFinal Project Workshop\n\n\n\n13\n4/14-16\nSpecial Topics\n\n\n\n\n\n14\n4/21 (NO CLASS ON 4/23)\nFinal Project Presentations"
+    "text": "Week\nDate\nTopic\nSlides\nLab\nAssignment Release (not due)\n\n\n\n\n0\n1/8\nSyllabus and Introduction\nSlides\n\n\n\n\n1\n1/13-15\nIntroduction to Data Science and R\nSlides\nLab\n\n\n\n2\n1/20-22\nVersion Control & Reproducible Research\nSlides\nLab\n\n\n\n3\n1/27-29\nExploratory data analysis\nSlides\nLab\nHW1\n\n\n4\n2/3-5\nData visualization\nSlides\nLab 4\n\n\n\n5\n2/10-12\nData Cleaning and Wrangling\n\nLab 5\nHW2\n\n\n6\n2/17-19\nText Mining & Sentiment Analysis\n\nLab 6\nMidterm Project\n\n\n7\n2/24-26\nScraping, APIs, and Regular Expressions\n\nLab 7\n\n\n\n\n3/3-5\nNO CLASS - SPRING RECESS\n\n\n\n\n\n8\n3/10-12\nEfficiency and High Performance Computing\n\nLab 8\nHW3\n\n\n9\n3/17-19\nSQL and Managing Big Data\n\nLab 9\nFinal Project\n\n\n10\n3/24-26\nInteractive Visualization\n\nLab 10\nHW4\n\n\n11\n3/31-4/2\nBuilding a Website with Quarto and GitHub\n\nLab 11\n\n\n\n12\n4/7-9\nSpecial Topics\n\nFinal Project Workshop\n\n\n\n13\n4/14-16\nSpecial Topics\n\n\n\n\n\n14\n4/21 (NO CLASS ON 4/23)\nFinal Project Presentations"
   },
   {
     "objectID": "syllabus.html",
@@ -1867,5 +1867,936 @@
     "title": "Assignment 1 - Exploratory Data Analysis",
     "section": "",
     "text": "Due Date\nThis assignment is due by 11:59pm Eastern Time on Friday, February 13th, 2026.\n\n\nLearning Goals\n\nDownload, read, and get familiar with an external dataset.\nStep through the EDA “checklist” presented in class\nPractice making exploratory plots\n\n\n\nAssignment Description\nWe will work with air pollution data from the U.S. Environmental Protection Agency (EPA). The EPA has a national monitoring network of air pollution sites that measure particulate matter (PM) concentrations. A primer on particulate matter air pollution can be found here.\nThe primary question you will answer is whether daily concentrations of PM\\(_{2.5}\\) (particulate matter air pollution with aerodynamic diameter less than 2.5 \\(\\mu\\)m) decreased in Michigan over the 20 years spanning from 2005 to 2025.\nYour assignment should be completed in Quarto and all code should be included.\n\n\nSteps\n\n(20 points) Given the formulated question from the assignment description, you will now conduct EDA Checklist items 1-5. First, download 2005 and 2025 PM2.5 data for all sites in Michigan from the EPA Air Quality Data website, then read the data into R. For each of the two datasets, check the dimensions, headers, footers, variable names and variable types. Check the distribution of the key variable we are analyzing (PM\\(_{2.5}\\)). Write up a summary of all of your findings.\n(10 points) Combine the two years of data into one data frame. Use the Date variable to create a new column for year, which will serve as an identifier. Change the names of the key variables so that they are easier to refer to in your code.\n(20 points) Create a basic map (or maps) in either leaflet or ggplot showing the locations of the monitoring sites, using different colors for each year. Summarize the spatial distribution of the sites. Does this distribution change from 2005 to 2025?\n(20 points) Check for any data issues such as missing or implausible values of PM\\(_{2.5}\\) in the combined dataset.\n\nLet’s look more closely at the methods used for data collection. Look at the distribution of the method code variable. Examine the two most common method codes in the EPA PM2.5 Codetable, and describe your findings. Calculate the proportion of missing values and method code for each year and report any temporal patterns you see in these observations. Why might these temporal patterns matter?\n\n(30 points) Explore the main question of interest at three different levels of spatial resolution. Create data visualizations (e.g. boxplots, histograms, line plots, violin plots) and summary statistics that best suit each level of the analysis. Be sure to write up explanations of what you observe at each level. For levels 2 and 3, include at least one spatial plot.\n\n\nLevel 1: State. Examine the primary question for the entire state.\nLevel 2: County. Examine the primary question for every county in Michigan.\nLevel 3: City. Restrict the data to sites in Wayne county and examine the primary question for every site.\n\nReminder: after you upload your final rendered document to GitHub, you should download it to make sure that it looks right! If you haven’t included embed-resources: true in the YAML header, none of your figures will show up!\nAnother reminder: GitHub is not (generally) intended for sharing data, so if you upload the dataset to your GitHub repo, you will lose 5 points. You can avoid this problem by storing the data somewhere else on your local machine (outside of your repo), or by adding the data file to your .gitignore file.\n\nThis homework has been adapted from the case study in Roger Peng’s Exploratory Data Analysis with R"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation",
+    "href": "slides/17-dataviz-principles.html#some-motivation",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation\n\nThe next few slides are examples of infographics that don’t follow data visualization principles.\nWe use them as motivation.\nSeveral of the examples come from here: https://venngage.com/blog/bad-infographics/"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-1",
+    "href": "slides/17-dataviz-principles.html#some-motivation-1",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-2",
+    "href": "slides/17-dataviz-principles.html#some-motivation-2",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-3",
+    "href": "slides/17-dataviz-principles.html#some-motivation-3",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-4",
+    "href": "slides/17-dataviz-principles.html#some-motivation-4",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-5",
+    "href": "slides/17-dataviz-principles.html#some-motivation-5",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-6",
+    "href": "slides/17-dataviz-principles.html#some-motivation-6",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#some-motivation-7",
+    "href": "slides/17-dataviz-principles.html#some-motivation-7",
+    "title": "Data Visualization Principles",
+    "section": "Some motivation",
+    "text": "Some motivation"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#data-visualization-principles",
+    "href": "slides/17-dataviz-principles.html#data-visualization-principles",
+    "title": "Data Visualization Principles",
+    "section": "Data visualization principles",
+    "text": "Data visualization principles\n\nWe provide some general principles we can use as a guide for effective data visualization.\nMuch of this section is based on a talk by Karl Broman titled Creating Effective Figures and Tables and includes some of the figures which were made with code that Karl makes available on his GitHub repository, as well as class notes from Peter Aldhous’ Introduction to Data Visualization course."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#data-visualization-principles-1",
+    "href": "slides/17-dataviz-principles.html#data-visualization-principles-1",
+    "title": "Data Visualization Principles",
+    "section": "Data visualization principles",
+    "text": "Data visualization principles\n\nFollowing Karl’s approach, we show some examples of plot styles we should avoid, explain how to improve them, and use these as motivation for a list of principles.\nWe compare and contrast plots that follow these principles to those that don’t."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#data-visualization-principles-2",
+    "href": "slides/17-dataviz-principles.html#data-visualization-principles-2",
+    "title": "Data Visualization Principles",
+    "section": "Data visualization principles",
+    "text": "Data visualization principles\n\nThe principles are mostly based on research related to how humans detect patterns and make visual comparisons.\nThe preferred approaches are those that best fit the way our brains process visual information.\nWhen deciding on a visualization approach, it is also important to keep our goal in mind."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#data-visualization-principles-3",
+    "href": "slides/17-dataviz-principles.html#data-visualization-principles-3",
+    "title": "Data Visualization Principles",
+    "section": "Data visualization principles",
+    "text": "Data visualization principles\nWe may be comparing a\n\nViewable number of quantities.\nDescribing distributions for categories or numeric values.\nComparing the data from two groups.\nDescribing the relationship between two variables."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues",
+    "href": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues",
+    "title": "Data Visualization Principles",
+    "section": "Encoding data using visual cues",
+    "text": "Encoding data using visual cues\nWe start by describing some principles for visually encoding numerical values:\n\naligned lengths\nposition\nangles\narea\nbrightness\ncolor hue"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-1",
+    "href": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-1",
+    "title": "Data Visualization Principles",
+    "section": "Encoding data using visual cues",
+    "text": "Encoding data using visual cues\nExample:\n\nSuppose we want to report the results from two hypothetical polls regarding browser preference taken in 2000 and then 2015.\nFor each year, we are simply comparing five quantities – the five percentages for Opera, Safari, Firefox, IE, and Chrome."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-2",
+    "href": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-2",
+    "title": "Data Visualization Principles",
+    "section": "Encoding data using visual cues",
+    "text": "Encoding data using visual cues\nA widely used graphical representation of percentages, popularized by Microsoft Excel, is the pie chart:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-3",
+    "href": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-3",
+    "title": "Data Visualization Principles",
+    "section": "Encoding data using visual cues",
+    "text": "Encoding data using visual cues\n\nHere we are representing quantities with both areas and angles, since both the angle and area of each pie slice are proportional to the quantity the slice represents.\nThis turns out to be a sub-optimal choice since, as demonstrated by perception studies, humans are not good at precisely quantifying angles and are even worse when area is the only available visual cue."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-4",
+    "href": "slides/17-dataviz-principles.html#encoding-data-using-visual-cues-4",
+    "title": "Data Visualization Principles",
+    "section": "Encoding data using visual cues",
+    "text": "Encoding data using visual cues\nThe donut chart uses only area:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#compare-2000-to-2015",
+    "href": "slides/17-dataviz-principles.html#compare-2000-to-2015",
+    "title": "Data Visualization Principles",
+    "section": "Compare 2000 to 2015",
+    "text": "Compare 2000 to 2015\n\nCan you determine the actual percentages and rank the browsers’ popularity?\nCan you see how they changed from 2000 to 2015?"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#show-the-numbers",
+    "href": "slides/17-dataviz-principles.html#show-the-numbers",
+    "title": "Data Visualization Principles",
+    "section": "Show the numbers",
+    "text": "Show the numbers\nA better approach is to simply show the numbers. It is not only clearer, but would also save on printing costs if printing a paper copy:\n\n\n\n\n\nBrowser\n2000\n2015\n\n\n\n\nOpera\n3\n2\n\n\nSafari\n21\n22\n\n\nFirefox\n23\n21\n\n\nChrome\n26\n29\n\n\nIE\n28\n27"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#barplots",
+    "href": "slides/17-dataviz-principles.html#barplots",
+    "title": "Data Visualization Principles",
+    "section": "Barplots",
+    "text": "Barplots\nLength is the best visual cue:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#if-foreced-to-make-a-pie-chart",
+    "href": "slides/17-dataviz-principles.html#if-foreced-to-make-a-pie-chart",
+    "title": "Data Visualization Principles",
+    "section": "If foreced to make a pie chart",
+    "text": "If foreced to make a pie chart\nLabel each pie slice with its respective percentage so viewers do not have to infer them:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\n\nWhen using barplots, it is misinformative not to start the bars at 0.\nThis is because, by using a barplot, we are implying the length is proportional to the quantities being displayed.\nBy avoiding 0, relatively small differences can be made to look much bigger than they actually are.\nThis approach is often used by politicians or media organizations trying to exaggerate a difference."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-1",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-1",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\nBelow is an illustrative example used by Peter Aldhous in this lecture.\n\n\n\n\n\n(Source: Fox News, via Media Matters.)"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-2",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-2",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\nHere is the correct plot:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-3",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-3",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\nAnother example:\n\n\n\n\n\n(Source: Fox News, via Flowing Data.)"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-4",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-4",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\nAnd here is the correct plot:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-5",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-5",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\nOne more example:\n\n\n\n\n\n(Source: Venezolana de Televisión via Pakistan Today and Diego Mariano.)"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-6",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-6",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\nHere is the appropriate plot:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-when-to-include-0-7",
+    "href": "slides/17-dataviz-principles.html#know-when-to-include-0-7",
+    "title": "Data Visualization Principles",
+    "section": "Know when to include 0",
+    "text": "Know when to include 0\n\nWhen using position rather than length, it is not necessary to include 0.\nIn particularly when comparing between to within groups variability."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#do-not-distort-quantities",
+    "href": "slides/17-dataviz-principles.html#do-not-distort-quantities",
+    "title": "Data Visualization Principles",
+    "section": "Do not distort quantities",
+    "text": "Do not distort quantities\nPresident Obama used the following chart to compare the US GDP to the GDP of four competing nations:\n\n\n\n\n\n(Source: The 2011 State of the Union Address)"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#do-not-distort-quantities-1",
+    "href": "slides/17-dataviz-principles.html#do-not-distort-quantities-1",
+    "title": "Data Visualization Principles",
+    "section": "Do not distort quantities",
+    "text": "Do not distort quantities\nHere is comparison of using radius versus area:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#do-not-distort-quantities-2",
+    "href": "slides/17-dataviz-principles.html#do-not-distort-quantities-2",
+    "title": "Data Visualization Principles",
+    "section": "Do not distort quantities",
+    "text": "Do not distort quantities\n\nggplot2 defaults to using area rather than radius.\nOf course, in this case, we really should be using length:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#order-categories-by-a-meaningful-value",
+    "href": "slides/17-dataviz-principles.html#order-categories-by-a-meaningful-value",
+    "title": "Data Visualization Principles",
+    "section": "Order categories by a meaningful value",
+    "text": "Order categories by a meaningful value\n\nWhen one of the axes is used to show categories the default ggplot2 behavior is to order the categories alphabetically when they are defined by character strings.\nIf they are defined by factors, they are ordered by the factor levels.\nWe rarely want to use alphabetical order.\nInstead, we should order by a meaningful quantity."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#order-categories-by-a-meaningful-value-1",
+    "href": "slides/17-dataviz-principles.html#order-categories-by-a-meaningful-value-1",
+    "title": "Data Visualization Principles",
+    "section": "Order categories by a meaningful value",
+    "text": "Order categories by a meaningful value\nNote that the plot on the right is more informative:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#order-categories-by-a-meaningful-value-2",
+    "href": "slides/17-dataviz-principles.html#order-categories-by-a-meaningful-value-2",
+    "title": "Data Visualization Principles",
+    "section": "Order categories by a meaningful value",
+    "text": "Order categories by a meaningful value\nHere is another example:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#show-the-data",
+    "href": "slides/17-dataviz-principles.html#show-the-data",
+    "title": "Data Visualization Principles",
+    "section": "Show the data",
+    "text": "Show the data\n\nWe have focused on displaying single quantities across categories. We now shift our attention to displaying data, with a focus on comparing groups.\nSuppose we want to describe height data to an extra-terrestrial."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#show-the-data-1",
+    "href": "slides/17-dataviz-principles.html#show-the-data-1",
+    "title": "Data Visualization Principles",
+    "section": "Show the data",
+    "text": "Show the data\nA commonly used plot, popularized by Microsoft Excel, is a barplot like this:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#show-the-data-2",
+    "href": "slides/17-dataviz-principles.html#show-the-data-2",
+    "title": "Data Visualization Principles",
+    "section": "Show the data",
+    "text": "Show the data"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#show-the-data-3",
+    "href": "slides/17-dataviz-principles.html#show-the-data-3",
+    "title": "Data Visualization Principles",
+    "section": "Show the data",
+    "text": "Show the data\nUse jitter to avoid over-plotting"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#histograms",
+    "href": "slides/17-dataviz-principles.html#histograms",
+    "title": "Data Visualization Principles",
+    "section": "Histograms",
+    "text": "Histograms\nSince there are so many points, it is more effective to show distributions rather than individual points. We therefore show histograms for each group:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#ease-comparisons",
+    "href": "slides/17-dataviz-principles.html#ease-comparisons",
+    "title": "Data Visualization Principles",
+    "section": "Ease comparisons",
+    "text": "Ease comparisons\n\nUse common axes\nIf horizontal comparison, stack graphs vertically\nIf vertical comparison, stack graphs horizontally"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#stack-vertically",
+    "href": "slides/17-dataviz-principles.html#stack-vertically",
+    "title": "Data Visualization Principles",
+    "section": "Stack vertically",
+    "text": "Stack vertically"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#same-axis",
+    "href": "slides/17-dataviz-principles.html#same-axis",
+    "title": "Data Visualization Principles",
+    "section": "Same axis",
+    "text": "Same axis"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#boxplot-is-vertical",
+    "href": "slides/17-dataviz-principles.html#boxplot-is-vertical",
+    "title": "Data Visualization Principles",
+    "section": "Boxplot is vertical",
+    "text": "Boxplot is vertical\nStack horizontally"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#contrast-and-compare",
+    "href": "slides/17-dataviz-principles.html#contrast-and-compare",
+    "title": "Data Visualization Principles",
+    "section": "Contrast and compare",
+    "text": "Contrast and compare"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#consider-transformations",
+    "href": "slides/17-dataviz-principles.html#consider-transformations",
+    "title": "Data Visualization Principles",
+    "section": "Consider transformations",
+    "text": "Consider transformations\nHere is a terrible plot comparing population across continents"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#two-countries-drive-average",
+    "href": "slides/17-dataviz-principles.html#two-countries-drive-average",
+    "title": "Data Visualization Principles",
+    "section": "Two countries drive average",
+    "text": "Two countries drive average"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#transformations",
+    "href": "slides/17-dataviz-principles.html#transformations",
+    "title": "Data Visualization Principles",
+    "section": "Transformations",
+    "text": "Transformations\nHere a log transformation provides a much more informative plot:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#visual-cues-to-be-compared-should-be-adjacent",
+    "href": "slides/17-dataviz-principles.html#visual-cues-to-be-compared-should-be-adjacent",
+    "title": "Data Visualization Principles",
+    "section": "Visual cues to be compared should be adjacent",
+    "text": "Visual cues to be compared should be adjacent\nNote that it is hard to compare 1970 to 2020 by country:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#visual-cues-to-be-compared-should-be-adjacent-1",
+    "href": "slides/17-dataviz-principles.html#visual-cues-to-be-compared-should-be-adjacent-1",
+    "title": "Data Visualization Principles",
+    "section": "Visual cues to be compared should be adjacent",
+    "text": "Visual cues to be compared should be adjacent\nMuch easier if they are adjacent"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#use-color",
+    "href": "slides/17-dataviz-principles.html#use-color",
+    "title": "Data Visualization Principles",
+    "section": "Use color",
+    "text": "Use color\nThe comparison becomes even easier to make if we use color to denote the two things we want to compare:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#think-of-the-color-blind",
+    "href": "slides/17-dataviz-principles.html#think-of-the-color-blind",
+    "title": "Data Visualization Principles",
+    "section": "Think of the color blind",
+    "text": "Think of the color blind\n\nApproximately 1 in 12 men (8%) and 1 in 200 women (0.5%) worldwide are color blind.\nThe most common type of color blindness is red-green color blindness, which affects around 99% of all color blind individuals.\nThe prevalence of blue-yellow color blindness and total color blindness (achromatopsia) is much lower.\nAn example of how we can use a color blind friendly palette is described here."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#think-of-the-color-blind-1",
+    "href": "slides/17-dataviz-principles.html#think-of-the-color-blind-1",
+    "title": "Data Visualization Principles",
+    "section": "Think of the color blind",
+    "text": "Think of the color blind\n\nExample of color-blind-friendly color palette:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#plots-for-two-variables",
+    "href": "slides/17-dataviz-principles.html#plots-for-two-variables",
+    "title": "Data Visualization Principles",
+    "section": "Plots for two variables",
+    "text": "Plots for two variables\nIn general, you should use scatterplots to visualize the relationship between two variables.\nHowever, there are some exceptions.\n\nWe describe two alternative plots here:\n\nslope chart\nBland-Altman plot"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#slope-charts",
+    "href": "slides/17-dataviz-principles.html#slope-charts",
+    "title": "Data Visualization Principles",
+    "section": "Slope charts",
+    "text": "Slope charts\nSlope charts adds angle as a visual cue, useful when comparing two groups and each element across two variables, such as years."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#scatterplot-version",
+    "href": "slides/17-dataviz-principles.html#scatterplot-version",
+    "title": "Data Visualization Principles",
+    "section": "Scatterplot version",
+    "text": "Scatterplot version"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#bland-altman-plot",
+    "href": "slides/17-dataviz-principles.html#bland-altman-plot",
+    "title": "Data Visualization Principles",
+    "section": "Bland-Altman plot",
+    "text": "Bland-Altman plot\nShows difference in the y-axis and average on the x-axis."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-a-third-variable",
+    "href": "slides/17-dataviz-principles.html#encoding-a-third-variable",
+    "title": "Data Visualization Principles",
+    "section": "Encoding a third variable",
+    "text": "Encoding a third variable\nWe can use\n\ndifferent colors or shapes for categoris\nareas, brightness or hue for continuous values"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#encoding-a-third-variable-1",
+    "href": "slides/17-dataviz-principles.html#encoding-a-third-variable-1",
+    "title": "Data Visualization Principles",
+    "section": "Encoding a third variable",
+    "text": "Encoding a third variable\nWe encode OPEC membership, region, and population."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#point-shapes-available-in-r",
+    "href": "slides/17-dataviz-principles.html#point-shapes-available-in-r",
+    "title": "Data Visualization Principles",
+    "section": "Point shapes available in R",
+    "text": "Point shapes available in R"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#using-intensity-or-hue",
+    "href": "slides/17-dataviz-principles.html#using-intensity-or-hue",
+    "title": "Data Visualization Principles",
+    "section": "Using intensity or hue",
+    "text": "Using intensity or hue\nWhen selecting colors to quantify a numeric variable, we choose between two options: sequential and diverging."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#sequential-colors",
+    "href": "slides/17-dataviz-principles.html#sequential-colors",
+    "title": "Data Visualization Principles",
+    "section": "Sequential colors",
+    "text": "Sequential colors\nSequential colors are suited for data that goes from high to low. High values are clearly distinguished from low values. Here are some examples offered by the package RColorBrewer:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#diverging-colors",
+    "href": "slides/17-dataviz-principles.html#diverging-colors",
+    "title": "Data Visualization Principles",
+    "section": "Diverging colors",
+    "text": "Diverging colors\nDiverging colors are used to represent values that diverge from a center. We put equal emphasis on both ends of the data range: higher than the center and lower than the center."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots",
+    "href": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots",
+    "title": "Data Visualization Principles",
+    "section": "Avoid pseudo-3D plots",
+    "text": "Avoid pseudo-3D plots\nThe figure below, taken from the scientific literature, shows three variables: dose, drug type and survival:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-1",
+    "href": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-1",
+    "title": "Data Visualization Principles",
+    "section": "Avoid pseudo-3D plots",
+    "text": "Avoid pseudo-3D plots\n\nHumans are not good at seeing in three dimensions and our limitation is even worse with regard to pseudo-three-dimensions."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-2",
+    "href": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-2",
+    "title": "Data Visualization Principles",
+    "section": "Avoid pseudo-3D plots",
+    "text": "Avoid pseudo-3D plots\n\nWhen does the purple ribbon intersects the red?"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-3",
+    "href": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-3",
+    "title": "Data Visualization Principles",
+    "section": "Avoid pseudo-3D plots",
+    "text": "Avoid pseudo-3D plots\nColor is enough to represent the categorical variable:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-4",
+    "href": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-4",
+    "title": "Data Visualization Principles",
+    "section": "Avoid pseudo-3D plots",
+    "text": "Avoid pseudo-3D plots\nPseudo-3D is sometimes used completely gratuitously: plots are made to look 3D even when the 3rd dimension does not represent a quantity. This only adds confusion and makes it harder to relay your message. We show two examples:"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-5",
+    "href": "slides/17-dataviz-principles.html#avoid-pseudo-3d-plots-5",
+    "title": "Data Visualization Principles",
+    "section": "Avoid pseudo-3D plots",
+    "text": "Avoid pseudo-3D plots\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(Images courtesy of Karl Broman)"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits",
+    "href": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits",
+    "title": "Data Visualization Principles",
+    "section": "Avoid too many significant digits",
+    "text": "Avoid too many significant digits\n\nBy default, statistical software like R returns many significant digits.\nThe default behavior in R is to show 7 significant digits.\nThat many digits often adds no information and the added visual clutter can make it hard for the viewer to understand the message."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-1",
+    "href": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-1",
+    "title": "Data Visualization Principles",
+    "section": "Avoid too many significant digits",
+    "text": "Avoid too many significant digits\nAs an example, here are the per 10,000 disease rates, computed from totals and population in R, for California across the five decades:\n\n\n\n\n\nstate\nyear\nMeasles\nPertussis\nPolio\n\n\n\n\nCalifornia\n1940\n37.8826320\n18.3397861\n0.8266512\n\n\nCalifornia\n1950\n13.9124205\n4.7467350\n1.9742639\n\n\nCalifornia\n1960\n14.1386471\nNA\n0.2640419\n\n\nCalifornia\n1970\n0.9767889\nNA\nNA\n\n\nCalifornia\n1980\n0.3743467\n0.0515466\nNA"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-2",
+    "href": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-2",
+    "title": "Data Visualization Principles",
+    "section": "Avoid too many significant digits",
+    "text": "Avoid too many significant digits\n\nWe are reporting precision up to 0.00001 cases per 10,000, a very small value in the context of the changes that are occurring across the dates.\n\n\n\n\n\n\nstate\nyear\nMeasles\nPertussis\nPolio\n\n\n\n\nCalifornia\n1940\n37.8826320\n18.3397861\n0.8266512\n\n\nCalifornia\n1950\n13.9124205\n4.7467350\n1.9742639\n\n\nCalifornia\n1960\n14.1386471\nNA\n0.2640419\n\n\nCalifornia\n1970\n0.9767889\nNA\nNA\n\n\nCalifornia\n1980\n0.3743467\n0.0515466\nNA"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-3",
+    "href": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-3",
+    "title": "Data Visualization Principles",
+    "section": "Avoid too many significant digits",
+    "text": "Avoid too many significant digits\n\nIn this case, one decimal point is more than enough and clearly makes the point that rates are decreasing:\n\n\n\n\n\n\nstate\nyear\nMeasles\nPertussis\nPolio\n\n\n\n\nCalifornia\n1940\n37.9\n18.3\n0.8\n\n\nCalifornia\n1950\n13.9\n4.7\n2.0\n\n\nCalifornia\n1960\n14.1\nNA\n0.3\n\n\nCalifornia\n1970\n1.0\nNA\nNA\n\n\nCalifornia\n1980\n0.4\n0.1\nNA"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-4",
+    "href": "slides/17-dataviz-principles.html#avoid-too-many-significant-digits-4",
+    "title": "Data Visualization Principles",
+    "section": "Avoid too many significant digits",
+    "text": "Avoid too many significant digits\nUseful ways to change the number of significant digits or to round numbers are\n\nsignif\nround\n\nYou can define the number of significant digits globally by setting options like this: options(digits = 3)."
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#values-compared-in-columns",
+    "href": "slides/17-dataviz-principles.html#values-compared-in-columns",
+    "title": "Data Visualization Principles",
+    "section": "Values compared in columns",
+    "text": "Values compared in columns\nAnother principle related to displaying tables is to place values being compared on columns rather than rows. Compare these two presentations:\n\n\n\n\n\nstate\ndisease\n1940\n1950\n1960\n1970\n1980\n\n\n\n\nCalifornia\nMeasles\n37.9\n13.9\n14.1\n1\n0.4\n\n\nCalifornia\nPertussis\n18.3\n4.7\nNA\nNA\n0.1\n\n\nCalifornia\nPolio\n0.8\n2.0\n0.3\nNA\nNA"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#values-compared-in-columns-1",
+    "href": "slides/17-dataviz-principles.html#values-compared-in-columns-1",
+    "title": "Data Visualization Principles",
+    "section": "Values compared in columns",
+    "text": "Values compared in columns\nAnother principle related to displaying tables is to place values being compared on columns rather than rows. Compare these two presentations:\n\n\n\n\n\nstate\nyear\nMeasles\nPertussis\nPolio\n\n\n\n\nCalifornia\n1940\n37.9\n18.3\n0.8\n\n\nCalifornia\n1950\n13.9\n4.7\n2.0\n\n\nCalifornia\n1960\n14.1\nNA\n0.3\n\n\nCalifornia\n1970\n1.0\nNA\nNA\n\n\nCalifornia\n1980\n0.4\n0.1\nNA"
+  },
+  {
+    "objectID": "slides/17-dataviz-principles.html#know-your-audience",
+    "href": "slides/17-dataviz-principles.html#know-your-audience",
+    "title": "Data Visualization Principles",
+    "section": "Know your audience",
+    "text": "Know your audience\nGraphs can be used for\n\nour own exploratory data analysis,\nto convey a message to experts, or\nto help tell a story to a general audience.\n\nMake sure that the intended audience understands each element of the plot."
+  },
+  {
+    "objectID": "slides/week04.html#acknowledgment",
+    "href": "slides/week04.html#acknowledgment",
+    "title": "Week 4: Data Visualization",
+    "section": "Acknowledgment",
+    "text": "Acknowledgment\nThese slides were originally developed by Meredith Franklin (and Paul Marjoram) and modified by George G. Vega Yon, Dylan Cable, and Kelly Street."
+  },
+  {
+    "objectID": "slides/week04.html#background",
+    "href": "slides/week04.html#background",
+    "title": "Week 4: Data Visualization",
+    "section": "Background",
+    "text": "Background\n\nThis lecture provides an introduction to ggplot2, an R package that provides vastly better graphics options than R’s default plots, histograms, etc.\nThis section is based on chapter 3 of “R for Data Science”"
+  },
+  {
+    "objectID": "slides/week04.html#background-1",
+    "href": "slides/week04.html#background-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Background",
+    "text": "Background\nggplot2 is part of the Tidyverse. The tidyverse is…“an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.” (https://www.tidyverse.org/)\n\nlibrary(tidyverse)\nlibrary(data.table)"
+  },
+  {
+    "objectID": "slides/week04.html#ggplot2",
+    "href": "slides/week04.html#ggplot2",
+    "title": "Week 4: Data Visualization",
+    "section": "ggplot2",
+    "text": "ggplot2\nggplot2 is designed on the principle of adding layers."
+  },
+  {
+    "objectID": "slides/week04.html#ggplot2-1",
+    "href": "slides/week04.html#ggplot2-1",
+    "title": "Week 4: Data Visualization",
+    "section": "ggplot2",
+    "text": "ggplot2\n\nWith ggplot2 a plot is initiated with the function ggplot()\nThe first argument of ggplot() is the dataset to use in the graph\nLayers are added to ggplot() with +\nLayers include geom functions such as point, lines, etc\nEach geom function takes a mapping argument, which is always paired with aes()\nThe aes() mapping takes the x and y axes of the plot\n\n\nggplot(data = data) +\n    geom_function(mapping = aes(mappings))"
+  },
+  {
+    "objectID": "slides/week04.html#data",
+    "href": "slides/week04.html#data",
+    "title": "Week 4: Data Visualization",
+    "section": "Data",
+    "text": "Data\nContinuing with the weather data from last week, let’s take the daily averages at each site, keeping some of the variables. Let’s also create a new variable for region (east and west), categorize elevation, and create a multi-category variable for visibility for exploratory purposes.\n\n# Reading the data, filtering, and replacing bad values with NAs\nmet &lt;- read.csv('../data/met/met_all.gz')\nmet &lt;- met[met$temp &gt; -10, ]\nmet$elev[met$elev == 9999.0] &lt;- NA\n\n# Creating an aggregated version of the dataset\nlibrary(dplyr)\nmet_avg &lt;- summarize(met,\n                     temp =     mean(temp, na.rm = TRUE),\n                     rh =       mean(rh, na.rm = TRUE),\n                     wind.sp =  mean(wind.sp, na.rm = TRUE),\n                     vis.dist = mean(vis.dist, na.rm = TRUE),\n                     lat =      mean(lat, na.rm = TRUE),\n                     lon =      mean(lon, na.rm = TRUE),\n                     elev =     mean(elev, na.rm = TRUE),\n                     .by = c(USAFID, day))"
+  },
+  {
+    "objectID": "slides/week04.html#basic-scatterplot",
+    "href": "slides/week04.html#basic-scatterplot",
+    "title": "Week 4: Data Visualization",
+    "section": "Basic Scatterplot",
+    "text": "Basic Scatterplot\n\nplot(met_avg$temp, met_avg$rh)"
+  },
+  {
+    "objectID": "slides/week04.html#basic-scatterplot-1",
+    "href": "slides/week04.html#basic-scatterplot-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Basic Scatterplot",
+    "text": "Basic Scatterplot\nHere’s how to create a basic plot in ggplot2\n\nggplot(data = met_avg) + \n  geom_point(mapping = aes(x = temp, y = rh))\n\n\nWe see that as temperature increases, relative humidity decreases."
+  },
+  {
+    "objectID": "slides/week04.html#basic-scatterplot-2",
+    "href": "slides/week04.html#basic-scatterplot-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Basic Scatterplot 2",
+    "text": "Basic Scatterplot 2\n\ngeom_point() adds a layer of points to your plot, to create a scatterplot.\nggplot2 comes with many geom functions that each add a different type of layer to a plot.\nEach geom function in ggplot2 takes a mapping argument. This defines how variables in your dataset are mapped to visual properties.\nThe mapping argument is always paired with aes(), and the x and y arguments of aes() specify which variables to map to the x and y axes. ggplot2 looks for the mapped variables in the data argument, in this case, met_avg\nOne common problem when creating ggplot2 graphics is to put the + in the wrong place: it has to come at the end of the line, not the start."
+  },
+  {
+    "objectID": "slides/week04.html#coloring-by-a-variable---using-aesthetics",
+    "href": "slides/week04.html#coloring-by-a-variable---using-aesthetics",
+    "title": "Week 4: Data Visualization",
+    "section": "Coloring by a variable - using aesthetics",
+    "text": "Coloring by a variable - using aesthetics\nYou can map the colors of your points to the class variable to reveal the region of data (west or east). ggplot2 chooses colors, and adds a legend, automatically.\n\nggplot(data = met_avg) + \n  geom_point(mapping = aes(x = temp, y = rh, color = region))\n\n\n\n\n\n\n\n\nWe see that humidity in the east is generally higher than in the west and that the hottest temperatures are in the west."
+  },
+  {
+    "objectID": "slides/week04.html#controlling-point-transparency-using-the-alpha-aesthetic",
+    "href": "slides/week04.html#controlling-point-transparency-using-the-alpha-aesthetic",
+    "title": "Week 4: Data Visualization",
+    "section": "Controlling point transparency using the “alpha” aesthetic",
+    "text": "Controlling point transparency using the “alpha” aesthetic\n\nggplot(data = met_avg) + \n  geom_point(mapping = aes(x = temp, y = rh, alpha = 0.3))"
+  },
+  {
+    "objectID": "slides/week04.html#controlling-point-transparency-using-the-alpha-aesthetic-1",
+    "href": "slides/week04.html#controlling-point-transparency-using-the-alpha-aesthetic-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Controlling point transparency using the “alpha” aesthetic",
+    "text": "Controlling point transparency using the “alpha” aesthetic\n\nggplot(data = met_avg) + \n  geom_point(mapping = aes(x = temp, y = rh, alpha = rh))"
+  },
+  {
+    "objectID": "slides/week04.html#controlling-point-shape",
+    "href": "slides/week04.html#controlling-point-shape",
+    "title": "Week 4: Data Visualization",
+    "section": "Controlling point shape:",
+    "text": "Controlling point shape:\n\nggplot(data = met_avg) + \n  geom_point(mapping = aes(x = temp, y = rh, shape = region))\n\n\nNote that, by default, ggplot uses up to 6 shapes. If there are more, some of your data is not plotted!! (At least it warns you.)"
+  },
+  {
+    "objectID": "slides/week04.html#summary-of-aesthetics",
+    "href": "slides/week04.html#summary-of-aesthetics",
+    "title": "Week 4: Data Visualization",
+    "section": "Summary of aesthetics",
+    "text": "Summary of aesthetics\n\n\n\ncode\ndescription\n\n\n\n\nx\nposition on x-axis\n\n\ny\nposition on y-axis\n\n\nshape\nshape\n\n\ncolor\ncolor of element borders\n\n\nfill\ncolor inside of elements\n\n\nsize\nsize\n\n\nalpha\ntransparency\n\n\nlinetype\ntype of line"
+  },
+  {
+    "objectID": "slides/week04.html#base-plot-equivalents",
+    "href": "slides/week04.html#base-plot-equivalents",
+    "title": "Week 4: Data Visualization",
+    "section": "Base plot equivalents",
+    "text": "Base plot equivalents\n\n\n\ncode\ndescription\n\n\n\n\nfirst arg / x\nposition on x-axis\n\n\nsecond arg / y\nposition on y-axis\n\n\npch\nshape\n\n\ncol\ncolor of element borders\n\n\nfill\ncolor inside of elements\n\n\ncex\nsize\n\n\nscales::alpha\ntransparency\n\n\nlty\ntype of line"
+  },
+  {
+    "objectID": "slides/week04.html#add-points-to-plot",
+    "href": "slides/week04.html#add-points-to-plot",
+    "title": "Week 4: Data Visualization",
+    "section": "Add points to plot",
+    "text": "Add points to plot\nWith base plot, you can add points to an existing plot with points(), which takes the same arguments as plot() for plotting points.\n\nplot(1:10, pch = 16)\npoints(10:1, pch = 16, col = 2)"
+  },
+  {
+    "objectID": "slides/week04.html#facets-1",
+    "href": "slides/week04.html#facets-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Facets 1",
+    "text": "Facets 1\nFacets are particularly useful for categorical variables.\n\nmet_avg[!is.na(met_avg$region), ] %&gt;% \n  ggplot() + \n  geom_point(mapping = aes(x = temp, y = rh, color=region)) + \n  facet_wrap(~ region, nrow = 1)"
+  },
+  {
+    "objectID": "slides/week04.html#facets-2",
+    "href": "slides/week04.html#facets-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Facets 2",
+    "text": "Facets 2\nOr you can facet on two variables…\n\nmet_avg[!is.na(met_avg$region) & !is.na(met_avg$elev_cat), ] %&gt;% \n  ggplot() + \n  geom_point(mapping = aes(x = temp, y = rh)) + \n  facet_grid(region ~ elev_cat)"
+  },
+  {
+    "objectID": "slides/week04.html#facets-3",
+    "href": "slides/week04.html#facets-3",
+    "title": "Week 4: Data Visualization",
+    "section": "Facets 3",
+    "text": "Facets 3\nBase plot is not good at this! You can make multiple plots within a single plotting window by utilizing the layout() function, but you will still have to make each plot manually.\n\nlayout(matrix(1:2, nrow=1))\nplot(met_avg$temp[which(met_avg$region == 'east')], met_avg$rh[which(met_avg$region == 'east')], pch = 16, col = 2)\nplot(met_avg$temp[which(met_avg$region == 'west')], met_avg$rh[which(met_avg$region == 'west')], pch = 16, col = 4)"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-1",
+    "href": "slides/week04.html#geometric-objects-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 1",
+    "text": "Geometric objects 1\nGeometric objects are used to control the type of plot you draw. So far we have used scatterplots (via geom_point). But now let’s try plotting a smoothed line fitted to the data (and note how we do side-by-side plots)\n\nlibrary(cowplot)\n\nscatterplot &lt;- ggplot(data = met_avg) + geom_point(mapping = aes(x = temp, y = rh))\nlineplot    &lt;- ggplot(data = met_avg) + geom_smooth(mapping = aes(x = temp, y = rh))\n\nplot_grid(scatterplot, lineplot, labels = \"AUTO\")"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-1-1",
+    "href": "slides/week04.html#geometric-objects-1-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 1",
+    "text": "Geometric objects 1\ncowplot is a package due to Claus Wilke, it “… is a simple add-on to ggplot. It provides various features that help with creating publication-quality figures, such as a set of themes, functions to align plots and arrange them into complex compound figures, and functions that make it easy to annotate plots and or mix plots with images.”"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-2",
+    "href": "slides/week04.html#geometric-objects-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 2",
+    "text": "Geometric objects 2\nNote that not every aesthetic works with every geom function. But now there are some new ones we can use.\n\nggplot(data = met_avg) + \n  geom_smooth(mapping = aes(x = temp, y = rh, linetype = region))\n\n\nHere we make the line type depend on the region and we clearly see east has higher rh than west, but generally as temperatures increase rh decreases in both regions."
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-3",
+    "href": "slides/week04.html#geometric-objects-3",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 3",
+    "text": "Geometric objects 3\nHistograms\n\nhist(met_avg$temp)"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-3-1",
+    "href": "slides/week04.html#geometric-objects-3-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 3",
+    "text": "Geometric objects 3\nHistograms\n\nggplot(met_avg) + \n  geom_histogram(mapping = aes(x = temp))"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-4",
+    "href": "slides/week04.html#geometric-objects-4",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 4",
+    "text": "Geometric objects 4\nBoxplots\n\nboxplot(met_avg$temp ~ met_avg$elev_cat)"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-4-1",
+    "href": "slides/week04.html#geometric-objects-4-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 4",
+    "text": "Geometric objects 4\nBoxplots\n\nmet_avg[!is.na(met_avg$elev_cat), ] %&gt;% \n  ggplot()+\n  geom_boxplot(mapping=aes(x=elev_cat, y=temp, fill=elev_cat))"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-5",
+    "href": "slides/week04.html#geometric-objects-5",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 5",
+    "text": "Geometric objects 5\nLineplots\n\nplot(met_avg$day[met_avg$elev==4113], met_avg$temp[met_avg$elev==4113], type = 'l')"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-5-1",
+    "href": "slides/week04.html#geometric-objects-5-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 5",
+    "text": "Geometric objects 5\nJust as you can add points to an existing plot, you can also add lines()\n\nplot(1:10, pch = 16)\nlines(10:1, col = 2, lwd = 3) # add a thick red line"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-5-2",
+    "href": "slides/week04.html#geometric-objects-5-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 5",
+    "text": "Geometric objects 5\nLineplots\n\nggplot(data = met_avg[met_avg$elev==4113, ])+\n geom_line(mapping=aes(x=day, y=temp))"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-5-3",
+    "href": "slides/week04.html#geometric-objects-5-3",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 5",
+    "text": "Geometric objects 5\nPolygons\n\nworld_map &lt;- map_data(\"world\")\nggplot(data = world_map, aes(x = long, y = lat, group = group)) +\n  geom_polygon(fill = \"darkgray\", color = \"white\")"
+  },
+  {
+    "objectID": "slides/week04.html#geometric-objects-5-4",
+    "href": "slides/week04.html#geometric-objects-5-4",
+    "title": "Week 4: Data Visualization",
+    "section": "Geometric objects 5",
+    "text": "Geometric objects 5\nPolygons\n\nus_map &lt;- map_data(\"state\")\nggplot(data = us_map, aes(x = long, y = lat, fill = region)) +\n  geom_polygon(color = \"white\")"
+  },
+  {
+    "objectID": "slides/week04.html#geoms---reference",
+    "href": "slides/week04.html#geoms---reference",
+    "title": "Week 4: Data Visualization",
+    "section": "Geoms - reference",
+    "text": "Geoms - reference\nggplot2 provides over 40 geoms, and extension packages provide even more (see https://ggplot2.tidyverse.org/reference/ for a sampling).\nThe best way to get a comprehensive overview is the ggplot2 cheatsheet, which you can find at https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf"
+  },
+  {
+    "objectID": "slides/week04.html#multiple-geoms-1",
+    "href": "slides/week04.html#multiple-geoms-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Multiple geoms 1",
+    "text": "Multiple geoms 1\nLet’s layer geoms\n\nmet_avg[!is.na(met_avg$region), ] %&gt;%\n  ggplot() + \n  geom_point(mapping = aes(x = temp, y = rh, color = region))+\n  geom_smooth(mapping = aes(x = temp, y = rh, linetype = region))"
+  },
+  {
+    "objectID": "slides/week04.html#multiple-geoms-2",
+    "href": "slides/week04.html#multiple-geoms-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Multiple geoms 2",
+    "text": "Multiple geoms 2\nWe can avoid repetition of aesthetics by passing a set of mappings to ggplot(). ggplot2 will treat these mappings as global mappings that apply to each geom in the graph.\n\nmet_avg[!is.na(met_avg$region), ] %&gt;%\n  ggplot(mapping = aes(x = temp, y = rh, color=region, linetype=region)) +\n  geom_point() + \n  geom_smooth()"
+  },
+  {
+    "objectID": "slides/week04.html#multiple-geoms-2-1",
+    "href": "slides/week04.html#multiple-geoms-2-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Multiple geoms 2",
+    "text": "Multiple geoms 2\ngeom_smooth() has options. For example if we want a linear regression line we add method=lm\n\nmet_avg[!is.na(met_avg$region), ] %&gt;%\n  ggplot(mapping = aes(x = temp, y = rh, color = region, linetype = region)) +\n  geom_point() + \n  geom_smooth(method = lm, se = FALSE, col = \"black\")"
+  },
+  {
+    "objectID": "slides/week04.html#multiple-geoms-3",
+    "href": "slides/week04.html#multiple-geoms-3",
+    "title": "Week 4: Data Visualization",
+    "section": "Multiple geoms 3",
+    "text": "Multiple geoms 3\nIf you place mappings in a geom function, ggplot2 will use these mappings to extend or overwrite the global mappings for that layer only. This makes it possible to display different aesthetics in different layers.\n\nmet_avg[!is.na(met_avg$region), ] %&gt;%\n  ggplot(mapping = aes(x = temp, y = rh)) + \n  geom_point(mapping = aes(color = region)) + \n  geom_smooth()"
+  },
+  {
+    "objectID": "slides/week04.html#multiple-geoms-4",
+    "href": "slides/week04.html#multiple-geoms-4",
+    "title": "Week 4: Data Visualization",
+    "section": "Multiple geoms 4",
+    "text": "Multiple geoms 4\nYou can use the same idea to specify different data for each layer. Here, our smooth line displays the full met dataset but the points are colored by visibilty.\n\nmet_avg[!is.na(met_avg$vis_cat), ] %&gt;%\n  ggplot(mapping = aes(x = temp, y = rh, alpha = 0.5)) + \n  geom_point(mapping = aes(color = vis_cat)) + \n  geom_smooth(se = FALSE)"
+  },
+  {
+    "objectID": "slides/week04.html#statistical-transformations---another-example",
+    "href": "slides/week04.html#statistical-transformations---another-example",
+    "title": "Week 4: Data Visualization",
+    "section": "Statistical transformations - another example",
+    "text": "Statistical transformations - another example\nYou might want to draw greater attention to the statistical transformation in your code. For example, you might use stat_summary(), which summarises the y values for each unique x value, to draw attention to the summary that you’re computing:\n\nl &lt;- met_avg[!is.na(met_avg$vis_cat) & met_avg$vis_cat != \"clear\", ] %&gt;%\n  ggplot() + \n    stat_summary(mapping = aes(x = vis_cat, y = temp),\n    fun.min = min,\n    fun.max = max,\n    fun = median)"
+  },
+  {
+    "objectID": "slides/week04.html#statistical-transformations---another-example-1",
+    "href": "slides/week04.html#statistical-transformations---another-example-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Statistical transformations - another example",
+    "text": "Statistical transformations - another example\n\nl"
+  },
+  {
+    "objectID": "slides/week04.html#position-adjustments",
+    "href": "slides/week04.html#position-adjustments",
+    "title": "Week 4: Data Visualization",
+    "section": "Position adjustments",
+    "text": "Position adjustments\nAn option that can be very useful is position = \"jitter\". This adds a small amount of random noise to each point. This spreads out points that might otherwise be overlapping.\n\nnojitter &lt;- ggplot(data = met_avg[1:1000,]) + \n  geom_point(mapping = aes(x = vis_cat, y = temp))\n\njitter &lt;- ggplot(data = met_avg[1:1000,]) + \n  geom_point(mapping = aes(x = vis_cat, y = temp), position = \"jitter\")"
+  },
+  {
+    "objectID": "slides/week04.html#position-adjustments-1",
+    "href": "slides/week04.html#position-adjustments-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Position adjustments",
+    "text": "Position adjustments\nAn option that can be very useful is position = \"jitter\". This adds a small amount of random noise to each point. This spreads out points that might otherwise be overlapping.\n\nnojitter &lt;- ggplot(data = met_avg[1:1000,]) + \n  geom_point(mapping = aes(x = vis_cat, y = temp))\n\njitter &lt;- ggplot(data = met_avg[1:1000,]) + \n  geom_point(mapping = aes(x = vis_cat, y = temp), position = \"jitter\")"
+  },
+  {
+    "objectID": "slides/week04.html#position-adjustments-2",
+    "href": "slides/week04.html#position-adjustments-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Position adjustments",
+    "text": "Position adjustments\n\nplot_grid(nojitter, jitter, labels = \"AUTO\")"
+  },
+  {
+    "objectID": "slides/week04.html#coordinate-systems",
+    "href": "slides/week04.html#coordinate-systems",
+    "title": "Week 4: Data Visualization",
+    "section": "Coordinate systems",
+    "text": "Coordinate systems\nCoordinate systems are one of the more complicated corners of ggplot. To start with something simple, here’s how to flip axes:\n\nunflipped &lt;- ggplot(data = met_avg) + \n  geom_boxplot(mapping = aes(x = vis_cat, y = temp))\n\nflipped &lt;- ggplot(data = met_avg) + \n  geom_boxplot(mapping = aes(x = vis_cat, y = temp)) +\n  coord_flip()"
+  },
+  {
+    "objectID": "slides/week04.html#coordinate-systems-1",
+    "href": "slides/week04.html#coordinate-systems-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Coordinate systems",
+    "text": "Coordinate systems\n\nplot_grid(unflipped, flipped, labels = \"AUTO\")"
+  },
+  {
+    "objectID": "slides/week04.html#coordinate-systems-2",
+    "href": "slides/week04.html#coordinate-systems-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Coordinate systems",
+    "text": "Coordinate systems\nThere is also the ability to control the aspect ratio using coord_quickmap() and to use polar coordinates with coord_polar().\n\nbar &lt;- ggplot(data = met_avg) + \n  geom_bar(mapping = aes(x = elev_cat, fill = elev_cat), show.legend = FALSE, width = 1) + \n  theme(aspect.ratio = 1) +\n  labs(x = NULL, y = NULL)"
+  },
+  {
+    "objectID": "slides/week04.html#coordinate-systems-3",
+    "href": "slides/week04.html#coordinate-systems-3",
+    "title": "Week 4: Data Visualization",
+    "section": "Coordinate systems",
+    "text": "Coordinate systems\n\nbar + coord_flip()\n\n\n\n\n\n\n\nbar + coord_polar()"
+  },
+  {
+    "objectID": "slides/week04.html#modifying-labels",
+    "href": "slides/week04.html#modifying-labels",
+    "title": "Week 4: Data Visualization",
+    "section": "Modifying labels",
+    "text": "Modifying labels\n\nggplot(met_avg[!is.na(met_avg$region), ]) +\n  geom_point(aes(temp, rh, color = region)) + \n  labs(title = \"Weather Station Data\") + \n  labs(x = expression(\"Temperature\" *~ degree * C), y = \"Relative Humidity\")"
+  },
+  {
+    "objectID": "slides/week04.html#changing-the-theme",
+    "href": "slides/week04.html#changing-the-theme",
+    "title": "Week 4: Data Visualization",
+    "section": "Changing the Theme",
+    "text": "Changing the Theme\n\nggplot(met_avg[!is.na(met_avg$region), ]) +\n  geom_point(aes(temp, rh, color = region)) + \n  labs(title = \"Weather Station Data\") + \n  labs(x = expression(\"Temperature\"*~degree*C), y = \"Relative Humidity\")+\n  theme_bw(base_family = \"Times\")"
+  },
+  {
+    "objectID": "slides/week04.html#changing-the-legend",
+    "href": "slides/week04.html#changing-the-legend",
+    "title": "Week 4: Data Visualization",
+    "section": "Changing the Legend",
+    "text": "Changing the Legend\n\nggplot(met_avg[!is.na(met_avg$region), ]) +\n  geom_point(aes(temp, rh, color = region)) + \n  labs(title = \"Weather Station Data\",x = expression(\"Temperature\"*~degree*C), y = \"Relative Humidity\")+\n  scale_color_manual(name=\"Region\", labels=c(\"East\", \"West\"), values=c(\"east\"=\"lightblue\", \"west\"=\"purple\"))+\n  theme_bw(base_family = \"Times\")"
+  },
+  {
+    "objectID": "slides/week04.html#changing-colorscales",
+    "href": "slides/week04.html#changing-colorscales",
+    "title": "Week 4: Data Visualization",
+    "section": "Changing Colorscales",
+    "text": "Changing Colorscales\n\nggplot(data = met_avg) + \n  geom_point(mapping=aes(x=temp, y=rh, color=elev))+\n  scale_color_gradient(low=\"blue\", high=\"red\")"
+  },
+  {
+    "objectID": "slides/week04.html#changing-colorscales-1",
+    "href": "slides/week04.html#changing-colorscales-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Changing Colorscales",
+    "text": "Changing Colorscales\n\nggplot(data=met_avg) + \n  geom_point(mapping= aes(x=temp, y=rh, color = cut(elev, b=5))) + \n  scale_color_manual(values = viridis::viridis(6))"
+  },
+  {
+    "objectID": "slides/week04.html#a-great-reference",
+    "href": "slides/week04.html#a-great-reference",
+    "title": "Week 4: Data Visualization",
+    "section": "A Great reference",
+    "text": "A Great reference\nA great (comprehensive) reference for everything you can do with ggplot2 is the R Graphics Cookbook:\nhttps://r-graphics.org/"
+  },
+  {
+    "objectID": "slides/week04.html#reminder---the-ggplot2-cheatsheet",
+    "href": "slides/week04.html#reminder---the-ggplot2-cheatsheet",
+    "title": "Week 4: Data Visualization",
+    "section": "Reminder - the ggplot2 cheatsheet",
+    "text": "Reminder - the ggplot2 cheatsheet\nA briefer summary can be found here:\nhttps://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf\nRstudio has a variety of other great Cheatsheets."
+  },
+  {
+    "objectID": "slides/week04.html#maps-with-leaflet",
+    "href": "slides/week04.html#maps-with-leaflet",
+    "title": "Week 4: Data Visualization",
+    "section": "Maps with leaflet",
+    "text": "Maps with leaflet\nLet’s create a map of monthly average temperatures at each of the weather stations and color the points by a temperature gradient. We need to create a color palette and we can add a legend.\n\nlibrary(leaflet)\nmet_avg2 &lt;- summarize(met,\n                      temp =     mean(temp, na.rm = TRUE),\n                      lat =      mean(lat, na.rm = TRUE),\n                      lon =      mean(lon, na.rm = TRUE),\n                      .by = c(USAFID))\nmet_avg2 &lt;- met_avg2[!is.na(met_avg2$temp), ]\n\n# Generating a color palette\ntemp.pal &lt;- colorNumeric(c('darkgreen','goldenrod','brown'), domain=met_avg2$temp)\n\ntemp.pal(20)\n\n[1] \"#B69A19\"\n\ntemp.pal\n\nfunction (x) \n{\n    if (length(x) == 0 || all(is.na(x))) {\n        return(pf(x))\n    }\n    if (is.null(rng)) \n        rng &lt;- range(x, na.rm = TRUE)\n    rescaled &lt;- scales::rescale(x, from = rng)\n    if (any(rescaled &lt; 0 | rescaled &gt; 1, na.rm = TRUE)) \n        warning(\"Some values were outside the color scale and will be treated as NA\")\n    if (reverse) {\n        rescaled &lt;- 1 - rescaled\n    }\n    pf(rescaled)\n}\n&lt;bytecode: 0x1119f7e30&gt;\n&lt;environment: 0x1119f3068&gt;\nattr(,\"colorType\")\n[1] \"numeric\"\nattr(,\"colorArgs\")\nattr(,\"colorArgs\")$na.color\n[1] \"#808080\""
+  },
+  {
+    "objectID": "slides/week04.html#maps-with-leaflet-1",
+    "href": "slides/week04.html#maps-with-leaflet-1",
+    "title": "Week 4: Data Visualization",
+    "section": "Maps with leaflet",
+    "text": "Maps with leaflet\nFor the tile providers, take a look at this site: https://leaflet-extras.github.io/leaflet-providers/preview/\n\ntempmap &lt;- leaflet(met_avg2) %&gt;% \n  # The looks of the Map\n  addProviderTiles('CartoDB.Positron') %&gt;% \n  # Some circles\n  addCircles(\n    lat = ~lat, lng=~lon,\n                                                  # HERE IS OUR PAL!\n    label = ~paste0(round(temp,2), ' C'), color = ~ temp.pal(temp),\n    opacity = 1, fillOpacity = 1, radius = 500\n    ) %&gt;%\n  # And a pretty legend\n  addLegend('bottomleft', pal=temp.pal, values=met_avg2$temp,\n          title='Temperature, C', opacity=1)"
+  },
+  {
+    "objectID": "slides/week04.html#maps-with-leaflet-2",
+    "href": "slides/week04.html#maps-with-leaflet-2",
+    "title": "Week 4: Data Visualization",
+    "section": "Maps with leaflet",
+    "text": "Maps with leaflet\n\ntempmap"
   }
 ]
