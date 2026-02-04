@@ -11,88 +11,83 @@ execute:
 
 ## Some motivation
 
-* The next few slides are examples of infographics that don't follow data visualization principles.
+-   The next few slides are examples of infographics that don't follow data visualization principles.
 
-* We use them as motivation.
+-   We use them as motivation.
 
-* Several of the examples come from here: [https://venngage.com/blog/bad-infographics/](https://venngage.com/blog/bad-infographics/)
-
-
-## Some motivation
-
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/bar-plot-honduras-election.jpeg){fig-align="center" height=500}
-
+-   Several of the examples come from here: <https://venngage.com/blog/bad-infographics/>
 
 ## Some motivation
 
-
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/coronavirusbargraph-cropped.jpeg){fig-align="center" height=500}
-
-## Some motivation
-
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/crazy-pie-chart.png){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/bar-plot-honduras-election.jpeg){fig-align="center" height="500"}
 
 ## Some motivation
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/piechart2.jpeg){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/coronavirusbargraph-cropped.jpeg){fig-align="center" height="500"}
 
 ## Some motivation
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/crazy-arrows.jpeg){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/crazy-pie-chart.png){fig-align="center" height="500"}
 
 ## Some motivation
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/misleading1.jpeg){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/piechart2.jpeg){fig-align="center" height="500"}
 
 ## Some motivation
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/womenicons.jpeg){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/crazy-arrows.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/misleading1.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/womenicons.jpeg){fig-align="center" height="500"}
 
 ## Data visualization principles
 
-* We provide some general principles we can use as a guide for effective data visualization. 
+-   We provide some general principles we can use as a guide for effective data visualization.
 
-* Much of this section is based on a talk by [Karl Broman](http://kbroman.org/) titled [_Creating Effective Figures and Tables_](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf) and includes some of the figures which were made with code that Karl makes available on his [GitHub repository](https://github.com/kbroman/Talk_Graphs), as well as class notes from Peter Aldhous' Introduction to [Data Visualization course](https://www.peteraldhous.com/ucb/2014/dataviz/index.html). 
-
-## Data visualization principles
-
-* Following Karl's approach, we show some examples of plot styles we should avoid, explain how to improve them, and use these as motivation for a list of principles. 
-
-* We compare and contrast plots that follow these principles to those that don't.
+-   Much of this section is based on a talk by [Karl Broman](http://kbroman.org/) titled [*Creating Effective Figures and Tables*](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf) and includes some of the figures which were made with code that Karl makes available on his [GitHub repository](https://github.com/kbroman/Talk_Graphs), as well as class notes from Peter Aldhous' Introduction to [Data Visualization course](https://www.peteraldhous.com/ucb/2014/dataviz/index.html).
 
 ## Data visualization principles
 
-* The principles are mostly based on research related to how humans detect patterns and make visual comparisons. 
+-   Following Karl's approach, we show some examples of plot styles we should avoid, explain how to improve them, and use these as motivation for a list of principles.
 
-* The preferred approaches are those that best fit the way our brains process visual information. 
-
-* When deciding on a visualization approach, it is also important to keep our goal in mind. 
+-   We compare and contrast plots that follow these principles to those that don't.
 
 ## Data visualization principles
 
-We may be comparing a 
+-   The principles are mostly based on research related to how humans detect patterns and make visual comparisons.
 
-* Viewable number of quantities.
-* Describing distributions for categories or numeric values.
-* Comparing the data from two groups.
-* Describing the relationship between two variables.
+-   The preferred approaches are those that best fit the way our brains process visual information.
 
+-   When deciding on a visualization approach, it is also important to keep our goal in mind.
+
+## Data visualization principles
+
+We may be comparing a
+
+-   Viewable number of quantities.
+-   Describing distributions for categories or numeric values.
+-   Comparing the data from two groups.
+-   Describing the relationship between two variables.
 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
 ```
 
-
 ## Encoding data using visual cues
 
 We start by describing some principles for visually encoding numerical values:
 
-* aligned lengths
-* position
-* angles
-* area
-* brightness
-* color hue
+-   aligned lengths
+-   position
+-   angles
+-   area
+-   brightness
+-   color hue
 
 ## Encoding data using visual cues
 
@@ -105,15 +100,13 @@ browsers <- data.frame(Browser = rep(c("Opera","Safari","Firefox","IE","Chrome")
 
 Example:
 
-* Suppose we want to report the results from two hypothetical polls regarding browser preference taken in 2000 and then 2015. 
+-   Suppose we want to report the results from two hypothetical polls regarding browser preference taken in 2000 and then 2015.
 
-* For each year, we are simply comparing five quantities – the five percentages for Opera, Safari, Firefox, IE, and Chrome.
-
+-   For each year, we are simply comparing five quantities – the five percentages for Opera, Safari, Firefox, IE, and Chrome.
 
 ## Encoding data using visual cues
 
 A widely used graphical representation of percentages, popularized by Microsoft Excel, is the pie chart:
-
 
 ```{r piechart}
 p1 <- browsers |> 
@@ -130,10 +123,9 @@ p1
 
 ## Encoding data using visual cues
 
-* Here we are representing quantities with both areas and angles, since both the angle and area of each pie slice are proportional to the quantity the slice represents. 
+-   Here we are representing quantities with both areas and angles, since both the angle and area of each pie slice are proportional to the quantity the slice represents.
 
-* This turns out to be a sub-optimal choice since, as demonstrated by perception studies, humans are not good at precisely quantifying angles and are even worse when area is the only available visual cue. 
-
+-   This turns out to be a sub-optimal choice since, as demonstrated by perception studies, humans are not good at precisely quantifying angles and are even worse when area is the only available visual cue.
 
 ## Encoding data using visual cues
 
@@ -151,12 +143,11 @@ browsers |> ggplot(aes(x = 2, y = Percentage, fill = Browser)) +
 
 ```
 
-
 ## Compare 2000 to 2015
 
-* Can you determine the actual percentages and rank the browsers' popularity? 
+-   Can you determine the actual percentages and rank the browsers' popularity?
 
-* Can you see how they changed from 2000 to 2015? 
+-   Can you see how they changed from 2000 to 2015?
 
 ```{r piechart-2}
 library(ggthemes)
@@ -169,8 +160,6 @@ p1 <- browsers |> ggplot(aes(x = "", y = Percentage, fill = Browser)) +
   facet_grid(.~Year)
 p1
 ```
-
-
 
 ## Show the numbers
 
@@ -197,8 +186,7 @@ p2 <- browsers |>
 grid.arrange(p1, p2, nrow = 2)
 ```
 
-
-## If foreced to make a pie chart 
+## If foreced to make a pie chart
 
 Label each pie slice with its respective percentage so viewers do not have to infer them:
 
@@ -219,27 +207,23 @@ annotate(geom = "text",
               label = label, size=4)
 ```
 
-
 ## Know when to include 0
 
-* When using barplots, it is misinformative not to start the bars at 0. 
+-   When using barplots, it is misinformative not to start the bars at 0.
 
-* This is because, by using a barplot, we are implying the length is proportional to the quantities being displayed. 
+-   This is because, by using a barplot, we are implying the length is proportional to the quantities being displayed.
 
-* By avoiding 0, relatively small differences can be made to look much bigger than they actually are.
+-   By avoiding 0, relatively small differences can be made to look much bigger than they actually are.
 
-* This approach is often used by politicians or media organizations trying to exaggerate a difference. 
-
+-   This approach is often used by politicians or media organizations trying to exaggerate a difference.
 
 ## Know when to include 0
 
 Below is an illustrative example used by Peter Aldhous in [this lecture](http://paldhous.github.io/ucb/2016/dataviz/week2.html).
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/class2_8.jpg){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/class2_8.jpg){fig-align="center" height="500"}
 
 (Source: [Fox News, via Media Matters](http://mediamatters.org/blog/2013/04/05/fox-news-newest-dishonest-chart-immigration-enf/193507).)
-
-
 
 ## Know when to include 0
 
@@ -253,15 +237,15 @@ data.frame(Year = as.character(c(2011, 2012, 2013)),Southwest_Border_Apprehensio
 
 ## Know when to include 0
 
-Another example: 
+Another example:
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/Bush-cuts.png){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/Bush-cuts.png){fig-align="center" height="500"}
 
 (Source: [Fox News, via Flowing Data](http://flowingdata.com/2012/08/06/fox-news-continues-charting-excellence/).)
 
 ## Know when to include 0
 
-And here is the correct plot: 
+And here is the correct plot:
 
 ```{r barplot-from-zero-2}
 data.frame(date = c("Now", "Jan 1, 2013"), tax_rate = c(35, 39.6)) |>
@@ -274,12 +258,11 @@ data.frame(date = c("Now", "Jan 1, 2013"), tax_rate = c(35, 39.6)) |>
 
 ## Know when to include 0
 
-One more example: 
+One more example:
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/venezuela-election.png){fig-align="center" height=500}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/venezuela-election.png){fig-align="center" height="500"}
 
-(Source: 
-[Venezolana de Televisión via Pakistan Today](https://www.pakistantoday.com.pk/2018/05/18/whats-at-stake-in-venezuelan-presidential-vote) and Diego Mariano.)
+(Source: [Venezolana de Televisión via Pakistan Today](https://www.pakistantoday.com.pk/2018/05/18/whats-at-stake-in-venezuelan-presidential-vote) and Diego Mariano.)
 
 ## Know when to include 0
 
@@ -294,9 +277,9 @@ data.frame(Candidate = factor(c("Maduro", "Capriles"), levels = c("Maduro", "Cap
 
 ## Know when to include 0
 
-* When using position rather than length, it is not necessary to include 0. 
+-   When using position rather than length, it is not necessary to include 0.
 
-* In particularly when comparing between to within groups variability. 
+-   In particularly when comparing between to within groups variability.
 
 ```{r points-plot-not-from-zero, out.width="75%",  fig.width = 6, fig.asp=0.5625}
 library(dslabs)
@@ -308,15 +291,13 @@ p2 <- p1 +
 grid.arrange(p2, p1, ncol = 2)
 ```
 
-
 ## Do not distort quantities
 
 President Obama used the following chart to compare the US GDP to the GDP of four competing nations:
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/state-of-the-union.jpg){fig-align="center" height=400}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/state-of-the-union.jpg){fig-align="center" height="400"}
 
 (Source: [The 2011 State of the Union Address](https://www.youtube.com/watch?v=kl2g40GoRxg))
-
 
 ## Do not distort quantities
 
@@ -337,9 +318,9 @@ gdp_data |>
 
 ## Do not distort quantities
 
-* __ggplot2__ defaults to using area rather than radius. 
+-   **ggplot2** defaults to using area rather than radius.
 
-* Of course, in this case, we really should be using length:
+-   Of course, in this case, we really should be using length:
 
 ```{r barplot-better-than-area}
 data.frame(Country = c("United States", "China", "Japan", "Germany", "France"), GDP = gdp) |>
@@ -351,13 +332,13 @@ data.frame(Country = c("United States", "China", "Japan", "Germany", "France"), 
 
 ## Order categories by a meaningful value
 
-* When one of the axes is used to show categories the default __ggplot2__ behavior is to order the categories alphabetically when they are defined by character strings. 
+-   When one of the axes is used to show categories the default **ggplot2** behavior is to order the categories alphabetically when they are defined by character strings.
 
-* If they are defined by factors, they are ordered by the factor levels. 
+-   If they are defined by factors, they are ordered by the factor levels.
 
-* We rarely want to use alphabetical order. 
+-   We rarely want to use alphabetical order.
 
-* Instead, we should order by a meaningful quantity. 
+-   Instead, we should order by a meaningful quantity.
 
 ## Order categories by a meaningful value
 
@@ -382,7 +363,6 @@ p2 <- murders |> mutate(murder_rate = total / population * 100000) |>
 
 grid.arrange(p1, p2, ncol = 2)
 ```
-
 
 ## Order categories by a meaningful value
 
@@ -412,12 +392,11 @@ p2 <- gapminder |>
 grid.arrange(p1, p2, nrow = 1)
 ```
 
-
 ## Show the data
 
-* We have focused on displaying single quantities across categories. We now shift our attention to displaying data, with a focus on comparing groups. 
+-   We have focused on displaying single quantities across categories. We now shift our attention to displaying data, with a focus on comparing groups.
 
-* Suppose we want to describe height data to an extra-terrestrial. 
+-   Suppose we want to describe height data to an extra-terrestrial.
 
 ## Show the data
 
@@ -444,13 +423,11 @@ heights |>
   geom_point() 
 ```
 
-
 ```{r show-data-2}
 heights |> 
   ggplot(aes(sex, height)) + 
   geom_point() 
 ```
-
 
 ## Show the data
 
@@ -462,13 +439,11 @@ heights |>
   geom_jitter(width = 0.1, alpha = 0.2) 
 ```
 
-
 ```{r show-points-with-jitter}
 heights |> 
   ggplot(aes(sex, height)) +
   geom_jitter(width = 0.1, alpha = 0.2) 
 ```
-
 
 ## Histograms
 
@@ -483,12 +458,11 @@ heights |>
 
 ## Ease comparisons
 
-* Use common axes
+-   Use common axes
 
-* If horizontal comparison, stack graphs vertically
+-   If horizontal comparison, stack graphs vertically
 
-* If vertical comparison, stack graphs horizontally
-
+-   If vertical comparison, stack graphs horizontally
 
 ## Stack vertically
 
@@ -509,8 +483,7 @@ p2 <- heights |>
 p2
 ```
 
-
-## Boxplot is vertical 
+## Boxplot is vertical
 
 Stack horizontally
 
@@ -523,13 +496,11 @@ p3 <- heights |>
 p3
 ```
 
-
 ## Contrast and compare
 
 ```{r show-the-data-comparison, out.width="100%", fig.asp = 0.4}
 grid.arrange(p1, p2, p3, ncol = 3)
 ```
-
 
 ## Consider transformations
 
@@ -573,9 +544,7 @@ p2 <- p2 + geom_boxplot(coef = 3) +
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-
 ## Visual cues to be compared should be adjacent
-
 
 Note that it is hard to compare 1970 to 2020 by country:
 
@@ -607,10 +576,9 @@ gapminder |>
   ylab("Income in dollars per day")
 ```
 
-## Use color 
+## Use color
 
-The comparison becomes even easier to make if we use color to denote the two things we want to compare: 
-
+The comparison becomes even easier to make if we use color to denote the two things we want to compare:
 
 ```{r boxplot-adjacent-comps-with-color}
  gapminder |> 
@@ -623,20 +591,19 @@ The comparison becomes even easier to make if we use color to denote the two thi
   ylab("Income in dollars per day")
 ```
 
+## Think of the color blind
+
+-   Approximately 1 in 12 men (8%) and 1 in 200 women (0.5%) worldwide are color blind.
+
+-   The most common type of color blindness is red-green color blindness, which affects around 99% of all color blind individuals.
+
+-   The prevalence of blue-yellow color blindness and total color blindness (achromatopsia) is much lower.
+
+-   An example of how we can use a color blind friendly palette is described [here](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette).
 
 ## Think of the color blind
 
-* Approximately 1 in 12 men (8%) and 1 in 200 women (0.5%) worldwide are color blind.
-
-* The most common type of color blindness is red-green color blindness, which affects around 99% of all color blind individuals. 
-
-* The prevalence of blue-yellow color blindness and total color blindness (achromatopsia) is much lower.
-
-* An example of how we can use a color blind friendly palette is described [here](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette).
-
-## Think of the color blind
-
-* Example of color-blind-friendly color palette:
+-   Example of color-blind-friendly color palette:
 
 ```{r color-blind-friendly-colors, fig.asp=0.1, out.width="100%"}
 color_blind_friendly_cols <- 
@@ -662,13 +629,12 @@ p1 + scale_color_manual(values = color_blind_friendly_cols)
 
 In general, you should use scatterplots to visualize the relationship between two variables.
 
-However, there are some exceptions. 
+However, there are some exceptions.
 
-* We describe two alternative plots here: 
-  - _slope chart_ 
-  -  _Bland-Altman plot_
-  
-  
+-   We describe two alternative plots here:
+    -   *slope chart*
+    -   *Bland-Altman plot*
+
 ## Slope charts
 
 Slope charts adds angle as a visual cue, useful when comparing two groups **and** each element across two variables, such as years.
@@ -695,7 +661,6 @@ dat |>
   xlab("") + ylab("Life Expectancy")
 ```
 
-
 ## Scatterplot version
 
 ```{r scatter-plot-instead-of-slope}
@@ -720,7 +685,6 @@ dat |>
   ylab("2015")
 ```
 
-
 ## Bland-Altman plot
 
 Shows difference in the y-axis and average on the x-axis.
@@ -743,11 +707,11 @@ dat |>
 
 ## Encoding a third variable
 
-We can use 
+We can use
 
-* different colors or shapes for categoris
+-   different colors or shapes for categoris
 
-* areas, brightness or hue for continuous values
+-   areas, brightness or hue for continuous values
 
 ## Encoding a third variable
 
@@ -799,13 +763,13 @@ geom_point(dat, mapping = aes(x%%9, x%/%9, shape = x), size = 4, fill="blue") +
 geom_text(dat, mapping = aes(x%%9, x%/%9+0.25, label = x), size = 4) 
 ```
 
-## Using intensity or hue 
+## Using intensity or hue
 
-When selecting colors to quantify a numeric variable, we choose between two options: sequential and diverging. 
+When selecting colors to quantify a numeric variable, we choose between two options: sequential and diverging.
 
-## Sequential colors 
+## Sequential colors
 
-Sequential colors are suited for data that goes from high to low.  High values are clearly distinguished from low values. Here are some examples offered by the package `RColorBrewer`:
+Sequential colors are suited for data that goes from high to low. High values are clearly distinguished from low values. Here are some examples offered by the package `RColorBrewer`:
 
 ```{r r-color-brewer-seq, fig.height=3.5}
 library(RColorBrewer)
@@ -815,8 +779,7 @@ display.brewer.all(type = "seq")
 
 ## Diverging colors
 
-Diverging colors are used to represent values that diverge from a center. We put equal emphasis on both ends of the data range: higher than the center and lower than the center. 
-
+Diverging colors are used to represent values that diverge from a center. We put equal emphasis on both ends of the data range: higher than the center and lower than the center.
 
 ```{r r-color-brewer-div, fig.height=2.5}
 library(RColorBrewer)
@@ -824,24 +787,21 @@ rafalib::mypar()
 display.brewer.all(type = "div")
 ```
 
+## Avoid pseudo-3D plots
+
+The figure below, taken from the [scientific literature](https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488), shows three variables: dose, drug type and survival:
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig8b.png){fig-align="center" height="400"}
 
 ## Avoid pseudo-3D plots
 
-The figure below, taken from the [scientific literature](https://projecteuclid.org/download/pdf_1/euclid.ss/1177010488),
-shows three variables: dose, drug type and survival:
-
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig8b.png){fig-align="center" height=400}
-
+-   Humans are not good at seeing in three dimensions and our limitation is even worse with regard to pseudo-three-dimensions.
 
 ## Avoid pseudo-3D plots
 
-* Humans are not good at seeing in three dimensions and our limitation is even worse with regard to pseudo-three-dimensions. 
+-   When does the purple ribbon intersects the red?
 
-## Avoid pseudo-3D plots
-
-* When does the purple ribbon intersects the red? 
-
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig8b.png){fig-align="center" height=400}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig8b.png){fig-align="center" height="400"}
 
 ## Avoid pseudo-3D plots
 
@@ -861,26 +821,25 @@ dat |> gather(drug, survival, -log.dose) |>
 
 ## Avoid pseudo-3D plots
 
-Pseudo-3D is sometimes used completely gratuitously: plots are made to look 3D even when the 3rd dimension does not represent a quantity. This only adds confusion and makes it harder to relay your message.  We show two examples:
+Pseudo-3D is sometimes used completely gratuitously: plots are made to look 3D even when the 3rd dimension does not represent a quantity. This only adds confusion and makes it harder to relay your message. We show two examples:
 
 ## Avoid pseudo-3D plots
-:::{layout-ncol=2}
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig1e.png){fig-align="center" height=400}
+::: {layout-ncol="2"}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig1e.png){fig-align="center" height="400"}
 
-![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig2d.png){fig-align="center" height=400}
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/fig2d.png){fig-align="center" height="400"}
 :::
 
 (Images courtesy of Karl Broman)
 
-
 ## Avoid too many significant digits
 
-* By default, statistical software like R returns many significant digits.
+-   By default, statistical software like R returns many significant digits.
 
-* The default behavior in R is to show 7 significant digits.
+-   The default behavior in R is to show 7 significant digits.
 
-* That many digits often adds no information and the added visual clutter can make it hard for the viewer to understand the message. 
+-   That many digits often adds no information and the added visual clutter can make it hard for the viewer to understand the message.
 
 ## Avoid too many significant digits
 
@@ -903,7 +862,7 @@ knitr::kable(dat)
 
 ## Avoid too many significant digits
 
-* We are reporting precision up to 0.00001 cases per 10,000, a very small value in the context of the changes that are occurring across the dates. 
+-   We are reporting precision up to 0.00001 cases per 10,000, a very small value in the context of the changes that are occurring across the dates.
 
 ```{r}
 knitr::kable(dat) 
@@ -913,7 +872,7 @@ options(digits = tmp)
 
 ## Avoid too many significant digits
 
-* In this case, one decimal point is more than enough and clearly makes the point that rates are decreasing:
+-   In this case, one decimal point is more than enough and clearly makes the point that rates are decreasing:
 
 ```{r, echo = FALSE}
 dat0 <- dat |> 
@@ -925,12 +884,11 @@ knitr::kable(dat0)
 
 Useful ways to change the number of significant digits or to round numbers are
 
-* `signif`
+-   `signif`
 
-* `round`
+-   `round`
 
-You can define the number of significant digits globally by setting options like this: `options(digits = 3)`. 
-
+You can define the number of significant digits globally by setting options like this: `options(digits = 3)`.
 
 ## Values compared in columns
 
@@ -953,21 +911,18 @@ knitr::kable(dat)
 
 Another principle related to displaying tables is to place values being compared on columns rather than rows. Compare these two presentations:
 
-
 ```{r, echo = FALSE}
 knitr::kable(dat0)
 ```
 
-
 ## Know your audience
 
-Graphs can be used for 
+Graphs can be used for
 
-1. our own exploratory data analysis, 
+1.  our own exploratory data analysis,
 
-2. to convey a message to experts, or 
+2.  to convey a message to experts, or
 
-3. to help tell a story to a general audience. 
+3.  to help tell a story to a general audience.
 
-Make sure that the intended audience understands each element of the plot. 
-
+Make sure that the intended audience understands each element of the plot.

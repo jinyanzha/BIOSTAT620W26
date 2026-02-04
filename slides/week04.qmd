@@ -60,6 +60,63 @@ opts_chunk$set(
 ```
 
 
+## Some motivation
+
+-   The next few slides are examples of infographics that don't follow data visualization principles.
+
+-   We use them as motivation.
+
+-   Several of the examples come from here: <https://venngage.com/blog/bad-infographics/>
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/bar-plot-honduras-election.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/coronavirusbargraph-cropped.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/crazy-pie-chart.png){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/piechart2.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/crazy-arrows.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/misleading1.jpeg){fig-align="center" height="500"}
+
+## Some motivation
+
+![](https://raw.githubusercontent.com/datasciencelabs/2022/refs/heads/master/dataviz/img/womenicons.jpeg){fig-align="center" height="500"}
+
+## Data visualization principles
+
+-   We provide some general principles we can use as a guide for effective data visualization.
+
+-   Much of this section is based on a talk by [Karl Broman](http://kbroman.org/) titled [*Creating Effective Figures and Tables*](https://www.biostat.wisc.edu/~kbroman/presentations/graphs2017.pdf) and includes some of the figures which were made with code that Karl makes available on his [GitHub repository](https://github.com/kbroman/Talk_Graphs), as well as class notes from Peter Aldhous' Introduction to [Data Visualization course](https://www.peteraldhous.com/ucb/2014/dataviz/index.html).
+
+## Data visualization principles
+
+-   Following Karl's approach, we show some examples of plot styles we should avoid, explain how to improve them, and use these as motivation for a list of principles.
+
+-   We compare and contrast plots that follow these principles to those that don't.
+
+## Data visualization principles
+
+-   The principles are mostly based on research related to how humans detect patterns and make visual comparisons.
+
+-   The preferred approaches are those that best fit the way our brains process visual information.
+
+-   When deciding on a visualization approach, it is also important to keep our goal in mind.
+
+
 ## Acknowledgment
 
 These slides were originally developed by Meredith Franklin (and Paul Marjoram) and modified by George G. Vega Yon, Dylan Cable, and Kelly Street.
