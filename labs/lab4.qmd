@@ -1,0 +1,141 @@
+---
+title: "Lab 4 - Data Visualization"
+link-citations: true
+toc: false
+embed-resources: true
+---
+
+```{r, echo = FALSE}
+# Set to TRUE if you want the blocks to be evaluated 
+EVAL <- FALSE
+ECHO <- EVAL
+```
+
+```{r setup, message=FALSE, echo = ECHO, warning=FALSE, eval = EVAL}
+library(tidyverse)
+```
+
+# Learning Goals
+
+-   Read in and prepare the COVID-19 dataset
+-   Create several graphs with different `geoms()` in `ggplot2`
+-   Create a facet graph
+-   Customize your plots
+-   Create a detailed map
+
+# Lab Description
+
+In this lab, we will work with the COVID-19 data from the CDC. The data has already been preprocessed.
+
+**The objective of the lab is to examine the association between weekly average COVID-19 death and vaccination rates in ten regions of the US.**
+
+Note the following variable definitions:
+
+-   `mmwr_year`: year (according to the [MMWR Calendar](https://stacks.cdc.gov/view/cdc/22305))
+-   `mmwr_week`: week (according to the [MMWR Calendar](https://stacks.cdc.gov/view/cdc/22305))
+-   `pop`: state population
+-   `cases`: weekly COVID cases
+-   `hosp`: weekly COVID hospitilizations
+-   `deaths`: weekly COVID deaths
+-   `series`: cumulative vaccinated population
+-   `booster`: cumulative boosted population
+
+# Steps
+
+### 1. Read in the data
+
+First download and then read in with `read.csv()`
+
+```{r, echo = TRUE, message=FALSE, eval = EVAL}
+if (!file.exists("covid_processed.csv"))
+  download.file(
+    url = "https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/covid_processed.csv",
+    destfile = "covid_processed.csv",
+    method   = "libcurl",
+    timeout  = 60
+    )
+```
+
+### 2. Prepare the data
+
+-   Since states have different population sizes, make sure that you are working with population-normalized rates (e.g. units cases per 100,000 population). Transform the following variables accordingly: `cases`, `hosp`, `booster`, `series`, `deaths`. 
+-   Use the `ymd` function from the `lubridate` to convert the date variable to a Date object. This is easier to work with for arithmetic and plotting.
+-   Compute the mean by state of the normalized variables above. We recommend creating a new data.frame with the state-averaged data. Keep any other relevant variables from the original data (e.g. population, region etc).
+-   Create a binary categorical variable for population.
+-   Make sure that region is a factor
+
+```{r, eval = EVAL, echo = ECHO}
+### Your code here
+```
+
+### 3. Use `geom_violin` to examine the case rates and death rates by region
+
+You saw how to use `geom_boxplot` in class. Try using `geom_violin` instead (take a look at the help). (hint: you will need to set the `x` aesthetic to 1)
+
+-   Use facets
+-   Fill color by region
+-   Describe what you observe in the graph
+
+```{r, eval = EVAL, echo = ECHO}
+### Your code here
+```
+
+### 4. Use `geom_point` with `stat_smooth` to examine the association between time and case rates by region
+
+-   Filter the data over time to two weeks after the first date in the dataset
+-   Color points by region
+-   Fit a function with `stat_smooth` by region. Does `method=lm` or the default method work better?
+-   For the default `stat_smooth`, play around with the `span` parameter to get a smooth that fits the data better without being too noisy.
+-   Describe what you observe in the graph
+
+```{r, eval = EVAL, echo = ECHO}
+### Your code here
+```
+
+### 5. Use `geom_bar` to create barplots of the states by population category colored by region
+
+-   Bars by population category using `position="dodge"`
+-   Change colors from the default. Color by region using `scale_fill_brewer` see [this](http://rstudio-pubs-static.s3.amazonaws.com/5312_98fc1aba2d5740dd849a5ab797cc2c8d.html)
+-   Create nice labels on the axes and add a title
+-   Describe what you observe in the graph
+
+```{r warning=FALSE, message=FALSE, eval = EVAL, echo = ECHO}
+### Your code here
+```
+
+### 6. Use `stat_summary` to examine mean vaccination rate and death rate by region with standard deviation error bars
+
+-   Use `fun.data="mean_sdl"` in `stat_summary`. Look up what `mean_sdl` does.
+-   Add another layer of `stats_summary` but change the geom to `"errorbar"` (see the help).
+-   Describe the graph and what you observe
+
+```{r, eval = EVAL, echo = ECHO}
+### Your code here
+```
+
+-   Vaccination rates are ...
+-   Death rates are...
+
+### 7. Make a map showing the spatial trend in COVID deaths in the US
+
+-   Use `geom_polygon` and `map_data`. Modify the given code.
+-   Merge the `map_data` data.frame with your COVID data.frame to add in the COVID data to the map data. Hint: use `left_join`.
+-   Use a color palette with custom colors
+-   Make sure that your legend is labelled correctly.
+-   Add a * or other label for the top 10 states in highest death rate.
+-   Make sure that the aspect ratio is appropriate
+-   Describe your observations
+
+```{r, eval = EVAL, echo = ECHO}
+us_map <- map_data("state")
+ggplot(data = us_map, aes(x = long, y = lat, fill = region)) + geom_polygon(color = "white") 
+
+### Your code here
+```
+
+-   Describe the trend in COVID death rates across the US
+
+### 8. Use a ggplot extension
+
+-   Pick an extension (except `cowplot`) from [here](https://exts.ggplot2.tidyverse.org/gallery/) and make a plot of your choice using the COVID data
+-   You might want to try examples that come with the extension first (e.g. `ggtech`, `gganimate`, `ggforce`)
