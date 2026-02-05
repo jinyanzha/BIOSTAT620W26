@@ -61,7 +61,7 @@ if (!file.exists("covid_processed.csv"))
 -   Since states have different population sizes, make sure that you are working with population-normalized rates (e.g. units cases per 100,000 population). Transform the following variables accordingly: `cases`, `hosp`, `booster`, `series`, `deaths`. 
 -   Use the `ymd` function from the `lubridate` to convert the date variable to a Date object. This is easier to work with for arithmetic and plotting.
 -   Compute the mean by state of the normalized variables above. We recommend creating a new data.frame with the state-averaged data. Keep any other relevant variables from the original data (e.g. population, region etc).
--   Create a binary categorical variable for population.
+-   Create a logical variable for low vs high population.
 -   Make sure that region is a factor
 
 ```{r, eval = EVAL, echo = ECHO}
@@ -139,3 +139,7 @@ ggplot(data = us_map, aes(x = long, y = lat, fill = region)) + geom_polygon(colo
 
 -   Pick an extension (except `cowplot`) from [here](https://exts.ggplot2.tidyverse.org/gallery/) and make a plot of your choice using the COVID data
 -   You might want to try examples that come with the extension first (e.g. `ggtech`, `gganimate`, `ggforce`)
+
+### 9. Submission (due Tuesday, Feb 10 at 8:30am)
+
+Submit through the course [Github issues page](https://github.com/dmcable/BIOSTAT620W26/issues/3).
