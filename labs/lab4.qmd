@@ -82,7 +82,7 @@ You saw how to use `geom_boxplot` in class. Try using `geom_violin` instead (tak
 
 ### 4. Use `geom_point` with `stat_smooth` to examine the association between time and case rates by region
 
--   Filter the data over time to two weeks after the first date in the dataset
+-   Filter out the data to exclude the first two weeks in the dataset
 -   Color points by region
 -   Fit a function with `stat_smooth` by region. Does `method=lm` or the default method work better?
 -   For the default `stat_smooth`, play around with the `span` parameter to get a smooth that fits the data better without being too noisy.
