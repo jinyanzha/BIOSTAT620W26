@@ -4,7 +4,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Week\nDate\nTopic\nSlides\nLab\nAssignment Release (not due)\n\n\n\n\n0\n1/8\nSyllabus and Introduction\nSlides\n\n\n\n\n1\n1/13-15\nIntroduction to Data Science and R\nSlides\nLab\n\n\n\n2\n1/20-22\nVersion Control & Reproducible Research\nSlides\nLab\n\n\n\n3\n1/27-29\nExploratory data analysis\nSlides\nLab\nHW1\n\n\n4\n2/3-5\nData visualization\nSlides\nLab\n\n\n\n5\n2/10-12\nData Cleaning and Wrangling\n\nLab 5\nHW2\n\n\n6\n2/17-19\nText Mining & Sentiment Analysis\n\nLab 6\nMidterm Project\n\n\n7\n2/24-26\nScraping, APIs, and Regular Expressions\n\nLab 7\n\n\n\n\n3/3-5\nNO CLASS - SPRING RECESS\n\n\n\n\n\n8\n3/10-12\nEfficiency and High Performance Computing\n\nLab 8\nHW3\n\n\n9\n3/17-19\nSQL and Managing Big Data\n\nLab 9\nFinal Project\n\n\n10\n3/24-26\nInteractive Visualization\n\nLab 10\nHW4\n\n\n11\n3/31-4/2\nBuilding a Website with Quarto and GitHub\n\nLab 11\n\n\n\n12\n4/7-9\nSpecial Topics\n\nFinal Project Workshop\n\n\n\n13\n4/14-16\nSpecial Topics\n\n\n\n\n\n14\n4/21 (NO CLASS ON 4/23)\nFinal Project Presentations"
+    "text": "Week\nDate\nTopic\nSlides\nLab\nAssignment Release (not due)\n\n\n\n\n0\n1/8\nSyllabus and Introduction\nSlides\n\n\n\n\n1\n1/13-15\nIntroduction to Data Science and R\nSlides\nLab\n\n\n\n2\n1/20-22\nVersion Control & Reproducible Research\nSlides\nLab\n\n\n\n3\n1/27-29\nExploratory data analysis\nSlides\nLab\nHW1\n\n\n4\n2/3-5\nData visualization\nSlides\nLab\n\n\n\n5\n2/10-12\nData Cleaning and Wrangling\nSlides\nLab 5\nHW2\n\n\n6\n2/17-19\nText Mining & Sentiment Analysis\n\nLab 6\nMidterm Project\n\n\n7\n2/24-26\nScraping, APIs, and Regular Expressions\n\nLab 7\n\n\n\n\n3/3-5\nNO CLASS - SPRING RECESS\n\n\n\n\n\n8\n3/10-12\nEfficiency and High Performance Computing\n\nLab 8\nHW3\n\n\n9\n3/17-19\nSQL and Managing Big Data\n\nLab 9\nFinal Project\n\n\n10\n3/24-26\nInteractive Visualization\n\nLab 10\nHW4\n\n\n11\n3/31-4/2\nBuilding a Website with Quarto and GitHub\n\nLab 11\n\n\n\n12\n4/7-9\nSpecial Topics\n\nFinal Project Workshop\n\n\n\n13\n4/14-16\nSpecial Topics\n\n\n\n\n\n14\n4/21 (NO CLASS ON 4/23)\nFinal Project Presentations"
   },
   {
     "objectID": "syllabus.html",
@@ -1057,123 +1057,487 @@
     "text": "R + RStudio"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "BIOSTAT 620",
+    "objectID": "slides/week05.html#todays-goals",
+    "href": "slides/week05.html#todays-goals",
+    "title": "Week 5: Data Wrangling",
+    "section": "Today’s goals",
+    "text": "Today’s goals\nWe will learn about how to manipulate data, and in particular,\n\nTransforming data\nSelecting variables.\nFiltering data.\nCreating variables.\nSummarize data.\n\nThroughout the session we will see examples using:\n\ndata.table in R,\ndtplyr in R, and\npydatatable\n\nAll with a fertility dataset and the MET dataset."
+  },
+  {
+    "objectID": "slides/week05.html#disclaimer",
+    "href": "slides/week05.html#disclaimer",
+    "title": "Week 5: Data Wrangling",
+    "section": "Disclaimer",
+    "text": "Disclaimer\nThere’s a lot of information in these slides! While tidyverse, the data.table package and Python all have a lot of useful functionality, we recommend sticking to the base R and tidyverse tools presented here. Slides covering material outside this scope will be marked with an asterisk (*); you should be cautious about using code from those slides!"
+  },
+  {
+    "objectID": "slides/week05.html#tidying-data",
+    "href": "slides/week05.html#tidying-data",
+    "title": "Week 5: Data Wrangling",
+    "section": "Tidying data",
+    "text": "Tidying data\n\nWe will work with a wide format dataset as an example:\n\n\nlibrary(tidyverse) \nlibrary(dslabs)\nlibrary(R.utils)\npath &lt;- system.file(\"extdata\", package = \"dslabs\")\nfilename &lt;- file.path(path, \"fertility-two-countries-example.csv\")\nwide_data &lt;- read_csv(filename)\nselect(wide_data, 1:10)\n\n# A tibble: 2 × 10\n  country     `1960` `1961` `1962` `1963` `1964` `1965` `1966` `1967` `1968`\n  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 Germany       2.41   2.44   2.47   2.49   2.49   2.48   2.44   2.37   2.28\n2 South Korea   6.16   5.99   5.79   5.57   5.36   5.16   4.99   4.85   4.73"
+  },
+  {
+    "objectID": "slides/week05.html#pivot_longer",
+    "href": "slides/week05.html#pivot_longer",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_longer",
+    "text": "pivot_longer\n\nOne of the most used functions in tidyr is pivot_longer.\nThe first argument is a data frame, the one that will be converted.\nWe want to reshape rows represents a fertility observation.\nWe need three columns to store the year, country, and the observed value."
+  },
+  {
+    "objectID": "slides/week05.html#pivot_longer-1",
+    "href": "slides/week05.html#pivot_longer-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_longer",
+    "text": "pivot_longer\n\nIn its current form, data from different years are in different columns with the year values stored in the column names.\nThe names_to and values_to argument tell pivot_longer the column names we want to assign to the columns containing the current column names and observations, respectively.\nThe default names are name and value, in our case a better choice is year and fertility."
+  },
+  {
+    "objectID": "slides/week05.html#pivot_longer-2",
+    "href": "slides/week05.html#pivot_longer-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_longer",
+    "text": "pivot_longer\n\nThrough cols, the second argument, we specify the columns containing observed values; these are the columns that will be pivoted.\nThe default is to pivot all columns so, in most cases, we have to specify the columns. In our example we want columns 1960, 1961 up to 2015."
+  },
+  {
+    "objectID": "slides/week05.html#pivot_longer-3",
+    "href": "slides/week05.html#pivot_longer-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_longer",
+    "text": "pivot_longer\nThe code to pivot the fertility data therefore looks like this:\n\nnew_tidy_data &lt;- wide_data |&gt;\n  pivot_longer(`1960`:`2015`, names_to = \"year\", values_to = \"fertility\")\nhead(new_tidy_data)\n\n# A tibble: 6 × 3\n  country year  fertility\n  &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;\n1 Germany 1960       2.41\n2 Germany 1961       2.44\n3 Germany 1962       2.47\n4 Germany 1963       2.49\n5 Germany 1964       2.49\n6 Germany 1965       2.48\n\n\n\nData have been converted to tidy format with columns year and fertility."
+  },
+  {
+    "objectID": "slides/week05.html#pivot_longer-4",
+    "href": "slides/week05.html#pivot_longer-4",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_longer",
+    "text": "pivot_longer\n\nA quicker way to write this code is to specify which column will not include in the pivot:\n\n\nnew_tidy_data &lt;- wide_data |&gt;\n  pivot_longer(-country, names_to = \"year\", values_to = \"fertility\")"
+  },
+  {
+    "objectID": "slides/week05.html#pivot_longer-5",
+    "href": "slides/week05.html#pivot_longer-5",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_longer",
+    "text": "pivot_longer\n\nNow that the data is tidy, we can use it with other tidyverse functions, such ggplot2:\n\n\nnew_tidy_data |&gt; \n  mutate(year = as.numeric(year)) |&gt;\n  ggplot(aes(year, fertility, color = country)) + \n  geom_line()"
+  },
+  {
+    "objectID": "slides/week05.html#pivot_wider",
+    "href": "slides/week05.html#pivot_wider",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_wider",
+    "text": "pivot_wider\n\nIt is sometimes useful for data wrangling purposes to convert tidy data into wide data.\nWe often use this as an intermediate step in tidying up data.\nThe pivot_wider function is basically the inverse of pivot_longer."
+  },
+  {
+    "objectID": "slides/week05.html#pivot_wider-1",
+    "href": "slides/week05.html#pivot_wider-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_wider",
+    "text": "pivot_wider\n\nThe first argument is for the data, but since we are using the pipe, we don’t show it.\nThe names_from argument tells pivot_wider which variable will be used as the column names.\nThe values_from argument specifies which variable to use to fill out the cells."
+  },
+  {
+    "objectID": "slides/week05.html#pivot_wider-2",
+    "href": "slides/week05.html#pivot_wider-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "pivot_wider",
+    "text": "pivot_wider\nHere is some example code\n\nnew_wide_data &lt;- new_tidy_data |&gt; \n  pivot_wider(names_from = year, values_from = fertility)\nselect(new_wide_data, country, `1960`:`1967`)\n\n# A tibble: 2 × 9\n  country     `1960` `1961` `1962` `1963` `1964` `1965` `1966` `1967`\n  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 Germany       2.41   2.44   2.47   2.49   2.49   2.48   2.44   2.37\n2 South Korea   6.16   5.99   5.79   5.57   5.36   5.16   4.99   4.85\n\n\nSimilar to pivot_wider, names_from and values_from default to name and value."
+  },
+  {
+    "objectID": "slides/week05.html#example",
+    "href": "slides/week05.html#example",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\nWe now demonstrate with a more complex example in which we have to use both pivot_longer and pivot_wider to tidy the data.\n\npath &lt;- system.file(\"extdata\", package = \"dslabs\")\n\nfilename &lt;- \"life-expectancy-and-fertility-two-countries-example.csv\"\nfilename &lt;-  file.path(path, filename)\n\nraw_dat &lt;- read_csv(filename)\nselect(raw_dat, 1:5)\n\n# A tibble: 2 × 5\n  country     `1960_fertility` `1960_life_expectancy` `1961_fertility`\n  &lt;chr&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;            &lt;dbl&gt;\n1 Germany                 2.41                   69.3             2.44\n2 South Korea             6.16                   53.0             5.99\n# ℹ 1 more variable: `1961_life_expectancy` &lt;dbl&gt;"
+  },
+  {
+    "objectID": "slides/week05.html#example-1",
+    "href": "slides/week05.html#example-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\n\nNote that the data is in wide format.\nAlso that this table includes values for two variables, fertility and life expectancy, with the column name encoding which column represents which variable.\nEncoding information in the column names is not recommended but, unfortunately, it is quite common."
+  },
+  {
+    "objectID": "slides/week05.html#example-2",
+    "href": "slides/week05.html#example-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\n\nWe start with the pivot_longer function, but we should no longer use the column name year for the new column since it also contains the variable type.\nWe will call it name, the default, for now:\n\n\nraw_dat |&gt; pivot_longer(-country) |&gt; head()\n\n# A tibble: 6 × 3\n  country name                 value\n  &lt;chr&gt;   &lt;chr&gt;                &lt;dbl&gt;\n1 Germany 1960_fertility        2.41\n2 Germany 1960_life_expectancy 69.3 \n3 Germany 1961_fertility        2.44\n4 Germany 1961_life_expectancy 69.8 \n5 Germany 1962_fertility        2.47\n6 Germany 1962_life_expectancy 70.0"
+  },
+  {
+    "objectID": "slides/week05.html#example-3",
+    "href": "slides/week05.html#example-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\n\nThe result is not exactly what we refer to as tidy since each observation is associated with two, not one, rows.\nWe want to have the values from the two variables, fertility and life expectancy, in two separate columns.\nThe first challenge to achieve this is to separate the name column into the year and the variable type."
+  },
+  {
+    "objectID": "slides/week05.html#example-4",
+    "href": "slides/week05.html#example-4",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\n\nEncoding multiple variables in a column name is such a common problem that the tidyr package includes function to separate these columns into two or more:\n\n\nraw_dat |&gt; \n  pivot_longer(-country) |&gt; \n  separate_wider_delim(name, delim = \"_\",  names = c(\"year\", \"name\"), \n                       too_many = \"merge\") |&gt;\n  head()\n\n# A tibble: 6 × 4\n  country year  name            value\n  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;\n1 Germany 1960  fertility        2.41\n2 Germany 1960  life_expectancy 69.3 \n3 Germany 1961  fertility        2.44\n4 Germany 1961  life_expectancy 69.8 \n5 Germany 1962  fertility        2.47\n6 Germany 1962  life_expectancy 70.0"
+  },
+  {
+    "objectID": "slides/week05.html#example-5",
+    "href": "slides/week05.html#example-5",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\n\nBut we are not done yet.\nWe need to create a column for each variable and change year to a number.\nAs we learned, the pivot_wider function can do this."
+  },
+  {
+    "objectID": "slides/week05.html#example-6",
+    "href": "slides/week05.html#example-6",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\n\ndat &lt;- raw_dat |&gt; \n  pivot_longer(-country) |&gt; \n  separate_wider_delim(name, delim = \"_\", \n                       names = c(\"year\", \"name\"), \n                       too_many = \"merge\") |&gt;\n  pivot_wider() |&gt;\n  mutate(year = as.integer(year))\nhead(dat)\n\n# A tibble: 6 × 4\n  country  year fertility life_expectancy\n  &lt;chr&gt;   &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;\n1 Germany  1960      2.41            69.3\n2 Germany  1961      2.44            69.8\n3 Germany  1962      2.47            70.0\n4 Germany  1963      2.49            70.1\n5 Germany  1964      2.49            70.7\n6 Germany  1965      2.48            70.6"
+  },
+  {
+    "objectID": "slides/week05.html#example-7",
+    "href": "slides/week05.html#example-7",
+    "title": "Week 5: Data Wrangling",
+    "section": "Example",
+    "text": "Example\nThe data is now is now in tidy form and we can use with other packages:\n\np1 &lt;- dat |&gt; ggplot(aes(year, fertility, color = country)) + geom_line(show.legend = FALSE)\np2 &lt;- dat |&gt; ggplot(aes(year, life_expectancy, color = country)) + geom_line()\ngridExtra::grid.arrange(p1, p2, ncol = 2, widths = c(3,4))"
+  },
+  {
+    "objectID": "slides/week05.html#data-wrangling-in-r",
+    "href": "slides/week05.html#data-wrangling-in-r",
+    "title": "Week 5: Data Wrangling",
+    "section": "Data wrangling in R",
+    "text": "Data wrangling in R\nOverall, you will find the following approaches:\n\nbase R: Use only base R functions.\ndplyr: Using “verbs”.\ndata.table: High-performing (ideal for large data)\ndplyr + data.table = dtplyr: High-performing + dplyr verbs.\n\nOther methods involve, for example, using external tools such as Spark, sparkly.\nWe will be focusing on data.table because of this\nTake a look at this very neat cheat sheet here."
+  },
+  {
+    "objectID": "slides/week05.html#selecting-variables-load-the-packages",
+    "href": "slides/week05.html#selecting-variables-load-the-packages",
+    "title": "Week 5: Data Wrangling",
+    "section": "Selecting variables: Load the packages",
+    "text": "Selecting variables: Load the packages\n\nlibrary(data.table)\nlibrary(dtplyr)\nlibrary(dplyr)\nlibrary(ggplot2)\n\nThe dtplyr R package translates dplyr (tidyverse) syntax to data.table, so that we can still use the dplyr verbs while at the same time leveraging the performance of data.table."
+  },
+  {
+    "objectID": "slides/week05.html#loading-the-data",
+    "href": "slides/week05.html#loading-the-data",
+    "title": "Week 5: Data Wrangling",
+    "section": "Loading the data",
+    "text": "Loading the data\nThe data that we will be using is an already processed version of the MET dataset. We can download (and load) the data directly in our session using the following commands:\n\n# Where are we getting the data from\nmet_url &lt;- \"https://github.com/dmcable/BIOSTAT620W26/raw/main/data/met/met_all.gz\"\n\n# Downloading the data to a tempfile (so it is destroyed afterwards)\n# you can replace this with, for example, your own data:\ntmp &lt;- tempfile(pattern = \"met\", fileext = \".gz\")\n# tmp &lt;- \"met.gz\"\n\n# We should be downloading this, ONLY IF this was not downloaded already.\n# otherwise is just a waste of time.\nif (!file.exists(tmp)) {\n  download.file(\n    url      = met_url,\n    destfile = tmp,\n    # method   = \"libcurl\", timeout = 1000 (you may need this option)\n  )\n}\n\nNow we can load the data using the read.csv() or fread() functions."
+  },
+  {
+    "objectID": "slides/week05.html#read-the-data",
+    "href": "slides/week05.html#read-the-data",
+    "title": "Week 5: Data Wrangling",
+    "section": "Read the Data",
+    "text": "Read the Data\nIn R (base)\n\n# Reading the data\ndat &lt;- read.csv(tmp)\nhead(dat)\n\nIn R (data.table)\n\n# Reading the data\ndat &lt;- fread(tmp)\nhead(dat)\ndat &lt;- as.data.frame(dat)\n\nIn Python\n\nimport datatable as dt\ndat = dt.fread(\"met.gz\")\ndat.head(5)\n\nBefore we continue, let’s learn a bit more on data.table and dtplyr"
+  },
+  {
+    "objectID": "slides/week05.html#data.table-and-dtplyr-data-tables-syntax",
+    "href": "slides/week05.html#data.table-and-dtplyr-data-tables-syntax",
+    "title": "Week 5: Data Wrangling",
+    "section": "* data.table and dtplyr: Data Table’s Syntax",
+    "text": "* data.table and dtplyr: Data Table’s Syntax\n\nAs you have seen in previous lectures, in data.table all happens within the square brackets. Here is common way to imagine DT:\n\n\n\nAny time that you see := in j that is “Assignment by reference.” Using = within j only works in some specific cases."
+  },
+  {
+    "objectID": "slides/week05.html#data.table-and-dtplyr-data-tables-syntax-1",
+    "href": "slides/week05.html#data.table-and-dtplyr-data-tables-syntax-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "* data.table and dtplyr: Data Table’s Syntax",
+    "text": "* data.table and dtplyr: Data Table’s Syntax\nOperations applied in j are evaluated within the data, meaning that names work as symbols, e.g.,\n\ndata(\"USArrests\")\nUSArrests_dt &lt;- data.table(USArrests)\n# This returns an error\nUSArrests[, Murder]\n# This works fine\nUSArrests_dt[, Murder]\n\nFurthermore, we can do things like this:\n\nUSArrests_dt[, plot(Murder, UrbanPop)]\n\n\nNULL"
+  },
+  {
+    "objectID": "slides/week05.html#data.table-and-dtplyr-lazy-table",
+    "href": "slides/week05.html#data.table-and-dtplyr-lazy-table",
+    "title": "Week 5: Data Wrangling",
+    "section": "* data.table and dtplyr: Lazy table",
+    "text": "* data.table and dtplyr: Lazy table\n\nThe dtplyr package provides a way to translate dplyr verbs to data.table syntax.\nThe key lies on the function lazy_dt from dtplyr (see ?dtplyr::lazy_dt).\nThis function creates a wrapper that “points” to a data.table object"
+  },
+  {
+    "objectID": "slides/week05.html#data.table-and-dtplyr-lazy-table-cont.",
+    "href": "slides/week05.html#data.table-and-dtplyr-lazy-table-cont.",
+    "title": "Week 5: Data Wrangling",
+    "section": "* data.table and dtplyr: Lazy table (cont.)",
+    "text": "* data.table and dtplyr: Lazy table (cont.)\n\n# Creating a lazy table object\ndat_ldt &lt;- lazy_dt(dat, immutable = FALSE)\n\n# We can use the address() function from data.table\naddress(dat)\naddress(dat_ldt$parent)\n\n\nQuestion: What is the immutable = FALSE option used for?"
+  },
+  {
+    "objectID": "slides/week05.html#selecting-columns",
+    "href": "slides/week05.html#selecting-columns",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Selecting columns",
+    "text": "* Selecting columns\nHow can we select the columns USAFID, lat, and lon, using data.table:\n\ndat[, list(USAFID, lat, lon)]\n# dat[, .(USAFID, lat, lon)]       # Alternative 1\n# dat[, c(\"USAFID\", \"lat\", \"lon\")] # Alternative 2\n\nWhat happens if instead of list() you used c()?"
+  },
+  {
+    "objectID": "slides/week05.html#selecting-columns-cont.-1",
+    "href": "slides/week05.html#selecting-columns-cont.-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Selecting columns (cont. 1)",
+    "text": "Selecting columns (cont. 1)\nUsing base R:\n\nhead(\n  dat[, c('USAFID', 'lat', 'lon')]\n)\n\n  USAFID  lat      lon\n1 690150 34.3 -116.166\n2 690150 34.3 -116.166\n3 690150 34.3 -116.166\n4 690150 34.3 -116.166\n5 690150 34.3 -116.166\n6 690150 34.3 -116.166"
+  },
+  {
+    "objectID": "slides/week05.html#selecting-columns-cont.-2",
+    "href": "slides/week05.html#selecting-columns-cont.-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Selecting columns (cont. 2)",
+    "text": "Selecting columns (cont. 2)\nUsing the dplyr::select verb:\n\ndat |&gt; select(USAFID, lat, lon) |&gt; head()\n\n  USAFID  lat      lon\n1 690150 34.3 -116.166\n2 690150 34.3 -116.166\n3 690150 34.3 -116.166\n4 690150 34.3 -116.166\n5 690150 34.3 -116.166\n6 690150 34.3 -116.166"
+  },
+  {
+    "objectID": "slides/week05.html#selecting-columns-cont.-3",
+    "href": "slides/week05.html#selecting-columns-cont.-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Selecting columns (cont. 3)",
+    "text": "* Selecting columns (cont. 3)\nIn the case of pydatatable\n\ndat[:,[\"USAFID\", \"lat\", \"lon\"]]\n\nWhat happens if instead of [\"USAFID\", \"lat\", \"lon\"] you used {\"USAFID\", \"lat\", \"lon\"} (vector vs set)?"
+  },
+  {
+    "objectID": "slides/week05.html#data-filtering-logical-conditions",
+    "href": "slides/week05.html#data-filtering-logical-conditions",
+    "title": "Week 5: Data Wrangling",
+    "section": "Data filtering: Logical conditions",
+    "text": "Data filtering: Logical conditions\n\nBased on logical operations, e.g. condition 1 [and|or condition2 [and|or ...]]\nNeed to be aware of ordering and grouping of and and or operators.\nFundamental logical operators:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx\ny\nNegate!x\nAndx & y\nOrx | y\nXorxor(x, y)\n\n\n\n\ntrue\ntrue\nfalse\ntrue\ntrue\nfalse\n\n\nfalse\ntrue\ntrue\nfalse\ntrue\ntrue\n\n\ntrue\nfalse\nfalse\nfalse\ntrue\ntrue\n\n\nfalse\nfalse\ntrue\nfalse\nfalse\nfalse\n\n\n\n\n\n\nFundamental relational operators, in R: &lt;, &gt;, &lt;=, &gt;=, ==, !=."
+  },
+  {
+    "objectID": "slides/week05.html#questions-1-how-many-ways-can-you-write-an-xor-operator",
+    "href": "slides/week05.html#questions-1-how-many-ways-can-you-write-an-xor-operator",
+    "title": "Week 5: Data Wrangling",
+    "section": "Questions 1: How many ways can you write an XOR operator?",
+    "text": "Questions 1: How many ways can you write an XOR operator?\nWrite a function that takes two arguments (x,y) and applies the XOR operator element wise. Here you have a template:\nmyxor &lt;- function(x, y) {\n  res &lt;- logical(length(x))\n  for (i in 1:length(x)) {\n    res[i] &lt;- # do something with x[i] and y[i]\n  }\n  return(res)\n}\nOr if vectorized (which would be better)\nmyxor &lt;- function(x, y) {\n  # INSERT YOUR CODE HERE\n}\nHint 1: Remember that negating (x & y) equals (!x | !y).\nHint 2: Logical operators are a distributive, meaning a * (b + c) = (a * b) + (a + c), where * and + are & or |."
+  },
+  {
+    "objectID": "slides/week05.html#or-in-python",
+    "href": "slides/week05.html#or-in-python",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Or in python",
+    "text": "* Or in python\n\n# Loading the libraries\nimport numpy as np\nimport pandas as pa\n\n# Defining the data\nx = [True, True, False, False]\ny = [False, True, True, False]\nans = {\n    'x'   : x,\n    'y'   : y,\n    'and' : np.logical_and(x, y),\n    'or'  : np.logical_or(x, y),\n    'xor' : np.logical_xor(x, y)\n    }\npa.DataFrame(ans)"
+  },
+  {
+    "objectID": "slides/week05.html#or-in-python-bis",
+    "href": "slides/week05.html#or-in-python-bis",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Or in python (bis)",
+    "text": "* Or in python (bis)\n\ndef myxor(x,y):\n    return np.logical_or(\n        np.logical_and(x, np.logical_not(y)),\n        np.logical_and(np.logical_not(x), y)\n    )\n\nans['myxor'] = myxor(x,y)\npa.DataFrame(ans)\n\nWe will now see applications using the met dataset"
+  },
+  {
+    "objectID": "slides/week05.html#filtering-subsetting-the-data",
+    "href": "slides/week05.html#filtering-subsetting-the-data",
+    "title": "Week 5: Data Wrangling",
+    "section": "Filtering (subsetting) the data",
+    "text": "Filtering (subsetting) the data\nSay we need to select records according to some criteria. For example:\n\nFirst day of the month, and\nAbove latitude 40, and\nElevation outside the range 500 and 1,000.\n\nThe logical expressions would be\n\n(day == 1)\n(lat &gt; 40)\n((elev &lt; 500) | (elev &gt; 1000))\n\nRespectively."
+  },
+  {
+    "objectID": "slides/week05.html#data.table",
+    "href": "slides/week05.html#data.table",
+    "title": "Week 5: Data Wrangling",
+    "section": "* data.table",
+    "text": "* data.table\nIn R with data.table:\n\ndat[(day == 1) & (lat &gt; 40) & ((elev &lt; 500) | (elev &gt; 1000))] |&gt;\n  nrow()"
+  },
+  {
+    "objectID": "slides/week05.html#questions-2",
+    "href": "slides/week05.html#questions-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Questions 2",
+    "text": "Questions 2\n\nHow many records have a temperature within 18 and 25?\nSome records have missing values. Count how many records have temp as NA.\nFollowing the previous question, plot a sample of 1,000 pairs of (lat, lon) coordinates for (a) the stations with temp as NA and (b) those with data."
+  },
+  {
+    "objectID": "slides/week05.html#solutions",
+    "href": "slides/week05.html#solutions",
+    "title": "Week 5: Data Wrangling",
+    "section": "Solutions",
+    "text": "Solutions\n\n# Question 1\nnrow(dat[dat$temp &lt; 25 & dat$temp &gt; 18, ])\n# dat[temp %between% c(18, 25), .N] \n# dat |&gt; filter(between(temp, 18, 25)) |&gt; nrow()\n\n# Question 2\nnrow(dat[is.na(dat$temp), ])\n# more succinct: sum(is.na(dat$temp))\n\n[1] 968136\n[1] 60089"
+  },
+  {
+    "objectID": "slides/week05.html#solutions-cont.",
+    "href": "slides/week05.html#solutions-cont.",
+    "title": "Week 5: Data Wrangling",
+    "section": "Solutions (cont.)",
+    "text": "Solutions (cont.)\n\n# Question 3\n# Drawing a sample\nset.seed(123)\nidx1 &lt;- sample(which(is.na(dat$temp)), 1000)\nidx2 &lt;- sample(which(!is.na(dat$temp)), 1000)\n\n# Visualizing the data\n# make a map of the US, as we did last class\nggplot(map_data(\"state\"), aes(x = long, y = lat)) +\n  geom_map(aes(map_id = region), map = map_data(\"state\"), col = \"lightgrey\", fill = \"gray\") +\n  geom_jitter(\n    data    = dat[c(idx1, idx2), ],\n    mapping = aes(x = lon, y = lat, col = is.na(temp)),\n    inherit.aes = FALSE, alpha = .5, cex = 2\n    )"
+  },
+  {
+    "objectID": "slides/week05.html#creating-variables-data-types",
+    "href": "slides/week05.html#creating-variables-data-types",
+    "title": "Week 5: Data Wrangling",
+    "section": "Creating variables: Data types",
+    "text": "Creating variables: Data types\n\nlogical: Bool true/false type, e.g. dead/alive, sick/healthy, good/bad, yes/no, etc.\nstrings: string of characters (letters/symbols), e.g. names, text, etc.\ninteger: Numeric variable with no decimal (discrete), e.g. age, days, counts, etc.\ndouble: Numeric variable with decimals (continuous), e.g. distance, expression level, time.\n\nIn C (and other languages), strings, integers, and doubles may be specified with size, e.g. in python integers can be of 9, 16, and 32 bits. This is relevant when managing large datasets, where saving space can be fundamental (more info)."
+  },
+  {
+    "objectID": "slides/week05.html#creating-variables-special-data-types",
+    "href": "slides/week05.html#creating-variables-special-data-types",
+    "title": "Week 5: Data Wrangling",
+    "section": "Creating variables: Special data types",
+    "text": "Creating variables: Special data types\nMost programming languages have special types which are built using basic types. A few examples:\n\ntime: Could be date, date + time, or a combination of both. Usually it has a reference number defined as date 0. In R, the Date class has as reference 1970-01-01, in other words, “days since January 1st, 1970”.\ncategorical: Commonly used to represent strata/levels of variables, e.g. a variable “country” could be represented as a factor, where the data is stored as numbers but has a label.\nordinal: Similar to factor, but it has ordering, e.g. “satisfaction level: 5 very satisfied, …, 1 very unsatisfied”.\n\nOther special data types could be ways to represent missings (usually described as na or NA), or special numeric types, e.g. +-Inf and Undefined (NaN).\nWhen storing/sharing datasets, it is a good practice to do it along a dictionary describing each column data type/format."
+  },
+  {
+    "objectID": "slides/week05.html#questions-3-whats-the-best-way-to-represent-the-following",
+    "href": "slides/week05.html#questions-3-whats-the-best-way-to-represent-the-following",
+    "title": "Week 5: Data Wrangling",
+    "section": "Questions 3: What’s the best way to represent the following",
+    "text": "Questions 3: What’s the best way to represent the following\n\n0, 1, 1, 0, 0, 1\nDiabetes type 1, Diabetes type 2, Diabetes type 1, Diabetes type 2\non, off, off, on, on, on\n5, 10, 1, 15, 0, 0, 1\n1.0, 2.0, 10.0, 6.0\nhigh, low, medium, medium, high\n-1, 1, -1, -1, 1,\n.2, 1.5, .8, \\(\\pi\\)\n\\(\\pi\\), \\(\\exp{1}\\), \\(\\pi\\), \\(\\pi\\)"
+  },
+  {
+    "objectID": "slides/week05.html#variable-creation",
+    "href": "slides/week05.html#variable-creation",
+    "title": "Week 5: Data Wrangling",
+    "section": "Variable creation",
+    "text": "Variable creation\nIf we wanted to create two variables, elev^2 and the scaled version of wind.sp by it’s standard error, we could do the following\n\ndat$elev2 &lt;- dat$elev^2\ndat$windsp_scaled &lt;- dat$wind.sp / sd(dat$wind.sp, na.rm = TRUE)"
+  },
+  {
+    "objectID": "slides/week05.html#variable-creation-cont.-1",
+    "href": "slides/week05.html#variable-creation-cont.-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Variable creation (cont. 1)",
+    "text": "Variable creation (cont. 1)\nWith the verb dplyr::mutate():\n\ndat |&gt;\n  mutate(\n    elev2         = elev ^ 2,\n    windsp_scaled = wind.sp / sd(wind.sp,na.rm=TRUE)\n  ) |&gt;\n  head()\n\n  USAFID  WBAN year month day hour min  lat      lon elev wind.sp temp\n1 690150 93121 2019     8   1    0  56 34.3 -116.166  696     5.7 37.2\n2 690150 93121 2019     8   1    1  56 34.3 -116.166  696     8.2 35.6\n3 690150 93121 2019     8   1    2  56 34.3 -116.166  696     6.7 34.4\n4 690150 93121 2019     8   1    3  56 34.3 -116.166  696     5.1 33.3\n5 690150 93121 2019     8   1    4  56 34.3 -116.166  696     2.1 32.8\n6 690150 93121 2019     8   1    5  56 34.3 -116.166  696     0.0 31.1\n  atm.press  elev2 windsp_scaled\n1    1009.9 484416      2.654379\n2    1010.3 484416      3.818580\n3    1010.6 484416      3.120059\n4    1011.6 484416      2.374970\n5    1012.7 484416      0.977929\n6    1012.7 484416      0.000000"
+  },
+  {
+    "objectID": "slides/week05.html#variable-creation-cont.-2",
+    "href": "slides/week05.html#variable-creation-cont.-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Variable creation (cont. 2)",
+    "text": "Variable creation (cont. 2)\nImagine that we needed to scale multiple variables by their SD and didn’t want to copy-paste this code several times. Here’s how we could do it automatically for a given list of variable names:\n\n# Listing the names\nnames  &lt;- c(\"wind.sp\", \"temp\", \"atm.press\")\n\nfor(var in names){\n  dat[,paste0(var,'_scaled')] &lt;- dat[,var] / sd(dat[,var], na.rm = TRUE)\n}\n\nWhy can’t we use dat$var inside the loop?"
+  },
+  {
+    "objectID": "slides/week05.html#or-with-data.table",
+    "href": "slides/week05.html#or-with-data.table",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Or with data.table",
+    "text": "* Or with data.table\n\nin_names  &lt;- c(\"wind.sp\", \"temp\", \"atm.press\")\nout_names &lt;- paste0(in_names, \"_scaled\")\ndat[,\n    c(out_names) := lapply(.SD, function(x) x/sd(x, na.rm = TRUE)), \n    .SDcols = in_names\n    ]\n\n# Looking at the first 6\nhead(dat[, .SD, .SDcols = out_names], n = 4)\n\nKey things to notice here: c(out_names), .SD, and .SDCols."
+  },
+  {
+    "objectID": "slides/week05.html#variable-creation-cont.-3",
+    "href": "slides/week05.html#variable-creation-cont.-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "Variable creation (cont. 3)",
+    "text": "Variable creation (cont. 3)\nIn the case of dplyr, we could use the following\n\nnames  &lt;- c(\"wind.sp\", \"temp\", \"atm.press\")\ndat |&gt;\n  mutate(\n    across(\n      all_of(names),\n      function(x) x/sd(x, na.rm = TRUE),\n      .names = \"{col}_scaled2\"\n      )\n  ) |&gt;\n  # Just to print the last columns\n  select(ends_with(\"_scaled2\")) |&gt;\n  head(n = 4)\n\n  wind.sp_scaled2 temp_scaled2 atm.press_scaled2\n1        2.654379     6.139348          248.7889\n2        3.818580     5.875290          248.8874\n3        3.120059     5.677247          248.9613\n4        2.374970     5.495707          249.2077"
+  },
+  {
+    "objectID": "slides/week05.html#complex-variable-creation",
+    "href": "slides/week05.html#complex-variable-creation",
+    "title": "Week 5: Data Wrangling",
+    "section": "Complex variable creation",
+    "text": "Complex variable creation\nDon’t forget about loops! for loops and sapply may be slow on a dataset of this size, but they can be quite handy for creating variables that rely on complicated relationships between variables. Consider this a “brute force” approach. Vectorized methods will always be faster, but these can be easier to conceptualize and, in rare cases, may be the only option.\nConsider the problem creating a weird variable: wind.temp. This will take on 4 possible values, based on the temperature and wind speed: cool & still, cool & windy, warm & still, or warm & windy. We will split each variable based on their median value. Note that this code is too slow to actually run on this large dataset."
+  },
+  {
+    "objectID": "slides/week05.html#complex-variable-creation-cont-1",
+    "href": "slides/week05.html#complex-variable-creation-cont-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Complex variable creation (cont 1)",
+    "text": "Complex variable creation (cont 1)\nHere’s how we would do that with the sapply function (and a custom, unnamed function):\n\n# create the new variable one entry at a time\nwind.temp &lt;- sapply(1:nrow(dat), function(i){\n  if(is.na(dat$temp[i]) | is.na(dat$wind.sp[i])){\n    return(NA)\n  }\n  if(dat$temp[i] &lt;= median(dat$temp, na.rm=TRUE)){\n    if(dat$wind.sp[i] &lt;= median(dat$wind.sp, na.rm=TRUE)){\n      return('cool & still')\n    }else{\n      return('cool & windy')\n    }\n  }else{\n    if(dat$wind.sp[i] &lt;= median(dat$wind.sp, na.rm=TRUE)){\n      return('warm & still')\n    }else{\n      return('warm & windy')\n    }\n  }\n})\n\nCheck: what would we need to change to add this variable to our dataset?"
+  },
+  {
+    "objectID": "slides/week05.html#complex-variable-creation-cont-2",
+    "href": "slides/week05.html#complex-variable-creation-cont-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Complex variable creation (cont 2)",
+    "text": "Complex variable creation (cont 2)\nHere’s the code for doing that with a for loop:\n\n# initialize a variable of all missing values\nwind.temp &lt;- rep(NA, nrow(dat))\n# fill in the values one at a time\nfor(i in 1:nrow(dat)){\n  if(is.na(dat$temp[i]) | is.na(dat$wind.sp[i])){\n    return(NA)\n  }else{\n    if(dat$temp[i] &lt;= median(dat$temp, na.rm=TRUE)){\n      if(dat$wind.sp[i] &lt;= median(dat$wind.sp, na.rm=TRUE)){\n        wind.temp[i] &lt;- 'cool & still'\n      }else{\n        wind.temp[i] &lt;- 'cool & windy'\n      }\n    }else{\n      if(dat$wind.sp[i] &lt;= median(dat$wind.sp, na.rm=TRUE)){\n        wind.temp[i] &lt;- 'warm & still'\n      }else{\n        wind.temp[i] &lt;- 'warm & windy'\n      }\n    }\n  }\n}\n\nCheck: why do we need to include na.rm=TRUE when calculating the medians?"
+  },
+  {
+    "objectID": "slides/week05.html#complex-variable-creation-cont-3",
+    "href": "slides/week05.html#complex-variable-creation-cont-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "Complex variable creation (cont 3)",
+    "text": "Complex variable creation (cont 3)\nHere’s a simple vectorized approach that will actually run on a large dataset. This works for our current case, but it’s still a brute force approach, because we had to specifically assign every possible value of our new variable. You can imagine that as the number of possible values increases, this code will get increasingly cumbersome.\n\n# initialize a variable of all missing values\nwind.temp &lt;- rep(NA, nrow(dat))\n# assign every possible value by subsetting\nwind.temp[dat$temp &lt;= median(dat$temp, na.rm=TRUE) & \n            dat$wind.sp &lt;= median(dat$wind.sp, na.rm=TRUE)] &lt;- 'cool & still'\nwind.temp[dat$temp &lt;= median(dat$temp, na.rm=TRUE) & \n            dat$wind.sp &gt; median(dat$wind.sp, na.rm=TRUE)] &lt;- 'cool & windy'\nwind.temp[dat$temp &gt; median(dat$temp, na.rm=TRUE) & \n            dat$wind.sp &lt;= median(dat$wind.sp, na.rm=TRUE)] &lt;- 'warm & still'\nwind.temp[dat$temp &gt; median(dat$temp, na.rm=TRUE) & \n            dat$wind.sp &gt; median(dat$wind.sp, na.rm=TRUE)] &lt;- 'warm & windy'\n\nhead(wind.temp)\n\n[1] \"warm & windy\" \"warm & windy\" \"warm & windy\" \"warm & windy\" \"warm & still\"\n[6] \"warm & still\""
+  },
+  {
+    "objectID": "slides/week05.html#merging-data",
+    "href": "slides/week05.html#merging-data",
+    "title": "Week 5: Data Wrangling",
+    "section": "Merging data",
+    "text": "Merging data\n\nWhile building the MET dataset, we dropped the State data.\nWe can use the original Stations dataset and merge it to the MET dataset.\nBut we cannot do it right away. We need to process the data somewhat first."
+  },
+  {
+    "objectID": "slides/week05.html#merging-data-cont.-1",
+    "href": "slides/week05.html#merging-data-cont.-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Merging data (cont. 1)",
+    "text": "Merging data (cont. 1)\n\nstations &lt;- fread(\"https://noaa-isd-pds.s3.amazonaws.com/isd-history.csv\")\nstations &lt;- as.data.frame(stations)\nstations$USAF &lt;- as.integer(stations$USAF)\n\n# Dealing with NAs and 999999\nstations$USAF[stations$USAF == 999999] &lt;- NA\nstations$CTRY[stations$CTRY == \"\"] &lt;- NA\nstations$STATE[stations$STATE == \"\"] &lt;- NA\n\n# Selecting the three relevant columns, and keep unique records\nstations &lt;- unique(stations[, c('USAF', 'CTRY', 'STATE')])\n\n# Dropping NAs\nstations &lt;- stations[!is.na(stations$USAF), ]\n\nhead(stations, n = 4)\n\n  USAF CTRY STATE\n1 7018 &lt;NA&gt;  &lt;NA&gt;\n2 7026   AF  &lt;NA&gt;\n3 7070   AF  &lt;NA&gt;\n4 8260 &lt;NA&gt;  &lt;NA&gt;"
+  },
+  {
+    "objectID": "slides/week05.html#merging-data-cont.-2",
+    "href": "slides/week05.html#merging-data-cont.-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Merging data (cont. 2)",
+    "text": "Merging data (cont. 2)\n\nmerge(\n  # Data\n  x     = dat,      \n  y     = stations, \n  # List of variables to match\n  by.x  = \"USAFID\",\n  by.y  = \"USAF\", \n  # Which obs to keep?\n  all.x = TRUE,      \n  all.y = FALSE\n  ) |&gt; nrow()\n\n[1] 2385443\n\n\nThis is more rows! The original dataset, dat, has 2377343. This means that the stations dataset has duplicated IDs. We can fix this:\n\nstations &lt;- stations[!duplicated(stations$USAF), ]"
+  },
+  {
+    "objectID": "slides/week05.html#merging-data-cont.-3",
+    "href": "slides/week05.html#merging-data-cont.-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "Merging data (cont. 3)",
+    "text": "Merging data (cont. 3)\nWe now can use the function merge() to add the extra data\n\ndat &lt;- merge(\n  # Data\n  x     = dat,      \n  y     = stations, \n  # List of variables to match\n  by.x  = \"USAFID\",\n  by.y  = \"USAF\", \n  # Which obs to keep?\n  all.x = TRUE,      \n  all.y = FALSE\n  )\n\nhead(dat[, c('USAFID', 'WBAN', 'STATE')], n = 4)\n\n  USAFID  WBAN STATE\n1 690150 93121    CA\n2 690150 93121    CA\n3 690150 93121    CA\n4 690150 93121    CA\n\n\nWhat happens when you change the options all.x and all.y?"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-adding-grouped-variables",
+    "href": "slides/week05.html#aggregating-data-adding-grouped-variables",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Aggregating data: Adding grouped variables",
+    "text": "* Aggregating data: Adding grouped variables\n\nMany times we need to either impute some data, or generate variables by strata.\nIf we, for example, wanted to impute missing temperature with the daily state average, we could use by together with the data.table::fcoalesce() function:\n\n\ndat[, temp_imp := fcoalesce(temp, mean(temp, na.rm = TRUE)),\n  by = .(STATE, year, month, day)]"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-adding-grouped-variables-1",
+    "href": "slides/week05.html#aggregating-data-adding-grouped-variables-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Aggregating data: Adding grouped variables",
+    "text": "Aggregating data: Adding grouped variables\n\nIn the case of dplyr, we can do the following using dplyr::group_by() together with dplyr::coalesce():\n\n\ndat &lt;- dat |&gt;\n  group_by(STATE, year, month, day) |&gt;\n  mutate(\n    temp_imp = coalesce(temp, mean(temp, na.rm = TRUE))\n    )"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-1",
+    "href": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "Aggregating data: Adding grouped variables (cont. 1)",
+    "text": "Aggregating data: Adding grouped variables (cont. 1)\nLet’s see how it looks:\n\n# Preparing for plotting\n# select single station, sort by date\nplotdata &lt;- dat[dat$USAFID == 720172, ]\nplotdata &lt;- plotdata[order(plotdata$year, plotdata$month, plotdata$day, plotdata$hour, plotdata$min), ]\n# Generate an 'x' variable for time\nplotdata$id &lt;- 1:nrow(plotdata)\n\n\nplot(plotdata$id, plotdata$temp, pch=16)\nlines(plotdata$id, plotdata$temp_imp, col=2)"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-2",
+    "href": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Aggregating data: Adding grouped variables (cont. 2)",
+    "text": "Aggregating data: Adding grouped variables (cont. 2)\n\nplotdata |&gt;\n  ggplot(aes(x = id)) +\n  geom_point(aes(y = temp)) +\n  geom_line(aes(y = temp_imp, colour = 'red'))"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-3",
+    "href": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-3",
+    "title": "Week 5: Data Wrangling",
+    "section": "Aggregating data: Adding grouped variables (cont. 3)",
+    "text": "Aggregating data: Adding grouped variables (cont. 3)\nNote that when you use group_by(), your data stays grouped.\n\nhead(dat)\n\n# A tibble: 6 × 21\n# Groups:   STATE, year, month, day [1]\n  USAFID  WBAN  year month   day  hour   min   lat   lon  elev wind.sp  temp\n   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 690150 93121  2019     8     1     0    56  34.3 -116.   696     5.7  37.2\n2 690150 93121  2019     8     1     1    56  34.3 -116.   696     8.2  35.6\n3 690150 93121  2019     8     1     2    56  34.3 -116.   696     6.7  34.4\n4 690150 93121  2019     8     1     3    56  34.3 -116.   696     5.1  33.3\n5 690150 93121  2019     8     1     4    56  34.3 -116.   696     2.1  32.8\n6 690150 93121  2019     8     1     5    56  34.3 -116.   696     0    31.1\n# ℹ 9 more variables: atm.press &lt;dbl&gt;, elev2 &lt;dbl&gt;, windsp_scaled &lt;dbl&gt;,\n#   wind.sp_scaled &lt;dbl&gt;, temp_scaled &lt;dbl&gt;, atm.press_scaled &lt;dbl&gt;,\n#   CTRY &lt;chr&gt;, STATE &lt;chr&gt;, temp_imp &lt;dbl&gt;\n\n\nThis can cause headaches downstream if you don’t remember that your data is grouped."
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-4",
+    "href": "slides/week05.html#aggregating-data-adding-grouped-variables-cont.-4",
+    "title": "Week 5: Data Wrangling",
+    "section": "Aggregating data: Adding grouped variables (cont. 4)",
+    "text": "Aggregating data: Adding grouped variables (cont. 4)\nYou can undo the grouping with dplyr::ungroup():\n\ndat &lt;- ungroup(dat)\nhead(dat)\n\n# A tibble: 6 × 21\n  USAFID  WBAN  year month   day  hour   min   lat   lon  elev wind.sp  temp\n   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 690150 93121  2019     8     1     0    56  34.3 -116.   696     5.7  37.2\n2 690150 93121  2019     8     1     1    56  34.3 -116.   696     8.2  35.6\n3 690150 93121  2019     8     1     2    56  34.3 -116.   696     6.7  34.4\n4 690150 93121  2019     8     1     3    56  34.3 -116.   696     5.1  33.3\n5 690150 93121  2019     8     1     4    56  34.3 -116.   696     2.1  32.8\n6 690150 93121  2019     8     1     5    56  34.3 -116.   696     0    31.1\n# ℹ 9 more variables: atm.press &lt;dbl&gt;, elev2 &lt;dbl&gt;, windsp_scaled &lt;dbl&gt;,\n#   wind.sp_scaled &lt;dbl&gt;, temp_scaled &lt;dbl&gt;, atm.press_scaled &lt;dbl&gt;,\n#   CTRY &lt;chr&gt;, STATE &lt;chr&gt;, temp_imp &lt;dbl&gt;"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-summary-table",
+    "href": "slides/week05.html#aggregating-data-summary-table",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Aggregating data: Summary table",
+    "text": "* Aggregating data: Summary table\n\nUsing by also allow us creating summaries of our data.\nFor example, if we wanted to compute the average temperature, wind-speed, and atmospheric pressure by state, we could do the following\n\n\ndat[, .(\n  temp_avg      = mean(temp, na.rm=TRUE),\n  wind.sp_avg   = mean(wind.sp, na.rm=TRUE),\n  atm.press_avg = mean(atm.press, na.rm = TRUE)\n  ),\n  by = STATE\n  ][order(STATE)] |&gt; head(n = 4)"
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-summary-table-cont.-1",
+    "href": "slides/week05.html#aggregating-data-summary-table-cont.-1",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Aggregating data: Summary table (cont. 1)",
+    "text": "* Aggregating data: Summary table (cont. 1)\nWhen dealing with too many variables, we can use the .SD special symbol in data.table:\n\n# Listing the names\nin_names  &lt;- c(\"wind.sp\", \"temp\", \"atm.press\")\nout_names &lt;- paste0(in_names, \"_avg\")\n\ndat[,\n  setNames(lapply(.SD, mean, na.rm = TRUE), out_names),\n  .SDcols = in_names, keyby   = STATE\n  ] |&gt; head(n = 4)\n\nNotice the keyby option here: “Group by STATE and order by STATE”."
+  },
+  {
+    "objectID": "slides/week05.html#aggregating-data-summary-table-cont.-2",
+    "href": "slides/week05.html#aggregating-data-summary-table-cont.-2",
+    "title": "Week 5: Data Wrangling",
+    "section": "Aggregating data: Summary table (cont. 2)",
+    "text": "Aggregating data: Summary table (cont. 2)\n\nUsing dplyr verbs\n\n\ndat |&gt; \n  group_by(STATE) |&gt;\n  summarise(\n    temp_avg      = mean(temp, na.rm=TRUE),\n    wind.sp_avg   = mean(wind.sp, na.rm=TRUE),\n    atm.press_avg = mean(atm.press, na.rm = TRUE)\n  ) |&gt; \n  arrange(STATE) |&gt; \n  head(n = 4)\n\n# A tibble: 4 × 4\n  STATE temp_avg wind.sp_avg atm.press_avg\n  &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;\n1 AL        26.2        1.57         1016.\n2 AR        26.2        1.84         1015.\n3 AZ        28.8        2.98         1011.\n4 CA        22.4        2.61         1013.\n\n\nNotice the arrange() function."
+  },
+  {
+    "objectID": "slides/week05.html#other-data.table-goodies",
+    "href": "slides/week05.html#other-data.table-goodies",
+    "title": "Week 5: Data Wrangling",
+    "section": "* Other data.table goodies",
+    "text": "* Other data.table goodies\n\nshift() Fast lead/lag for vectors and lists.\nfifelse() Fast if-else, similar to base R’s ifelse().\nfcoalesce() Fast coalescing of missing values.\n%between% A short form of (x &lt; lb) & (x &gt; up)\n%inrange% A short form of x %in% lb:up\n%chin% Fast match of character vectors, equivalent to x %in% X, where both x and X are character vectors.\nnafill() Fill missing values using a constant, last observed value, or the next observed value."
+  },
+  {
+    "objectID": "slides/week05.html#benchmarks",
+    "href": "slides/week05.html#benchmarks",
+    "title": "Week 5: Data Wrangling",
+    "section": "Benchmarks",
+    "text": "Benchmarks\n\nH2O.ai’s benchmark (link): Designed by the lead developer of data.table Matt Dowle\nRStudio’s benchmark (link): Designed as part of the benchmarks with the vroom package."
+  },
+  {
+    "objectID": "assignments/hw1.html",
+    "href": "assignments/hw1.html",
+    "title": "Assignment 1 - Exploratory Data Analysis",
     "section": "",
-    "text": "Term: Winter 2026\nTime: Tuesdays and Thursdays 8:30am - 9:50am\nLocation: SPH I 3755\nCourse GitHub: https://github.com/dmcable/BIOSTAT620W26"
-  },
-  {
-    "objectID": "index.html#introduction-to-health-data-science",
-    "href": "index.html#introduction-to-health-data-science",
-    "title": "BIOSTAT 620",
-    "section": "",
-    "text": "Term: Winter 2026\nTime: Tuesdays and Thursdays 8:30am - 9:50am\nLocation: SPH I 3755\nCourse GitHub: https://github.com/dmcable/BIOSTAT620W26"
-  },
-  {
-    "objectID": "index.html#instructor",
-    "href": "index.html#instructor",
-    "title": "BIOSTAT 620",
-    "section": "Instructor",
-    "text": "Instructor\nDylan Cable\n\nEmail: dmcable@umich.edu\nOffice: SPH I 4635\nOffice Hours: Friday 11am - 12pm"
-  },
-  {
-    "objectID": "labs/lab4.html",
-    "href": "labs/lab4.html",
-    "title": "Lab 4 - Data Visualization",
-    "section": "",
-    "text": "Learning Goals\n\nRead in and prepare the COVID-19 dataset\nCreate several graphs with different geoms() in ggplot2\nCreate a facet graph\nCustomize your plots\nCreate a detailed map\n\n\n\nLab Description\nIn this lab, we will work with the COVID-19 data from the CDC. The data has already been preprocessed.\nThe objective of the lab is to examine the association between weekly average COVID-19 death and vaccination rates in ten regions of the US.\nNote the following variable definitions:\n\nmmwr_year: year (according to the MMWR Calendar)\nmmwr_week: week (according to the MMWR Calendar)\npop: state population\ncases: weekly COVID cases\nhosp: weekly COVID hospitilizations\ndeaths: weekly COVID deaths\nseries: cumulative vaccinated population\nbooster: cumulative boosted population\n\n\n\nSteps\n\n1. Read in the data\nFirst download and then read in with read.csv()\n\nif (!file.exists(\"covid_processed.csv\"))\n  download.file(\n    url = \"https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/covid_processed.csv\",\n    destfile = \"covid_processed.csv\",\n    method   = \"libcurl\",\n    timeout  = 60\n    )\n\n\n\n2. Prepare the data\n\nSince states have different population sizes, make sure that you are working with population-normalized rates (e.g. units cases per 100,000 population). Transform the following variables accordingly: cases, hosp, booster, series, deaths.\nUse the ymd function from the lubridate to convert the date variable to a Date object. This is easier to work with for arithmetic and plotting.\nCompute the mean by state of the normalized variables above. We recommend creating a new data.frame with the state-averaged data. Keep any other relevant variables from the original data (e.g. population, region etc).\nCreate a logical variable for low vs high population.\nMake sure that region is a factor\n\n\n\n3. Use geom_violin to examine the case rates and death rates by region\nYou saw how to use geom_boxplot in class. Try using geom_violin instead (take a look at the help). (hint: you will need to set the x aesthetic to 1)\n\nUse facets\nFill color by region\nDescribe what you observe in the graph\n\n\n\n4. Use geom_point with stat_smooth to examine the association between time and case rates by region\n\nFilter out the data to exclude the first two weeks in the dataset\nColor points by region\nFit a function with stat_smooth by region. Does method=lm or the default method work better?\nFor the default stat_smooth, play around with the span parameter to get a smooth that fits the data better without being too noisy.\nDescribe what you observe in the graph\n\n\n\n5. Use geom_bar to create barplots of the states by population category colored by region\n\nBars by population category using position=\"dodge\"\nChange colors from the default. Color by region using scale_fill_brewer see this\nCreate nice labels on the axes and add a title\nDescribe what you observe in the graph\n\n\n\n6. Use stat_summary to examine mean vaccination rate and death rate by region with standard deviation error bars\n\nUse fun.data=\"mean_sdl\" in stat_summary. Look up what mean_sdl does.\nAdd another layer of stats_summary but change the geom to \"errorbar\" (see the help).\nDescribe the graph and what you observe\n\n\nVaccination rates are …\nDeath rates are…\n\n\n\n7. Make a map showing the spatial trend in COVID deaths in the US\n\nUse geom_polygon and map_data. Modify the given code.\nMerge the map_data data.frame with your COVID data.frame to add in the COVID data to the map data. Hint: use left_join.\nUse a color palette with custom colors\nMake sure that your legend is labelled correctly.\nAdd a * or other label for the top 10 states in highest death rate.\nMake sure that the aspect ratio is appropriate\nDescribe your observations\n\n\nDescribe the trend in COVID death rates across the US\n\n\n\n8. Use a ggplot extension\n\nPick an extension (except cowplot) from here and make a plot of your choice using the COVID data\nYou might want to try examples that come with the extension first (e.g. ggtech, gganimate, ggforce)\n\n\n\n9. Submission (due Tuesday, Feb 10 at 8:30am)\nSubmit through the course Github issues page."
-  },
-  {
-    "objectID": "labs/lab3.html",
-    "href": "labs/lab3.html",
-    "title": "Lab 3 - Exploratory Data Analysis",
-    "section": "",
-    "text": "Learning Goals\n\nRead in and get familiar with the meteorology dataset\n\nStep through the EDA “checklist” presented in the class slides\nPractice making exploratory graphs\n\nAs you do this, think about what questions you would like to ask regarding this data. What would you ask a collaborator who was more familiar with it?\n\n\nLab Description\nWe will work with the meteorological data presented in lecture. Recall the dataset consists of weather station readings in the continental US.\nThe objective of the lab is to find the weather station with the highest elevation and look at patterns in the time series of its wind speed and temperature.\n\n\nSteps\n\n1. Read in the data\nThe data for this lab is available at https://github.com/dmcable/BIOSTAT620W26/tree/main/data/met. There’s some additional information about the dataset, but the main file you’ll need to download is met_all.gz.\nOnce you’ve downloaded the file, you can read it into R with:\n\nmet &lt;- read.csv(\"~/Downloads/met_all.gz\")\n\n\n\n2. Check the dimensions, headers, footers\n\nHow many columns, rows are there?\n\n\n\n3. Take a look at all the variables (hint: use the str function).\n\n\n4. Take a closer look at the key variables (year, day, hour, temp, elev, wind.sp). Hint: use table and/or summary).\nIt looks like the elevation variable has observations with 9999.0, which is probably an indicator for missing. We should take a deeper look at the data dictionary to confirm. The wind speed variable is OK but there are a lot of missing data.\nAfter checking the data we should make the appropriate modifications. Replace elevations with 9999 as NA.\n\nAt what elevation is the highest weather station?\n\nWe also have the issue of the minimum temperature being -40C, so we should remove those observations. Also, remove the NA temperature points.\nAfter removing the -40C points, what is the new lowest temperature? We again notice that there is a -17.2C temperature reading that seems suspicious.\n\n\n5. Check the data against an external data source.\nValidate that the total range of elevations in the data make sense. Also, we should check the suspicious -17.2C temperature value (where is it located?).\nGoogle is your friend here.\nFix any problems that arise in your checks.\n\n\n6. Calculate summary statistics\nRemember to keep the initial question in mind. We want to pick out the weather station with maximum elevation and examine its windspeed and temperature.\nSome ideas: select the weather station with maximum elevation; within this station, look at the correlation between temperature and wind speed. Also, look at the correlation between (temp and wind.sp) and (hour and day) (four total pairwise correlations).\n\n\n7. Exploratory graphs\nWe should look at the distributions of all of the key variables to make sure there are no remaining issues with the data. Hint: using the hist function, make histograms of the elev, temp, and wind.sp variables.\nNote: one thing we should consider for later analyses (not today) is to log transform wind speed and elevation as they are very skewed.\nLook at where the weather station with highest elevation is located. To do so, create a subsetted version of your dataframe with only the highest elevation, and name it elev.\n\nleaflet(elev) %&gt;%\n  addProviderTiles('OpenStreetMap') %&gt;% \n  addCircles(lat=~lat,lng=~lon, opacity=1, fillOpacity=1, radius=100)\n\nLook at the time series of temperature and wind speed at this location. For this we will need to create a date-time variable for the x-axis.\n\nlibrary(lubridate)\nelev$date &lt;- with(elev, ymd_h(paste(year, month, day, hour, sep= ' ')))\nsummary(elev$date)\nelev &lt;- elev[order(elev$date), ]\nhead(elev)\n\nGiven the date-time variable, plot the time series of temperature and also wind speed.\n\nSummarize any trends that you see in these time series plots.\n\n\n\n8. Ask questions\nBy now, you might have some specific questions about how the data was gathered and what some of the different variables and values mean. Alternatively, maybe you have an idea for how some of the variable should be related and you want to explore that relationship. In a real-world analysis, these questions could potentially be answered by a collaborator, who may have been part of the team that collected the data. What questions do you have about the data?\nIf you haven’t already, now would be a good time to look at the accompanying data dictionary for this dataset and see if it can answer any of your questions. If you have questions about the nature of the dataset and how it was gathered, this might be able to help.\nFor questions about variables in the dataset or relationships between them, try making some more exploratory plots. Do you see the patterns you would expect? There are many different types of summaries and visualization strategies that we have not discussed, but which could provide interesting perspectives on the data.\nSome other useful plotting functions include:\n\npairs for making all pairwise scatter plots in a dataset with 2 dimensions.\nheatmap and/or corrplot (from the corrplot package) for visualizing matrices in general or correlation matrices in particular.\nimage a low-level matrix visualization function\nbarplot, especially with table, for visualizing frequencies of categorical variables.\n\n\n\n9. Submission (due Tuesday, Feb 03 at 8:30am)\nSubmit through the course Github issues page."
-  },
-  {
-    "objectID": "labs/lab1.html",
-    "href": "labs/lab1.html",
-    "title": "Lab 1 - Hello R!",
-    "section": "",
-    "text": "Get acquainted with R and RStudio, which we will be using throughout the course to analyze data.\nAppreciate the value of visualization in exploring the relationship between variables.\nStart using R for building plots and calculating summary statistics.\n\nNote: This lab contains a lot of material to help you get familiar with R and RStudio, but the only materials you need to submit are your responses to the six questions at the end of the lab (in the form of an HTML or PDF file)."
-  },
-  {
-    "objectID": "labs/lab1.html#download-r",
-    "href": "labs/lab1.html#download-r",
-    "title": "Lab 1 - Hello R!",
-    "section": "Download R",
-    "text": "Download R\n\nIf you don’t have R installed.\nGo to the CRAN and download R, make sure you get the version that matches your operating system.\n\n\nIf you have R installed\nIf you have R installed run the following code\n\nR.version\n\n               _                           \nplatform       aarch64-apple-darwin20      \narch           aarch64                     \nos             darwin20                    \nsystem         aarch64, darwin20           \nstatus                                     \nmajor          4                           \nminor          4.1                         \nyear           2024                        \nmonth          06                          \nday            14                          \nsvn rev        86737                       \nlanguage       R                           \nversion.string R version 4.4.1 (2024-06-14)\nnickname       Race for Your Life          \n\n\nThis should tell you what version of R you are currently using. If your R version is lower then 4.3.0, I would strongly recommend updating. In general, it is a good idea to keep your R version up to date, unless you have a project right now that depends on a specific version of R."
-  },
-  {
-    "objectID": "labs/lab1.html#download-rstudio",
-    "href": "labs/lab1.html#download-rstudio",
-    "title": "Lab 1 - Hello R!",
-    "section": "Download RStudio",
-    "text": "Download RStudio\nWe recommend using RStudio as your IDE if you don’t already have it installed. You can go to the RStudio website to download and install the software. Once it is installed, open RStudio and use it to complete the rest of this lab."
-  },
-  {
-    "objectID": "labs/lab1.html#start-a-new-project",
-    "href": "labs/lab1.html#start-a-new-project",
-    "title": "Lab 1 - Hello R!",
-    "section": "Start a new Project",
-    "text": "Start a new Project\nRStudio Projects are a great way to stay organized and keep all of your work on a particular topic in one place. Project files keep track of things like the R objects you are using and which files you have open, so that you can quickly jump in and out of different work environments.\nWe’re going to start a new Project called BIOSTAT620labs. If you want to keep all of your materials for this class in one place, you may want to open Finder (MacOS) or File Explorer (Windows) and create a new folder (directory) for this class.\nIn the top right of the RStudio window, you should see a drop-down menu that says “Project: (None)”. Click on this and then “New Project…”, which will open up a dialogue box. If you had already created a BIOSTAT620labs directory, you could choose the “Existing Directory” option to associate this Project with that directory. Since we haven’t done that, we’ll use the “New Directory” option, then select the generic Project type, “New Project”. Give your new directory the name BIOSTAT620labs and use the “Browse” button to choose where you want to save it on your computer, then click “Create Project”. Now in the top right, you should see “BIOSTAT620labs” next to the R Project logo."
-  },
-  {
-    "objectID": "labs/lab1.html#create-a-quarto-document",
-    "href": "labs/lab1.html#create-a-quarto-document",
-    "title": "Lab 1 - Hello R!",
-    "section": "Create a Quarto document",
-    "text": "Create a Quarto document\nWe will use Quarto documents a lot in this course because they are fully reproducible and allow us to seamlessly integrate code and text. We expect you to use Quarto for all homework assignments and (almost) all labs.\nIn the top left, you will see a “New File” icon (a white “plus” sign in a green circle over a blank document) that leads to a drop-down menu. Click on this and then select “Quarto document…”, which will open up a dialogue box. You can leave most of the settings on their defaults for now, just give your document a title (like “Lab 1”) and an author (yourself) and click “Create”. RStudio may ask you if you would like to install a package that is required, and if so, click “Install”.\nThis will open the default Quarto document, which already contains some example content. Read through it, then remove this content. Please do not hand in assignments that contain the default content, as I have seen it plenty of times! Set up new sections in your document titled “Question 1” through “Question 6”. This document will serve as the template for your responses to this lab. Under each section title, add an R code chunk via “Insert…”, “Executable Cell”, “R”. Alternatively, you can switch to the “Source” editor (in the top left of the Editor pane) and add an R chunk by typing the following:\n```{r}\n```\nThis will create an R code chunk and any code you add inside of it will be executed when you Render the document.\nSave your Quarto markdown (qmd) file as lab-01.qmd and see what happens when you click “Render”."
-  },
-  {
-    "objectID": "labs/lab1.html#yaml",
-    "href": "labs/lab1.html#yaml",
-    "title": "Lab 1 - Hello R!",
-    "section": "YAML",
-    "text": "YAML\nThe top portion of your Quarto file (between the three dashed lines) is called YAML. It stands for “YAML Ain’t Markup Language”. It is a human-friendly data serialization standard for all programming languages. All you need to know is that this area is called the YAML (we will refer to it as such) and that it contains meta information about your document.\nOpen the Quarto (qmd) file in your project, make sure the author name is your name. You can add additional lines to the YAML section to control more aspects of your document. For example, you can set the output to be a PDF or HTML document by adding either format: pdf or format: html.\nRegardless of what output format you choose, add another line to the YAML header that reads embed-resources: true. This tells Quarto that you want to produce a “stand-alone” document that contains all images directly in the document. If you don’t do this, Quarto will often create a separate directory (called &lt;document&gt;_files) that contains these images and your output will depend on this outside directory.\nWhen you’re done, click “Render” to compile the document."
-  },
-  {
-    "objectID": "labs/lab1.html#question-1",
-    "href": "labs/lab1.html#question-1",
-    "title": "Lab 1 - Hello R!",
-    "section": "Question 1",
-    "text": "Question 1\n\nBased on the help file, how many rows and how many columns does the datasaurus_dozen file have? What are the variables included in the data frame? Add your responses to your lab report, with relevant code in the associated R code chunk, and free-form text outside of the code chunk.\n\nLet’s take a look at what these datasets are. To start, we can make a frequency table of the dataset variable:\n\ntable(datasaurus_dozen$dataset)\n\nHere, we used the $ operator to access a specific column (variable) of the dataset. Then we used the table function to summarize that variable. table is great for quickly summarizing categorical variables, but it’s not very useful for summarizing continuous variables, where most unique values are only present once. For continuous variables, try the summary function.\nThe original Datasaurus (dino) was created by Alberto Cairo in a blog post. The other Dozen were generated using simulated annealing and the process is described in the paper Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing by Justin Matejka and George Fitzmaurice. In the paper, the authors simulate a variety of datasets with the same summary statistics as the Datasaurus, but with very different distributions."
-  },
-  {
-    "objectID": "labs/lab1.html#question-2",
-    "href": "labs/lab1.html#question-2",
-    "title": "Lab 1 - Hello R!",
-    "section": "Question 2",
-    "text": "Question 2\n\nPlot y vs. x for the dino dataset. Then, calculate the correlation coefficient between x and y for just this dataset.\n\nBelow is the code you will need to complete this exercise. Basically, the answer is already given, but you need to include relevant bits in your Quarto document and successfully Render it and view the results.\nWe’re going to start by subsetting our data down to just the dino dataset.\n\nSubsetting\n\ndino_data &lt;- datasaurus_dozen[datasaurus_dozen$dataset == 'dino', ]\n\nThere is a lot going on here, so let’s slow down and unpack it a bit.\nThe first thing to note is the assignment operator: &lt;-. This special symbol is used to create a new object or assign a new value to an existing one. In this case, we’re creating a new object called dino_data.\nThe second important feature is the set of square brackets: []. When these come immediately after the name of an object, they are used for subsetting that object, or taking a smaller piece of it. In this case, we want to subset the datasaurus_dozen object. Since this is a two-dimensional data.frame, we can subset it by either rows or columns, or both. The comma (,) separates our row subset from our column subset. In this case, we only want to subset by row and keep all the columns, so there is nothing after the comma.\nIn R (as in Python and many other programming languages), we can check whether or not two values are equal by using the == operator. Here, we again use the $ to access the dataset variable and we check if it is equal to the value 'dino'. If it is, this comparison will return TRUE and we will keep that row. If it isn’t, this comparison will return FALSE and we will not keep that row.\n\n\nPlotting\nNext, we need to visualize these data. We will use the plot function for this, which is R’s most basic plotting function. If you provide the plot function with two numeric vectors, it will plot them in a scatter plot. Let’s see what happens when we plot the x and y variables from our dino_data object:\n\nplot(dino_data$x, dino_data$y)\n# ggplot(data = dino_data, mapping = aes(x = x, y = y)) +\n#   geom_point()\n\n(I’ve also included code for producing similar plots using the ggplot function from the ggplot2 package. This is another widely-used plotting function that includes some more aesthetically pleasing defaults, but requires more complicated syntax)\nWe will talk a lot more about the philosophy of data visualization, how to choose the right plot type, and constructing visualizations in layers in the coming weeks. But for now, you can follow along with the code that is provided.\nFor the second part of these exercises, we need to calculate a summary statistic: the correlation coefficient. The correlation coefficient, often referred to as \\(r\\) in statistics, measures the linear association between two variables. You will see that some of the pairs of variables we plot do not have a linear relationship between them. This is exactly why we want to visualize first: visualize to assess the form of the relationship, and calculate \\(r\\) only if relevant. In this case, calculating a correlation coefficient really doesn’t make sense since the relationship between x and y is definitely not linear – it’s dinosaurial!\nBut, for illustrative purposes, let’s calculate correlation coefficient between x and y. Like plot, the cor function takes two numeric variables and calculates their correlation coefficient:\n\ncor(dino_data$x, dino_data$y)\n# dino_data |&gt;\n#   summarize(r = cor(x, y))\n\n(I’ve also included the “tidyverse” way of calculating this value. The “tidyverse” is a collection of packages that includes ggplot2 and is based on the concept of “tidy”, rectangular datasets. We will tend to focus on the “Base R” way of doing things, as learning the “tidyverse” coding style is almost like learning another language in addition to R)"
-  },
-  {
-    "objectID": "labs/lab1.html#question-3",
-    "href": "labs/lab1.html#question-3",
-    "title": "Lab 1 - Hello R!",
-    "section": "Question 3",
-    "text": "Question 3\n\nNow try it on your own! Plot y vs. x for the star dataset, another one of the datasaurus_dozen. You can (and should) re-use code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between x and y for this dataset. How does this value compare to the r of dino?"
-  },
-  {
-    "objectID": "labs/lab1.html#question-4",
-    "href": "labs/lab1.html#question-4",
-    "title": "Lab 1 - Hello R!",
-    "section": "Question 4",
-    "text": "Question 4\n\nPlot y vs. x for the circle dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between x and y for this dataset. How does this value compare to the r of dino?"
-  },
-  {
-    "objectID": "labs/lab1.html#question-5",
-    "href": "labs/lab1.html#question-5",
-    "title": "Lab 1 - Hello R!",
-    "section": "Question 5",
-    "text": "Question 5\nNow let’s plot all 13 datasets at once. In order to do this we will make use of the layout function. This function allows you to put multiple plots in the same plotting window. We will create a 4x4 matrix containing the values 1 through 16 and pass this to layout, which lets it know where we want each plot to go (we only have 13 datasets, so there will be a few empty spots at the end). This may be too many plots for a small viewing window, so if you get the error message Error in plot.new() : figure margins too large, try making your plotting window larger.\nThen we use a for loop to perform a set of actions over every unique value of the dataset variable. This creates a new object, called name, that takes on each of those unique values, but it only exists within the context (interior) of the loop. Then we subset and plot the data, as we have before.\n\nlayout(matrix(1:16, nrow=4, ncol=4))\nfor(name in unique(datasaurus_dozen$dataset)){\n  subset &lt;- datasaurus_dozen[datasaurus_dozen$dataset == name, ]\n  plot(subset$x, subset$y, main = name)\n}\nlayout(1)\n\n\n# ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset))+\n#   geom_point()+\n#   facet_wrap(~ dataset, ncol = 3) +\n#   theme(legend.position = \"none\")\n\nThe second call to layout will reset the plotting window, so that the next plot will take up the entire window, rather than 1/16th of it.\nOptional:If you really want to maximize the plotting area of this figure, you can also adjust the plotting margins via the par function (short for “graphical parameters”). The setting for margins is called mar and it takes a vector of length 4, specifying the bottom, left, top, and right margins, in order (the units are lines of text). You can set each margin to a value of 2 with par(mar = c(2,2,2,2)) and then reset to the default values with par(mar = c(5,4,4,2) + 0.1)."
-  },
-  {
-    "objectID": "labs/lab1.html#question-6",
-    "href": "labs/lab1.html#question-6",
-    "title": "Lab 1 - Hello R!",
-    "section": "Question 6",
-    "text": "Question 6\nFinally, we want to calculate the correlation between the x and y variables for all 13 datasets. Like before, we will use a loop, but this time, since we want to return a specific value every time through the loop, we will use the sapply function. sapply is useful way to apply a function to every element of a vector. In this case, we provide the vector of unique dataset names (like before) and then our own custom function. This function subsets the data as before, and then returns the correlation coefficient as the output of the function.\n\nsapply(unique(datasaurus_dozen$dataset), function(name){\n    subset &lt;- datasaurus_dozen[datasaurus_dozen$dataset == name, ]\n    return(cor(subset$x, subset$y))\n})\n\n\n# datasaurus_dozen |&gt;\n#   group_by(dataset) |&gt;\n#   summarize(r = cor(x, y))\n\nYou’re now done with the data analysis exercises, but we’d like you to do two more things:\nResize your figures:\nAdd the fields fig-width and fig-height to the YAML header of your document. These will allow you to specify the size (in inches) of any figures generated by the code chunks in your report.\nYou can also use different figure sizes for different figures. If you are in the Visual editor mode, switch to Source mode. Notice that each R chunk starts and ends with three backticks. Click on the gear icon in the top right of a code chunk and select “Use custom figure size” in the pop-up menu. Set the height and width of the figures and hit Apply when done. Then, render your document and see how you like the new sizes. Try making the plot for Question 5 larger, until you are happy with its size. Note that changing the figure sizes added new options to these chunks: fig.width and fig.height. You can change them by defining different values directly in your Quarto document as well.\nChange the look of your report:\nIf you have time, you can explore the different ways you can add styling to your document. Try adding a theme field to the YAML header and see if you can find valid names of different themes.\nHere is a Quarto cheatsheet and a general markdown cheatsheet that shows some of the many cool features you can make use of in a Quarto document."
+    "text": "Due Date\nThis assignment is due by 11:59pm Eastern Time on Friday, February 13th, 2026.\n\n\nLearning Goals\n\nDownload, read, and get familiar with an external dataset.\nStep through the EDA “checklist” presented in class\nPractice making exploratory plots\n\n\n\nAssignment Description\nWe will work with air pollution data from the U.S. Environmental Protection Agency (EPA). The EPA has a national monitoring network of air pollution sites that measure particulate matter (PM) concentrations. A primer on particulate matter air pollution can be found here.\nThe primary question you will answer is whether daily concentrations of PM\\(_{2.5}\\) (particulate matter air pollution with aerodynamic diameter less than 2.5 \\(\\mu\\)m) decreased in Michigan over the 20 years spanning from 2005 to 2025.\nYour assignment should be completed in Quarto and all code should be included.\n\n\nSteps\n\n(20 points) Given the formulated question from the assignment description, you will now conduct EDA Checklist items 1-5. First, download 2005 and 2025 PM2.5 data for all sites in Michigan from the EPA Air Quality Data website, then read the data into R. For each of the two datasets, check the dimensions, headers, footers, variable names and variable types. Check the distribution of the key variable we are analyzing (PM\\(_{2.5}\\)). Write up a summary of all of your findings.\n(10 points) Combine the two years of data into one data frame. Use the Date variable to create a new column for year, which will serve as an identifier. Change the names of the key variables so that they are easier to refer to in your code.\n(20 points) Create a basic map (or maps) in either leaflet or ggplot showing the locations of the monitoring sites, using different colors for each year. Summarize the spatial distribution of the sites. Does this distribution change from 2005 to 2025?\n(20 points) Check for any data issues such as missing or implausible values of PM\\(_{2.5}\\) in the combined dataset.\n\nLet’s look more closely at the methods used for data collection. Look at the distribution of the method code variable. Examine the two most common method codes in the EPA PM2.5 Codetable, and describe your findings. Calculate the proportion of missing values and method code for each year and report any temporal patterns you see in these observations. Why might these temporal patterns matter?\n\n(30 points) Explore the main question of interest at three different levels of spatial resolution. Create data visualizations (e.g. boxplots, histograms, line plots, violin plots) and summary statistics that best suit each level of the analysis. Be sure to write up explanations of what you observe at each level. For levels 2 and 3, include at least one spatial plot.\n\n\nLevel 1: State. Examine the primary question for the entire state.\nLevel 2: County. Examine the primary question for every county in Michigan.\nLevel 3: City. Restrict the data to sites in Wayne county and examine the primary question for every site.\n\nReminder: after you upload your final rendered document to GitHub, you should download it to make sure that it looks right! If you haven’t included embed-resources: true in the YAML header, none of your figures will show up!\nAnother reminder: GitHub is not (generally) intended for sharing data, so if you upload the dataset to your GitHub repo, you will lose 5 points. You can avoid this problem by storing the data somewhere else on your local machine (outside of your repo), or by adding the data file to your .gitignore file.\n\nThis homework has been adapted from the case study in Roger Peng’s Exploratory Data Analysis with R"
   },
   {
     "objectID": "labs/lab2.html",
@@ -1260,11 +1624,123 @@
     "text": "Footnotes\n\n\nTeam-members could be working on the same file but editing different lines of code. If this is the case, after pull/push, git will integrate the changes without conflicts.↩︎\nFor more details, take a look at the Forking Projects article in GitHub guides.↩︎\nMore info about how to deal with conflicts in this very neat post on stackoverflow.com How to resolve merge conflicts in Git. GitHub also has a way to solve conflicts in PRs, but this is only available to the admins of target repo. More info here,↩︎"
   },
   {
-    "objectID": "assignments/hw1.html",
-    "href": "assignments/hw1.html",
-    "title": "Assignment 1 - Exploratory Data Analysis",
+    "objectID": "labs/lab1.html",
+    "href": "labs/lab1.html",
+    "title": "Lab 1 - Hello R!",
     "section": "",
-    "text": "Due Date\nThis assignment is due by 11:59pm Eastern Time on Friday, February 13th, 2026.\n\n\nLearning Goals\n\nDownload, read, and get familiar with an external dataset.\nStep through the EDA “checklist” presented in class\nPractice making exploratory plots\n\n\n\nAssignment Description\nWe will work with air pollution data from the U.S. Environmental Protection Agency (EPA). The EPA has a national monitoring network of air pollution sites that measure particulate matter (PM) concentrations. A primer on particulate matter air pollution can be found here.\nThe primary question you will answer is whether daily concentrations of PM\\(_{2.5}\\) (particulate matter air pollution with aerodynamic diameter less than 2.5 \\(\\mu\\)m) decreased in Michigan over the 20 years spanning from 2005 to 2025.\nYour assignment should be completed in Quarto and all code should be included.\n\n\nSteps\n\n(20 points) Given the formulated question from the assignment description, you will now conduct EDA Checklist items 1-5. First, download 2005 and 2025 PM2.5 data for all sites in Michigan from the EPA Air Quality Data website, then read the data into R. For each of the two datasets, check the dimensions, headers, footers, variable names and variable types. Check the distribution of the key variable we are analyzing (PM\\(_{2.5}\\)). Write up a summary of all of your findings.\n(10 points) Combine the two years of data into one data frame. Use the Date variable to create a new column for year, which will serve as an identifier. Change the names of the key variables so that they are easier to refer to in your code.\n(20 points) Create a basic map (or maps) in either leaflet or ggplot showing the locations of the monitoring sites, using different colors for each year. Summarize the spatial distribution of the sites. Does this distribution change from 2005 to 2025?\n(20 points) Check for any data issues such as missing or implausible values of PM\\(_{2.5}\\) in the combined dataset.\n\nLet’s look more closely at the methods used for data collection. Look at the distribution of the method code variable. Examine the two most common method codes in the EPA PM2.5 Codetable, and describe your findings. Calculate the proportion of missing values and method code for each year and report any temporal patterns you see in these observations. Why might these temporal patterns matter?\n\n(30 points) Explore the main question of interest at three different levels of spatial resolution. Create data visualizations (e.g. boxplots, histograms, line plots, violin plots) and summary statistics that best suit each level of the analysis. Be sure to write up explanations of what you observe at each level. For levels 2 and 3, include at least one spatial plot.\n\n\nLevel 1: State. Examine the primary question for the entire state.\nLevel 2: County. Examine the primary question for every county in Michigan.\nLevel 3: City. Restrict the data to sites in Wayne county and examine the primary question for every site.\n\nReminder: after you upload your final rendered document to GitHub, you should download it to make sure that it looks right! If you haven’t included embed-resources: true in the YAML header, none of your figures will show up!\nAnother reminder: GitHub is not (generally) intended for sharing data, so if you upload the dataset to your GitHub repo, you will lose 5 points. You can avoid this problem by storing the data somewhere else on your local machine (outside of your repo), or by adding the data file to your .gitignore file.\n\nThis homework has been adapted from the case study in Roger Peng’s Exploratory Data Analysis with R"
+    "text": "Get acquainted with R and RStudio, which we will be using throughout the course to analyze data.\nAppreciate the value of visualization in exploring the relationship between variables.\nStart using R for building plots and calculating summary statistics.\n\nNote: This lab contains a lot of material to help you get familiar with R and RStudio, but the only materials you need to submit are your responses to the six questions at the end of the lab (in the form of an HTML or PDF file)."
+  },
+  {
+    "objectID": "labs/lab1.html#download-r",
+    "href": "labs/lab1.html#download-r",
+    "title": "Lab 1 - Hello R!",
+    "section": "Download R",
+    "text": "Download R\n\nIf you don’t have R installed.\nGo to the CRAN and download R, make sure you get the version that matches your operating system.\n\n\nIf you have R installed\nIf you have R installed run the following code\n\nR.version\n\n               _                           \nplatform       aarch64-apple-darwin20      \narch           aarch64                     \nos             darwin20                    \nsystem         aarch64, darwin20           \nstatus                                     \nmajor          4                           \nminor          4.1                         \nyear           2024                        \nmonth          06                          \nday            14                          \nsvn rev        86737                       \nlanguage       R                           \nversion.string R version 4.4.1 (2024-06-14)\nnickname       Race for Your Life          \n\n\nThis should tell you what version of R you are currently using. If your R version is lower then 4.3.0, I would strongly recommend updating. In general, it is a good idea to keep your R version up to date, unless you have a project right now that depends on a specific version of R."
+  },
+  {
+    "objectID": "labs/lab1.html#download-rstudio",
+    "href": "labs/lab1.html#download-rstudio",
+    "title": "Lab 1 - Hello R!",
+    "section": "Download RStudio",
+    "text": "Download RStudio\nWe recommend using RStudio as your IDE if you don’t already have it installed. You can go to the RStudio website to download and install the software. Once it is installed, open RStudio and use it to complete the rest of this lab."
+  },
+  {
+    "objectID": "labs/lab1.html#start-a-new-project",
+    "href": "labs/lab1.html#start-a-new-project",
+    "title": "Lab 1 - Hello R!",
+    "section": "Start a new Project",
+    "text": "Start a new Project\nRStudio Projects are a great way to stay organized and keep all of your work on a particular topic in one place. Project files keep track of things like the R objects you are using and which files you have open, so that you can quickly jump in and out of different work environments.\nWe’re going to start a new Project called BIOSTAT620labs. If you want to keep all of your materials for this class in one place, you may want to open Finder (MacOS) or File Explorer (Windows) and create a new folder (directory) for this class.\nIn the top right of the RStudio window, you should see a drop-down menu that says “Project: (None)”. Click on this and then “New Project…”, which will open up a dialogue box. If you had already created a BIOSTAT620labs directory, you could choose the “Existing Directory” option to associate this Project with that directory. Since we haven’t done that, we’ll use the “New Directory” option, then select the generic Project type, “New Project”. Give your new directory the name BIOSTAT620labs and use the “Browse” button to choose where you want to save it on your computer, then click “Create Project”. Now in the top right, you should see “BIOSTAT620labs” next to the R Project logo."
+  },
+  {
+    "objectID": "labs/lab1.html#create-a-quarto-document",
+    "href": "labs/lab1.html#create-a-quarto-document",
+    "title": "Lab 1 - Hello R!",
+    "section": "Create a Quarto document",
+    "text": "Create a Quarto document\nWe will use Quarto documents a lot in this course because they are fully reproducible and allow us to seamlessly integrate code and text. We expect you to use Quarto for all homework assignments and (almost) all labs.\nIn the top left, you will see a “New File” icon (a white “plus” sign in a green circle over a blank document) that leads to a drop-down menu. Click on this and then select “Quarto document…”, which will open up a dialogue box. You can leave most of the settings on their defaults for now, just give your document a title (like “Lab 1”) and an author (yourself) and click “Create”. RStudio may ask you if you would like to install a package that is required, and if so, click “Install”.\nThis will open the default Quarto document, which already contains some example content. Read through it, then remove this content. Please do not hand in assignments that contain the default content, as I have seen it plenty of times! Set up new sections in your document titled “Question 1” through “Question 6”. This document will serve as the template for your responses to this lab. Under each section title, add an R code chunk via “Insert…”, “Executable Cell”, “R”. Alternatively, you can switch to the “Source” editor (in the top left of the Editor pane) and add an R chunk by typing the following:\n```{r}\n```\nThis will create an R code chunk and any code you add inside of it will be executed when you Render the document.\nSave your Quarto markdown (qmd) file as lab-01.qmd and see what happens when you click “Render”."
+  },
+  {
+    "objectID": "labs/lab1.html#yaml",
+    "href": "labs/lab1.html#yaml",
+    "title": "Lab 1 - Hello R!",
+    "section": "YAML",
+    "text": "YAML\nThe top portion of your Quarto file (between the three dashed lines) is called YAML. It stands for “YAML Ain’t Markup Language”. It is a human-friendly data serialization standard for all programming languages. All you need to know is that this area is called the YAML (we will refer to it as such) and that it contains meta information about your document.\nOpen the Quarto (qmd) file in your project, make sure the author name is your name. You can add additional lines to the YAML section to control more aspects of your document. For example, you can set the output to be a PDF or HTML document by adding either format: pdf or format: html.\nRegardless of what output format you choose, add another line to the YAML header that reads embed-resources: true. This tells Quarto that you want to produce a “stand-alone” document that contains all images directly in the document. If you don’t do this, Quarto will often create a separate directory (called &lt;document&gt;_files) that contains these images and your output will depend on this outside directory.\nWhen you’re done, click “Render” to compile the document."
+  },
+  {
+    "objectID": "labs/lab1.html#question-1",
+    "href": "labs/lab1.html#question-1",
+    "title": "Lab 1 - Hello R!",
+    "section": "Question 1",
+    "text": "Question 1\n\nBased on the help file, how many rows and how many columns does the datasaurus_dozen file have? What are the variables included in the data frame? Add your responses to your lab report, with relevant code in the associated R code chunk, and free-form text outside of the code chunk.\n\nLet’s take a look at what these datasets are. To start, we can make a frequency table of the dataset variable:\n\ntable(datasaurus_dozen$dataset)\n\nHere, we used the $ operator to access a specific column (variable) of the dataset. Then we used the table function to summarize that variable. table is great for quickly summarizing categorical variables, but it’s not very useful for summarizing continuous variables, where most unique values are only present once. For continuous variables, try the summary function.\nThe original Datasaurus (dino) was created by Alberto Cairo in a blog post. The other Dozen were generated using simulated annealing and the process is described in the paper Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing by Justin Matejka and George Fitzmaurice. In the paper, the authors simulate a variety of datasets with the same summary statistics as the Datasaurus, but with very different distributions."
+  },
+  {
+    "objectID": "labs/lab1.html#question-2",
+    "href": "labs/lab1.html#question-2",
+    "title": "Lab 1 - Hello R!",
+    "section": "Question 2",
+    "text": "Question 2\n\nPlot y vs. x for the dino dataset. Then, calculate the correlation coefficient between x and y for just this dataset.\n\nBelow is the code you will need to complete this exercise. Basically, the answer is already given, but you need to include relevant bits in your Quarto document and successfully Render it and view the results.\nWe’re going to start by subsetting our data down to just the dino dataset.\n\nSubsetting\n\ndino_data &lt;- datasaurus_dozen[datasaurus_dozen$dataset == 'dino', ]\n\nThere is a lot going on here, so let’s slow down and unpack it a bit.\nThe first thing to note is the assignment operator: &lt;-. This special symbol is used to create a new object or assign a new value to an existing one. In this case, we’re creating a new object called dino_data.\nThe second important feature is the set of square brackets: []. When these come immediately after the name of an object, they are used for subsetting that object, or taking a smaller piece of it. In this case, we want to subset the datasaurus_dozen object. Since this is a two-dimensional data.frame, we can subset it by either rows or columns, or both. The comma (,) separates our row subset from our column subset. In this case, we only want to subset by row and keep all the columns, so there is nothing after the comma.\nIn R (as in Python and many other programming languages), we can check whether or not two values are equal by using the == operator. Here, we again use the $ to access the dataset variable and we check if it is equal to the value 'dino'. If it is, this comparison will return TRUE and we will keep that row. If it isn’t, this comparison will return FALSE and we will not keep that row.\n\n\nPlotting\nNext, we need to visualize these data. We will use the plot function for this, which is R’s most basic plotting function. If you provide the plot function with two numeric vectors, it will plot them in a scatter plot. Let’s see what happens when we plot the x and y variables from our dino_data object:\n\nplot(dino_data$x, dino_data$y)\n# ggplot(data = dino_data, mapping = aes(x = x, y = y)) +\n#   geom_point()\n\n(I’ve also included code for producing similar plots using the ggplot function from the ggplot2 package. This is another widely-used plotting function that includes some more aesthetically pleasing defaults, but requires more complicated syntax)\nWe will talk a lot more about the philosophy of data visualization, how to choose the right plot type, and constructing visualizations in layers in the coming weeks. But for now, you can follow along with the code that is provided.\nFor the second part of these exercises, we need to calculate a summary statistic: the correlation coefficient. The correlation coefficient, often referred to as \\(r\\) in statistics, measures the linear association between two variables. You will see that some of the pairs of variables we plot do not have a linear relationship between them. This is exactly why we want to visualize first: visualize to assess the form of the relationship, and calculate \\(r\\) only if relevant. In this case, calculating a correlation coefficient really doesn’t make sense since the relationship between x and y is definitely not linear – it’s dinosaurial!\nBut, for illustrative purposes, let’s calculate correlation coefficient between x and y. Like plot, the cor function takes two numeric variables and calculates their correlation coefficient:\n\ncor(dino_data$x, dino_data$y)\n# dino_data |&gt;\n#   summarize(r = cor(x, y))\n\n(I’ve also included the “tidyverse” way of calculating this value. The “tidyverse” is a collection of packages that includes ggplot2 and is based on the concept of “tidy”, rectangular datasets. We will tend to focus on the “Base R” way of doing things, as learning the “tidyverse” coding style is almost like learning another language in addition to R)"
+  },
+  {
+    "objectID": "labs/lab1.html#question-3",
+    "href": "labs/lab1.html#question-3",
+    "title": "Lab 1 - Hello R!",
+    "section": "Question 3",
+    "text": "Question 3\n\nNow try it on your own! Plot y vs. x for the star dataset, another one of the datasaurus_dozen. You can (and should) re-use code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between x and y for this dataset. How does this value compare to the r of dino?"
+  },
+  {
+    "objectID": "labs/lab1.html#question-4",
+    "href": "labs/lab1.html#question-4",
+    "title": "Lab 1 - Hello R!",
+    "section": "Question 4",
+    "text": "Question 4\n\nPlot y vs. x for the circle dataset. You can (and should) reuse code we introduced above, just replace the dataset name with the desired dataset. Then, calculate the correlation coefficient between x and y for this dataset. How does this value compare to the r of dino?"
+  },
+  {
+    "objectID": "labs/lab1.html#question-5",
+    "href": "labs/lab1.html#question-5",
+    "title": "Lab 1 - Hello R!",
+    "section": "Question 5",
+    "text": "Question 5\nNow let’s plot all 13 datasets at once. In order to do this we will make use of the layout function. This function allows you to put multiple plots in the same plotting window. We will create a 4x4 matrix containing the values 1 through 16 and pass this to layout, which lets it know where we want each plot to go (we only have 13 datasets, so there will be a few empty spots at the end). This may be too many plots for a small viewing window, so if you get the error message Error in plot.new() : figure margins too large, try making your plotting window larger.\nThen we use a for loop to perform a set of actions over every unique value of the dataset variable. This creates a new object, called name, that takes on each of those unique values, but it only exists within the context (interior) of the loop. Then we subset and plot the data, as we have before.\n\nlayout(matrix(1:16, nrow=4, ncol=4))\nfor(name in unique(datasaurus_dozen$dataset)){\n  subset &lt;- datasaurus_dozen[datasaurus_dozen$dataset == name, ]\n  plot(subset$x, subset$y, main = name)\n}\nlayout(1)\n\n\n# ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset))+\n#   geom_point()+\n#   facet_wrap(~ dataset, ncol = 3) +\n#   theme(legend.position = \"none\")\n\nThe second call to layout will reset the plotting window, so that the next plot will take up the entire window, rather than 1/16th of it.\nOptional:If you really want to maximize the plotting area of this figure, you can also adjust the plotting margins via the par function (short for “graphical parameters”). The setting for margins is called mar and it takes a vector of length 4, specifying the bottom, left, top, and right margins, in order (the units are lines of text). You can set each margin to a value of 2 with par(mar = c(2,2,2,2)) and then reset to the default values with par(mar = c(5,4,4,2) + 0.1)."
+  },
+  {
+    "objectID": "labs/lab1.html#question-6",
+    "href": "labs/lab1.html#question-6",
+    "title": "Lab 1 - Hello R!",
+    "section": "Question 6",
+    "text": "Question 6\nFinally, we want to calculate the correlation between the x and y variables for all 13 datasets. Like before, we will use a loop, but this time, since we want to return a specific value every time through the loop, we will use the sapply function. sapply is useful way to apply a function to every element of a vector. In this case, we provide the vector of unique dataset names (like before) and then our own custom function. This function subsets the data as before, and then returns the correlation coefficient as the output of the function.\n\nsapply(unique(datasaurus_dozen$dataset), function(name){\n    subset &lt;- datasaurus_dozen[datasaurus_dozen$dataset == name, ]\n    return(cor(subset$x, subset$y))\n})\n\n\n# datasaurus_dozen |&gt;\n#   group_by(dataset) |&gt;\n#   summarize(r = cor(x, y))\n\nYou’re now done with the data analysis exercises, but we’d like you to do two more things:\nResize your figures:\nAdd the fields fig-width and fig-height to the YAML header of your document. These will allow you to specify the size (in inches) of any figures generated by the code chunks in your report.\nYou can also use different figure sizes for different figures. If you are in the Visual editor mode, switch to Source mode. Notice that each R chunk starts and ends with three backticks. Click on the gear icon in the top right of a code chunk and select “Use custom figure size” in the pop-up menu. Set the height and width of the figures and hit Apply when done. Then, render your document and see how you like the new sizes. Try making the plot for Question 5 larger, until you are happy with its size. Note that changing the figure sizes added new options to these chunks: fig.width and fig.height. You can change them by defining different values directly in your Quarto document as well.\nChange the look of your report:\nIf you have time, you can explore the different ways you can add styling to your document. Try adding a theme field to the YAML header and see if you can find valid names of different themes.\nHere is a Quarto cheatsheet and a general markdown cheatsheet that shows some of the many cool features you can make use of in a Quarto document."
+  },
+  {
+    "objectID": "labs/lab3.html",
+    "href": "labs/lab3.html",
+    "title": "Lab 3 - Exploratory Data Analysis",
+    "section": "",
+    "text": "Learning Goals\n\nRead in and get familiar with the meteorology dataset\n\nStep through the EDA “checklist” presented in the class slides\nPractice making exploratory graphs\n\nAs you do this, think about what questions you would like to ask regarding this data. What would you ask a collaborator who was more familiar with it?\n\n\nLab Description\nWe will work with the meteorological data presented in lecture. Recall the dataset consists of weather station readings in the continental US.\nThe objective of the lab is to find the weather station with the highest elevation and look at patterns in the time series of its wind speed and temperature.\n\n\nSteps\n\n1. Read in the data\nThe data for this lab is available at https://github.com/dmcable/BIOSTAT620W26/tree/main/data/met. There’s some additional information about the dataset, but the main file you’ll need to download is met_all.gz.\nOnce you’ve downloaded the file, you can read it into R with:\n\nmet &lt;- read.csv(\"~/Downloads/met_all.gz\")\n\n\n\n2. Check the dimensions, headers, footers\n\nHow many columns, rows are there?\n\n\n\n3. Take a look at all the variables (hint: use the str function).\n\n\n4. Take a closer look at the key variables (year, day, hour, temp, elev, wind.sp). Hint: use table and/or summary).\nIt looks like the elevation variable has observations with 9999.0, which is probably an indicator for missing. We should take a deeper look at the data dictionary to confirm. The wind speed variable is OK but there are a lot of missing data.\nAfter checking the data we should make the appropriate modifications. Replace elevations with 9999 as NA.\n\nAt what elevation is the highest weather station?\n\nWe also have the issue of the minimum temperature being -40C, so we should remove those observations. Also, remove the NA temperature points.\nAfter removing the -40C points, what is the new lowest temperature? We again notice that there is a -17.2C temperature reading that seems suspicious.\n\n\n5. Check the data against an external data source.\nValidate that the total range of elevations in the data make sense. Also, we should check the suspicious -17.2C temperature value (where is it located?).\nGoogle is your friend here.\nFix any problems that arise in your checks.\n\n\n6. Calculate summary statistics\nRemember to keep the initial question in mind. We want to pick out the weather station with maximum elevation and examine its windspeed and temperature.\nSome ideas: select the weather station with maximum elevation; within this station, look at the correlation between temperature and wind speed. Also, look at the correlation between (temp and wind.sp) and (hour and day) (four total pairwise correlations).\n\n\n7. Exploratory graphs\nWe should look at the distributions of all of the key variables to make sure there are no remaining issues with the data. Hint: using the hist function, make histograms of the elev, temp, and wind.sp variables.\nNote: one thing we should consider for later analyses (not today) is to log transform wind speed and elevation as they are very skewed.\nLook at where the weather station with highest elevation is located. To do so, create a subsetted version of your dataframe with only the highest elevation, and name it elev.\n\nleaflet(elev) %&gt;%\n  addProviderTiles('OpenStreetMap') %&gt;% \n  addCircles(lat=~lat,lng=~lon, opacity=1, fillOpacity=1, radius=100)\n\nLook at the time series of temperature and wind speed at this location. For this we will need to create a date-time variable for the x-axis.\n\nlibrary(lubridate)\nelev$date &lt;- with(elev, ymd_h(paste(year, month, day, hour, sep= ' ')))\nsummary(elev$date)\nelev &lt;- elev[order(elev$date), ]\nhead(elev)\n\nGiven the date-time variable, plot the time series of temperature and also wind speed.\n\nSummarize any trends that you see in these time series plots.\n\n\n\n8. Ask questions\nBy now, you might have some specific questions about how the data was gathered and what some of the different variables and values mean. Alternatively, maybe you have an idea for how some of the variable should be related and you want to explore that relationship. In a real-world analysis, these questions could potentially be answered by a collaborator, who may have been part of the team that collected the data. What questions do you have about the data?\nIf you haven’t already, now would be a good time to look at the accompanying data dictionary for this dataset and see if it can answer any of your questions. If you have questions about the nature of the dataset and how it was gathered, this might be able to help.\nFor questions about variables in the dataset or relationships between them, try making some more exploratory plots. Do you see the patterns you would expect? There are many different types of summaries and visualization strategies that we have not discussed, but which could provide interesting perspectives on the data.\nSome other useful plotting functions include:\n\npairs for making all pairwise scatter plots in a dataset with 2 dimensions.\nheatmap and/or corrplot (from the corrplot package) for visualizing matrices in general or correlation matrices in particular.\nimage a low-level matrix visualization function\nbarplot, especially with table, for visualizing frequencies of categorical variables.\n\n\n\n9. Submission (due Tuesday, Feb 03 at 8:30am)\nSubmit through the course Github issues page."
+  },
+  {
+    "objectID": "labs/lab4.html",
+    "href": "labs/lab4.html",
+    "title": "Lab 4 - Data Visualization",
+    "section": "",
+    "text": "Learning Goals\n\nRead in and prepare the COVID-19 dataset\nCreate several graphs with different geoms() in ggplot2\nCreate a facet graph\nCustomize your plots\nCreate a detailed map\n\n\n\nLab Description\nIn this lab, we will work with the COVID-19 data from the CDC. The data has already been preprocessed.\nThe objective of the lab is to examine the association between weekly average COVID-19 death and vaccination rates in ten regions of the US.\nNote the following variable definitions:\n\nmmwr_year: year (according to the MMWR Calendar)\nmmwr_week: week (according to the MMWR Calendar)\npop: state population\ncases: weekly COVID cases\nhosp: weekly COVID hospitilizations\ndeaths: weekly COVID deaths\nseries: cumulative vaccinated population\nbooster: cumulative boosted population\n\n\n\nSteps\n\n1. Read in the data\nFirst download and then read in with read.csv()\n\nif (!file.exists(\"covid_processed.csv\"))\n  download.file(\n    url = \"https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/covid_processed.csv\",\n    destfile = \"covid_processed.csv\",\n    method   = \"libcurl\",\n    timeout  = 60\n    )\n\n\n\n2. Prepare the data\n\nSince states have different population sizes, make sure that you are working with population-normalized rates (e.g. units cases per 100,000 population). Transform the following variables accordingly: cases, hosp, booster, series, deaths.\nUse the ymd function from the lubridate to convert the date variable to a Date object. This is easier to work with for arithmetic and plotting.\nCompute the mean by state of the normalized variables above. We recommend creating a new data.frame with the state-averaged data. Keep any other relevant variables from the original data (e.g. population, region etc).\nCreate a logical variable for low vs high population.\nMake sure that region is a factor\n\n\n\n3. Use geom_violin to examine the case rates and death rates by region\nYou saw how to use geom_boxplot in class. Try using geom_violin instead (take a look at the help). (hint: you will need to set the x aesthetic to 1)\n\nUse facets\nFill color by region\nDescribe what you observe in the graph\n\n\n\n4. Use geom_point with stat_smooth to examine the association between time and case rates by region\n\nFilter out the data to exclude the first two weeks in the dataset\nColor points by region\nFit a function with stat_smooth by region. Does method=lm or the default method work better?\nFor the default stat_smooth, play around with the span parameter to get a smooth that fits the data better without being too noisy.\nDescribe what you observe in the graph\n\n\n\n5. Use geom_bar to create barplots of the states by population category colored by region\n\nBars by population category using position=\"dodge\"\nChange colors from the default. Color by region using scale_fill_brewer see this\nCreate nice labels on the axes and add a title\nDescribe what you observe in the graph\n\n\n\n6. Use stat_summary to examine mean vaccination rate and death rate by region with standard deviation error bars\n\nUse fun.data=\"mean_sdl\" in stat_summary. Look up what mean_sdl does.\nAdd another layer of stats_summary but change the geom to \"errorbar\" (see the help).\nDescribe the graph and what you observe\n\n\nVaccination rates are …\nDeath rates are…\n\n\n\n7. Make a map showing the spatial trend in COVID deaths in the US\n\nUse geom_polygon and map_data. Modify the given code.\nMerge the map_data data.frame with your COVID data.frame to add in the COVID data to the map data. Hint: use left_join.\nUse a color palette with custom colors\nMake sure that your legend is labelled correctly.\nAdd a * or other label for the top 10 states in highest death rate.\nMake sure that the aspect ratio is appropriate\nDescribe your observations\n\n\nDescribe the trend in COVID death rates across the US\n\n\n\n8. Use a ggplot extension\n\nPick an extension (except cowplot) from here and make a plot of your choice using the COVID data\nYou might want to try examples that come with the extension first (e.g. ggtech, gganimate, ggforce)\n\n\n\n9. Submission (due Tuesday, Feb 10 at 8:30am)\nSubmit through the course Github issues page."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BIOSTAT 620",
+    "section": "",
+    "text": "Term: Winter 2026\nTime: Tuesdays and Thursdays 8:30am - 9:50am\nLocation: SPH I 3755\nCourse GitHub: https://github.com/dmcable/BIOSTAT620W26"
+  },
+  {
+    "objectID": "index.html#introduction-to-health-data-science",
+    "href": "index.html#introduction-to-health-data-science",
+    "title": "BIOSTAT 620",
+    "section": "",
+    "text": "Term: Winter 2026\nTime: Tuesdays and Thursdays 8:30am - 9:50am\nLocation: SPH I 3755\nCourse GitHub: https://github.com/dmcable/BIOSTAT620W26"
+  },
+  {
+    "objectID": "index.html#instructor",
+    "href": "index.html#instructor",
+    "title": "BIOSTAT 620",
+    "section": "Instructor",
+    "text": "Instructor\nDylan Cable\n\nEmail: dmcable@umich.edu\nOffice: SPH I 4635\nOffice Hours: Friday 11am - 12pm"
   },
   {
     "objectID": "slides/week04.html#some-motivation",
@@ -1719,7 +2195,7 @@
     "href": "slides/week04.html#maps-with-leaflet",
     "title": "Week 4: Data Visualization",
     "section": "Maps with leaflet",
-    "text": "Maps with leaflet\nLet’s create a map of monthly average temperatures at each of the weather stations and color the points by a temperature gradient. We need to create a color palette and we can add a legend.\n\nlibrary(leaflet)\nmet_avg2 &lt;- summarize(met,\n                      temp =     mean(temp, na.rm = TRUE),\n                      lat =      mean(lat, na.rm = TRUE),\n                      lon =      mean(lon, na.rm = TRUE),\n                      .by = c(USAFID))\nmet_avg2 &lt;- met_avg2[!is.na(met_avg2$temp), ]\n\n# Generating a color palette\ntemp.pal &lt;- colorNumeric(c('darkgreen','goldenrod','brown'), domain=met_avg2$temp)\n\ntemp.pal(20)\n\n[1] \"#B69A19\"\n\ntemp.pal\n\nfunction (x) \n{\n    if (length(x) == 0 || all(is.na(x))) {\n        return(pf(x))\n    }\n    if (is.null(rng)) \n        rng &lt;- range(x, na.rm = TRUE)\n    rescaled &lt;- scales::rescale(x, from = rng)\n    if (any(rescaled &lt; 0 | rescaled &gt; 1, na.rm = TRUE)) \n        warning(\"Some values were outside the color scale and will be treated as NA\")\n    if (reverse) {\n        rescaled &lt;- 1 - rescaled\n    }\n    pf(rescaled)\n}\n&lt;bytecode: 0x10607e208&gt;\n&lt;environment: 0x10607c438&gt;\nattr(,\"colorType\")\n[1] \"numeric\"\nattr(,\"colorArgs\")\nattr(,\"colorArgs\")$na.color\n[1] \"#808080\""
+    "text": "Maps with leaflet\nLet’s create a map of monthly average temperatures at each of the weather stations and color the points by a temperature gradient. We need to create a color palette and we can add a legend.\n\nlibrary(leaflet)\nmet_avg2 &lt;- summarize(met,\n                      temp =     mean(temp, na.rm = TRUE),\n                      lat =      mean(lat, na.rm = TRUE),\n                      lon =      mean(lon, na.rm = TRUE),\n                      .by = c(USAFID))\nmet_avg2 &lt;- met_avg2[!is.na(met_avg2$temp), ]\n\n# Generating a color palette\ntemp.pal &lt;- colorNumeric(c('darkgreen','goldenrod','brown'), domain=met_avg2$temp)\n\ntemp.pal(20)\n\n[1] \"#B69A19\"\n\ntemp.pal\n\nfunction (x) \n{\n    if (length(x) == 0 || all(is.na(x))) {\n        return(pf(x))\n    }\n    if (is.null(rng)) \n        rng &lt;- range(x, na.rm = TRUE)\n    rescaled &lt;- scales::rescale(x, from = rng)\n    if (any(rescaled &lt; 0 | rescaled &gt; 1, na.rm = TRUE)) \n        warning(\"Some values were outside the color scale and will be treated as NA\")\n    if (reverse) {\n        rescaled &lt;- 1 - rescaled\n    }\n    pf(rescaled)\n}\n&lt;bytecode: 0x106783590&gt;\n&lt;environment: 0x106780e90&gt;\nattr(,\"colorType\")\n[1] \"numeric\"\nattr(,\"colorArgs\")\nattr(,\"colorArgs\")$na.color\n[1] \"#808080\""
   },
   {
     "objectID": "slides/week04.html#maps-with-leaflet-1",
@@ -1936,7 +2412,7 @@
     "href": "slides/week01.html#factors-3",
     "title": "R Basics",
     "section": "Factors",
-    "text": "Factors\nExercise: How can we make this go much faster?\n\nsystem.time({y &lt;- tolower(y)})\n\n   user  system elapsed \n  1.285   0.014   1.329"
+    "text": "Factors\nExercise: How can we make this go much faster?\n\nsystem.time({y &lt;- tolower(y)})\n\n   user  system elapsed \n  1.262   0.007   1.268"
   },
   {
     "objectID": "slides/week01.html#factors-can-be-confusing",
@@ -2160,7 +2636,7 @@
     "href": "slides/week01.html#vectorization-4",
     "title": "R Basics",
     "section": "Vectorization",
-    "text": "Vectorization\n\nIf we operate on two vectors, vectorization is componentwise.\nHere is an example:\n\n\nheights &lt;- c(69, 62, 66, 70, 70, 73, 67, 73, 67, 70)\nerror &lt;- rnorm(length(heights), 0, 0.1)\nheights + error\n\n [1] 69.04028 61.92156 66.13797 70.00078 70.00544 73.05819 67.07054 73.00456\n [9] 67.09739 70.03438"
+    "text": "Vectorization\n\nIf we operate on two vectors, vectorization is componentwise.\nHere is an example:\n\n\nheights &lt;- c(69, 62, 66, 70, 70, 73, 67, 73, 67, 70)\nerror &lt;- rnorm(length(heights), 0, 0.1)\nheights + error\n\n [1] 69.00134 61.89057 66.04635 69.92656 69.95497 72.91317 67.02321 72.92356\n [9] 67.02289 69.80704"
   },
   {
     "objectID": "slides/week01.html#exercise",
