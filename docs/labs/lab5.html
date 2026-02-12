@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Schedule – BIOSTAT 620</title>
+<title>Lab 5 - Data Wrangling – BIOSTAT 620</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d1b12f2568ecbe55642fee6aa00bd082.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-b2511bcbb01c2159fd96a78deb42ffd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d1b12f2568ecbe55642fee6aa00bd082.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-b2511bcbb01c2159fd96a78deb42ffd9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,17 +104,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">BIOSTAT 620</span>
     </a>
   </div>
@@ -91,19 +125,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./syllabus.html"> 
+    <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">Syllabus</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./schedule.html" aria-current="page"> 
+    <a class="nav-link" href="../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./references.html"> 
+    <a class="nav-link" href="../references.html"> 
 <span class="menu-text">References</span></a>
   </li>  
 </ul>
@@ -118,15 +152,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Schedule</h1>
+<h1 class="title">Lab 5 - Data Wrangling</h1>
 </div>
 
 
@@ -143,150 +175,85 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Week</th>
-<th style="text-align: center;">Date</th>
-<th style="text-align: left;">Topic</th>
-<th style="text-align: center;">Slides</th>
-<th style="text-align: center;">Lab</th>
-<th style="text-align: center;">Assignment Release (not due)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1/8</td>
-<td style="text-align: left;">Syllabus and Introduction</td>
-<td style="text-align: center;"><a href="./slides/week00.html">Slides</a></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1/13-15</td>
-<td style="text-align: left;">Introduction to Data Science and R</td>
-<td style="text-align: center;"><a href="./slides/week01.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab1.html">Lab</a></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">1/20-22</td>
-<td style="text-align: left;">Version Control &amp; Reproducible Research</td>
-<td style="text-align: center;"><a href="./slides/week02.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab2.html">Lab</a></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1/27-29</td>
-<td style="text-align: left;">Exploratory data analysis</td>
-<td style="text-align: center;"><a href="./slides/week03.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab3.html">Lab</a></td>
-<td style="text-align: center;"><a href="./assignments/hw1.html">HW1</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">2/3-5</td>
-<td style="text-align: left;">Data visualization</td>
-<td style="text-align: center;"><a href="./slides/week04.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab4.html">Lab</a></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">2/10-12</td>
-<td style="text-align: left;">Data Cleaning and Wrangling</td>
-<td style="text-align: center;"><a href="./slides/week05.html">Slides</a></td>
-<td style="text-align: center;"><a href="./labs/lab5.html">Lab</a></td>
-<td style="text-align: center;">HW2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">2/17-19</td>
-<td style="text-align: left;">Text Mining &amp; Sentiment Analysis</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 6</td>
-<td style="text-align: center;">Midterm Project</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">2/24-26</td>
-<td style="text-align: left;">Scraping, APIs, and Regular Expressions</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 7</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"></td>
-<td style="text-align: center;">3/3-5</td>
-<td style="text-align: left;">NO CLASS - SPRING RECESS</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">3/10-12</td>
-<td style="text-align: left;">Efficiency and High Performance Computing</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 8</td>
-<td style="text-align: center;">HW3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">3/17-19</td>
-<td style="text-align: left;">SQL and Managing Big Data</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 9</td>
-<td style="text-align: center;">Final Project</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">3/24-26</td>
-<td style="text-align: left;">Interactive Visualization</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 10</td>
-<td style="text-align: center;">HW4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">3/31-4/2</td>
-<td style="text-align: left;">Building a Website with Quarto and GitHub</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Lab 11</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">4/7-9</td>
-<td style="text-align: left;">Special Topics</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;">Final Project Workshop</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">13</td>
-<td style="text-align: center;">4/14-16</td>
-<td style="text-align: left;">Special Topics</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">14</td>
-<td style="text-align: center;">4/21 (NO CLASS ON 4/23)</td>
-<td style="text-align: left;">Final Project Presentations</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
+<section id="learning-goals" class="level1">
+<h1>Learning goals</h1>
+<ul>
+<li>Use the <code>merge()</code> function to join two datasets.</li>
+<li>Look at several different ways of loading data from different sources.</li>
+<li>Transform, filter, and mutate the data.</li>
+</ul>
+</section>
+<section id="lab-description" class="level1">
+<h1>Lab description</h1>
+<p>This analysis will involve gathering COVID-19 related data from the CDC and then extensively processing it to merge the various datasets. To facilitate this, we will also source population data from the US Census to accurately calculate these rates.</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<ol type="1">
+<li><p>Load the <code>data.table</code> (and the <code>dtplyr</code> and <code>dplyr</code> packages if you plan to work with those). Alternatively, you can decide to work with <code>tidyverse</code>.</p></li>
+<li><p>The <a href="https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf">US Census API User Guide</a> provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the <code>population</code> csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>poppulation <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'population.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Examine the <code>population</code> matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:</li>
+</ol>
+<ul>
+<li>Convert <code>population</code> to a tidy dataset.</li>
+<li>Make the first row the header</li>
+<li>Remove the unnecessary index column and the state ID column</li>
+<li>Change the name of the column with state names to <code>state_name</code>.</li>
+<li>Add a column with state abbreviations called <code>state</code>. Make sure you assign the abbreviations for DC and PR correctly.</li>
+</ul>
+<p>Hint 1: Use the <strong>janitor</strong> package to make the first row the header. Hint 2: Use <code>setNames(state.abb, state.name)</code> to map state names to abbreviations.</p>
+<ol start="4" type="1">
+<li>The following URL:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://github.com/datasciencelabs/2024/raw/refs/heads/main/data/regions.json"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>points to a JSON file that lists the states in the 10 Public Health Service (PHS) defined by CDC. We want to add these regions to the <code>population</code> dataset. To facilitate this create a dataframe called <code>regions</code> that has columns <code>state_name</code>, <code>region</code>, and <code>region_name</code>. For this exercise, we recommend:</p>
+<ul>
+<li>Split the states into separate rows. Hint: look up the <code>unnest</code> function.</li>
+<li>One of the regions has a long name. Change it to something shorter.</li>
+<li>Print the first few rows of regions.</li>
+<li>Make sure that the region is a factor.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://github.com/datasciencelabs/2024/raw/refs/heads/main/data/regions.json"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(url) <span class="co"># use fromJSON to read as a data.frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li><p>Add a region and region name columns to the <code>population</code> data frame using the merging or joining methods we have learned. Print out the first few rows. Hint: consider <code>left_join</code>.</p></li>
+<li><p>From reading <a href="https://data.cdc.gov/" class="uri">https://data.cdc.gov/</a> we learn the endpoint <code>https://data.cdc.gov/resource/pwn4-m3yp.json</code> provides state level data from SARS-COV2 cases. We use <strong>httr2</strong> tools to download this into a data frame. Question: what would happen and why if you replaced <code>"?$limit=10000000000"</code> with <code>""</code>?</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>api <span class="ot">&lt;-</span> <span class="st">"https://data.cdc.gov/resource/pwn4-m3yp.json"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="fu">paste0</span>(api,<span class="fu">paste0</span>(<span class="st">"?$limit=10000000000"</span>)))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> request <span class="sc">|&gt;</span> <span class="fu">req_perform</span>() <span class="sc">|&gt;</span> <span class="fu">resp_body_string</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cases_raw <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(response)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cases_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="7" type="1">
+<li>Wrangle the <code>cases_raw</code> to produce a data frame with columns <code>state</code>, <code>date</code> (should be the end date) and <code>cases</code>. For this task:</li>
+</ol>
+<ul>
+<li>Make sure the cases are numeric and the dates are in <code>Date</code> format. Hint: check out the <code>lubridate</code> package.</li>
+<li>Print out the first several rows.</li>
+</ul>
+<ol start="8" type="1">
+<li>Optional freestyle. Here are some ideas:</li>
+</ol>
+<ul>
+<li>Merge the cases dataframe with the population data.</li>
+<li>Use the <code>as_date</code>, <code>ymd_hms</code>, <code>epiweek</code> and <code>epiyear</code> functions in the <strong>lubridate</strong> package to get a week and year for each data point.</li>
+<li>Order your data by date within each state.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
