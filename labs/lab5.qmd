@@ -95,6 +95,6 @@ Here are some ideas:
 
 ### 9. Submission (due Tuesday, Feb 17 at 8:30am)
 
-Submit through the course [Github issues page](https://github.com/dmcable/BIOSTAT620W26/issues/3).
+Submit through the course [Github issues page](https://github.com/dmcable/BIOSTAT620W26/issues/4).
 
 
