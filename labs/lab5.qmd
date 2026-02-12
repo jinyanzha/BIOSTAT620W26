@@ -16,14 +16,14 @@ This analysis will involve gathering COVID-19 related data from the CDC and then
 
 ## Setup
 
-1. Load the `data.table` (and the `dtplyr` and `dplyr` packages if you plan to work with those). Alternatively, you can decide to work with `tidyverse`.
+### 1. Load the `data.table` (and the `dtplyr` and `dplyr` packages if you plan to work with those). Alternatively, you can decide to work with `tidyverse`.
 
 2. The [US Census API User Guide](https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf)
 provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the `population` csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.
 
 ```{r pop-data, eval = FALSE}
 url <- 'https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/population.csv'
-if (!file.exists("covid_processed.csv"))
+if (!file.exists("population.csv"))
   download.file(
     url = url,
     destfile = "population.csv",
@@ -84,5 +84,9 @@ head(cases_raw)
 - Merge the cases dataframe with the population data. 
 - Use the `as_date`, `ymd_hms`, `epiweek` and `epiyear` functions in the **lubridate** package to get a week and year for each data point.
 - Order your data by date within each state. 
+
+9. Submission (due Tuesday, Feb 10 at 8:30am)
+
+Submit through the course [Github issues page](https://github.com/dmcable/BIOSTAT620W26/issues/3).
 
 
