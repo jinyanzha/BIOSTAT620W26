@@ -44,7 +44,7 @@ Examine the `population` matrix you just created. Notice that 1) it is not tidy,
 - Change the name of the column with state names to `state_name`. 
 - Add a column with state abbreviations called `state`. Make sure you assign the abbreviations for DC and PR correctly. 
 
-Hint 1: Use the **janitor** package to make the first row the header. Hint 2: Use `setNames(state.abb, state.name)` to map state names to abbreviations.
+Hint 1: Use the **row_to_names** function from the **janitor** package to make the first row the header. Hint 2: Use `setNames(state.abb, state.name)` to map state names to abbreviations.
 
 ### 4. Regions data
 The following URL:

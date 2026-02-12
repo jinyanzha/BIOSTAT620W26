@@ -7,6 +7,7 @@ format:
     theme: default
     fig-width: 7
     fig-align: center
+  html:
     embed-resources: true
 echo: TRUE
 engine: knitr
@@ -182,7 +183,7 @@ Similar to `pivot_wider`, `names_from` and `values_from` default to `name` and `
 
 We now demonstrate with a more complex example in which we have to use both `pivot_longer` and `pivot_wider` to tidy the data.
 
-```{r, message=FALSE}
+```{r}
 path <- system.file("extdata", package = "dslabs")
 
 filename <- "life-expectancy-and-fertility-two-countries-example.csv"
@@ -211,7 +212,7 @@ select(raw_dat, 1:5)
 
 * We will call it `name`, the default, for now:
 
-```{r}
+```{r, message=FALSE}
 raw_dat |> pivot_longer(-country) |> head()
 ```
 
@@ -563,7 +564,7 @@ myxor <- function(x, y) {
 Hint 1: Remember that negating `(x & y)` equals `(!x | !y)`.
 
 Hint 2: Logical operators are a distributive, meaning
-`a * (b + c) = (a * b) + (a + c)`, where `*` and `+` are `&` or `|`.
+`a * (b + c) = (a * b) + (a * c)`, where `*` and `+` are `&` or `|`.
 
 ---
 
@@ -712,7 +713,7 @@ that allows accessing column names in a datatable's `Frame`.
 
 ## Solutions
 
-```{r echo=FALSE, eval = TRUE, cache = TRUE, echo = TRUE}
+```{r echo=FALSE, eval = TRUE, cache = FALSE, echo = TRUE}
 # Question 1
 nrow(dat[dat$temp < 25 & dat$temp > 18, ])
 # dat[temp %between% c(18, 25), .N] 
@@ -727,7 +728,7 @@ nrow(dat[is.na(dat$temp), ])
 
 ## Solutions (cont.){.smaller}
 
-```{r echo=FALSE, eval = TRUE, cache = TRUE, echo = TRUE}
+```{r echo=FALSE, eval = TRUE, cache = FALSE, echo = TRUE}
 # Question 3
 # Drawing a sample
 set.seed(123)
@@ -758,7 +759,7 @@ ggplot(map_data("state"), aes(x = long, y = lat)) +
 - **double**: Numeric variable with decimals (continuous), e.g. distance, expression level, time.
 
 In C (and other languages), strings, integers, and doubles may be specified 
-with size, e.g. in `python` integers can be of 9, 16, and 32 bits. This is relevant
+with size, e.g. integers can be of 8, 16, and 32 bits. This is relevant
 when managing large datasets, where saving space can be fundamental
 ([more info](https://en.wikipedia.org/wiki/C_data_types#Main_types)).
 
@@ -1001,7 +1002,7 @@ head(wind.temp)
 
 ## Merging data (cont. 1)
 
-```{r stations-data, cache = TRUE, warning=FALSE, echo=TRUE}
+```{r stations-data, cache = FALSE, warning=FALSE, echo=TRUE}
 stations <- fread("https://noaa-isd-pds.s3.amazonaws.com/isd-history.csv")
 stations <- as.data.frame(stations)
 stations$USAF <- as.integer(stations$USAF)
@@ -1024,7 +1025,7 @@ head(stations, n = 4)
 
 ## Merging data (cont. 2){.smaller}
 
-```{r merge-try1, cache = TRUE, echo=TRUE}
+```{r merge-try1, cache = FALSE, echo=TRUE}
 merge(
   # Data
   x     = dat,      
