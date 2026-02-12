@@ -30,7 +30,7 @@ if (!file.exists("covid_processed.csv"))
     method   = "libcurl",
     timeout  = 60
     )
-poppulation <- read.csv('population.csv')
+population <- read.csv('population.csv')
 ```
 
 3. Examine the `population` matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:
@@ -46,7 +46,7 @@ Hint 1: Use the **janitor** package to make the first row the header. Hint 2: Us
 4. The following URL:
 
 ```{r, eval = FALSE}
-url <- "https://github.com/datasciencelabs/2024/raw/refs/heads/main/data/regions.json"
+url <- "https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/regions.json"
 ```
 
 points to a JSON file that lists the states in the 10 Public Health Service (PHS) defined by CDC. We want to add these regions to the `population` dataset. To facilitate this create a dataframe called `regions` that has columns `state_name`, `region`, and `region_name`. For this exercise, we recommend:
@@ -58,7 +58,7 @@ points to a JSON file that lists the states in the 10 Public Health Service (PHS
 
 ```{r, eval = FALSE}
 library(jsonlite)
-url <- "https://github.com/datasciencelabs/2024/raw/refs/heads/main/data/regions.json"
+url <- "https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/regions.json"
 regions <- fromJSON(url) # use fromJSON to read as a data.frame
 ```
 
