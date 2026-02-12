@@ -22,6 +22,14 @@ This analysis will involve gathering COVID-19 related data from the CDC and then
 provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the `population` csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.
 
 ```{r pop-data, eval = FALSE}
+url <- 'https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/population.csv'
+if (!file.exists("covid_processed.csv"))
+  download.file(
+    url = url,
+    destfile = "population.csv",
+    method   = "libcurl",
+    timeout  = 60
+    )
 poppulation <- read.csv('population.csv')
 ```
 

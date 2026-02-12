@@ -193,7 +193,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>The <a href="https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf">US Census API User Guide</a> provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the <code>population</code> csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>poppulation <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'population.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/population.csv'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">"covid_processed.csv"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> url,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">destfile =</span> <span class="st">"population.csv"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">method   =</span> <span class="st">"libcurl"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">timeout  =</span> <span class="dv">60</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>poppulation <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'population.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Examine the <code>population</code> matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:</li>
