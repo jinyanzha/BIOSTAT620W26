@@ -16,9 +16,11 @@ This analysis will involve gathering COVID-19 related data from the CDC and then
 
 ## Setup
 
-### 1. Load the `data.table` (and the `dtplyr` and `dplyr` packages if you plan to work with those). Alternatively, you can decide to work with `tidyverse`.
+### 1. Load in packages.
+Load the `data.table` (and the `dtplyr` and `dplyr` packages if you plan to work with those). Alternatively, you can decide to work with `tidyverse`.
 
-2. The [US Census API User Guide](https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf)
+### 2. Census data.
+The [US Census API User Guide](https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf)
 provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the `population` csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.
 
 ```{r pop-data, eval = FALSE}
@@ -33,7 +35,8 @@ if (!file.exists("population.csv"))
 population <- read.csv('population.csv')
 ```
 
-3. Examine the `population` matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:
+### 3. Clean population data.
+Examine the `population` matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:
 
 - Convert `population` to a tidy dataset. 
 - Make the first row the header
@@ -43,7 +46,8 @@ population <- read.csv('population.csv')
 
 Hint 1: Use the **janitor** package to make the first row the header. Hint 2: Use `setNames(state.abb, state.name)` to map state names to abbreviations.
 
-4. The following URL:
+### 4. Regions data
+The following URL:
 
 ```{r, eval = FALSE}
 url <- "https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/regions.json"
@@ -62,9 +66,11 @@ url <- "https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/
 regions <- fromJSON(url) # use fromJSON to read as a data.frame
 ```
 
-5. Add a region and region name columns to the `population` data frame using the merging or joining methods we have learned. Print out the first few rows. Hint: consider `left_join`.
+### 5. Process regions data.
+Add a region and region name columns to the `population` data frame using the merging or joining methods we have learned. Print out the first few rows. Hint: consider `left_join`.
 
-6. From reading <https://data.cdc.gov/> we learn the endpoint `https://data.cdc.gov/resource/pwn4-m3yp.json` provides state level data from SARS-COV2 cases. We use **httr2** tools to download this into a data frame. Question: what would happen and why if you replaced `"?$limit=10000000000"` with `""`?
+### 6. Load CDC data
+From reading <https://data.cdc.gov/> we learn the endpoint `https://data.cdc.gov/resource/pwn4-m3yp.json` provides state level data from SARS-COV2 cases. We use **httr2** tools to download this into a data frame. Question: what would happen and why if you replaced `"?$limit=10000000000"` with `""`?
 
 ```{r, eval = FALSE}
 api <- "https://data.cdc.gov/resource/pwn4-m3yp.json"
@@ -74,18 +80,20 @@ cases_raw <- fromJSON(response)
 head(cases_raw)
 ```
 
-7. Wrangle the `cases_raw` to produce a data frame with columns `state`, `date` (should be the end date) and `cases`. For this task:
+### 7. Wrangle cases data
+Wrangle the `cases_raw` to produce a data frame with columns `state`, `date` (should be the end date) and `cases`. For this task:
 
 - Make sure the cases are numeric and the dates are in `Date` format. Hint: check out the `lubridate` package.
 - Print out the first several rows.
 
-8. Optional freestyle. Here are some ideas:
+### 8. Optional freestyle. 
+Here are some ideas:
 
 - Merge the cases dataframe with the population data. 
 - Use the `as_date`, `ymd_hms`, `epiweek` and `epiyear` functions in the **lubridate** package to get a week and year for each data point.
 - Order your data by date within each state. 
 
-9. Submission (due Tuesday, Feb 10 at 8:30am)
+### 9. Submission (due Tuesday, Feb 17 at 8:30am)
 
 Submit through the course [Github issues page](https://github.com/dmcable/BIOSTAT620W26/issues/3).
 

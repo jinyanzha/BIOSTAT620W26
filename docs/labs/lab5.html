@@ -188,11 +188,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This analysis will involve gathering COVID-19 related data from the CDC and then extensively processing it to merge the various datasets. To facilitate this, we will also source population data from the US Census to accurately calculate these rates.</p>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<section id="load-the-data.table-and-the-dtplyr-and-dplyr-packages-if-you-plan-to-work-with-those.-alternatively-you-can-decide-to-work-with-tidyverse." class="level3">
-<h3 class="anchored" data-anchor-id="load-the-data.table-and-the-dtplyr-and-dplyr-packages-if-you-plan-to-work-with-those.-alternatively-you-can-decide-to-work-with-tidyverse.">1. Load the <code>data.table</code> (and the <code>dtplyr</code> and <code>dplyr</code> packages if you plan to work with those). Alternatively, you can decide to work with <code>tidyverse</code>.</h3>
-<ol start="2" type="1">
-<li>The <a href="https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf">US Census API User Guide</a> provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the <code>population</code> csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.</li>
-</ol>
+<section id="load-in-packages." class="level3">
+<h3 class="anchored" data-anchor-id="load-in-packages.">1. Load in packages.</h3>
+<p>Load the <code>data.table</code> (and the <code>dtplyr</code> and <code>dplyr</code> packages if you plan to work with those). Alternatively, you can decide to work with <code>tidyverse</code>.</p>
+</section>
+<section id="census-data." class="level3">
+<h3 class="anchored" data-anchor-id="census-data.">2. Census data.</h3>
+<p>The <a href="https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-user-guide.pdf">US Census API User Guide</a> provides details on how to leverage this valuable resource. We are interested in vintage population estimates for years 2020 and 2021. Load in the <code>population</code> csv, and print out the first few rows of the matrix. Hint: the first row of the matrix will be the variable names and this OK as we will fix in the next exercise.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">'https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/population.csv'</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">"population.csv"</span>))</span>
@@ -204,9 +206,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'population.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="3" type="1">
-<li>Examine the <code>population</code> matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:</li>
-</ol>
+</section>
+<section id="clean-population-data." class="level3">
+<h3 class="anchored" data-anchor-id="clean-population-data.">3. Clean population data.</h3>
+<p>Examine the <code>population</code> matrix you just created. Notice that 1) it is not tidy, 2) the column types are not what we want, 3) there is a redundant column for index, and 4) the first row is a header. Here are some recommendations for how to clean the data:</p>
 <ul>
 <li>Convert <code>population</code> to a tidy dataset.</li>
 <li>Make the first row the header</li>
@@ -215,9 +218,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Add a column with state abbreviations called <code>state</code>. Make sure you assign the abbreviations for DC and PR correctly.</li>
 </ul>
 <p>Hint 1: Use the <strong>janitor</strong> package to make the first row the header. Hint 2: Use <code>setNames(state.abb, state.name)</code> to map state names to abbreviations.</p>
-<ol start="4" type="1">
-<li>The following URL:</li>
-</ol>
+</section>
+<section id="regions-data" class="level3">
+<h3 class="anchored" data-anchor-id="regions-data">4. Regions data</h3>
+<p>The following URL:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/regions.json"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -233,10 +237,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/dmcable/BIOSTAT620W26/main/data/covid/regions.json"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(url) <span class="co"># use fromJSON to read as a data.frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="5" type="1">
-<li><p>Add a region and region name columns to the <code>population</code> data frame using the merging or joining methods we have learned. Print out the first few rows. Hint: consider <code>left_join</code>.</p></li>
-<li><p>From reading <a href="https://data.cdc.gov/" class="uri">https://data.cdc.gov/</a> we learn the endpoint <code>https://data.cdc.gov/resource/pwn4-m3yp.json</code> provides state level data from SARS-COV2 cases. We use <strong>httr2</strong> tools to download this into a data frame. Question: what would happen and why if you replaced <code>"?$limit=10000000000"</code> with <code>""</code>?</p></li>
-</ol>
+</section>
+<section id="process-regions-data." class="level3">
+<h3 class="anchored" data-anchor-id="process-regions-data.">5. Process regions data.</h3>
+<p>Add a region and region name columns to the <code>population</code> data frame using the merging or joining methods we have learned. Print out the first few rows. Hint: consider <code>left_join</code>.</p>
+</section>
+<section id="load-cdc-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-cdc-data">6. Load CDC data</h3>
+<p>From reading <a href="https://data.cdc.gov/" class="uri">https://data.cdc.gov/</a> we learn the endpoint <code>https://data.cdc.gov/resource/pwn4-m3yp.json</code> provides state level data from SARS-COV2 cases. We use <strong>httr2</strong> tools to download this into a data frame. Question: what would happen and why if you replaced <code>"?$limit=10000000000"</code> with <code>""</code>?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>api <span class="ot">&lt;-</span> <span class="st">"https://data.cdc.gov/resource/pwn4-m3yp.json"</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>request <span class="ot">&lt;-</span> <span class="fu">request</span>(<span class="fu">paste0</span>(api,<span class="fu">paste0</span>(<span class="st">"?$limit=10000000000"</span>)))</span>
@@ -244,24 +252,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cases_raw <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(response)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cases_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<ol start="7" type="1">
-<li>Wrangle the <code>cases_raw</code> to produce a data frame with columns <code>state</code>, <code>date</code> (should be the end date) and <code>cases</code>. For this task:</li>
-</ol>
+</section>
+<section id="wrangle-cases-data" class="level3">
+<h3 class="anchored" data-anchor-id="wrangle-cases-data">7. Wrangle cases data</h3>
+<p>Wrangle the <code>cases_raw</code> to produce a data frame with columns <code>state</code>, <code>date</code> (should be the end date) and <code>cases</code>. For this task:</p>
 <ul>
 <li>Make sure the cases are numeric and the dates are in <code>Date</code> format. Hint: check out the <code>lubridate</code> package.</li>
 <li>Print out the first several rows.</li>
 </ul>
-<ol start="8" type="1">
-<li>Optional freestyle. Here are some ideas:</li>
-</ol>
+</section>
+<section id="optional-freestyle." class="level3">
+<h3 class="anchored" data-anchor-id="optional-freestyle.">8. Optional freestyle.</h3>
+<p>Here are some ideas:</p>
 <ul>
 <li>Merge the cases dataframe with the population data.</li>
 <li>Use the <code>as_date</code>, <code>ymd_hms</code>, <code>epiweek</code> and <code>epiyear</code> functions in the <strong>lubridate</strong> package to get a week and year for each data point.</li>
 <li>Order your data by date within each state.</li>
 </ul>
-<ol start="9" type="1">
-<li>Submission (due Tuesday, Feb 10 at 8:30am)</li>
-</ol>
+</section>
+<section id="submission-due-tuesday-feb-17-at-830am" class="level3">
+<h3 class="anchored" data-anchor-id="submission-due-tuesday-feb-17-at-830am">9. Submission (due Tuesday, Feb 17 at 8:30am)</h3>
 <p>Submit through the course <a href="https://github.com/dmcable/BIOSTAT620W26/issues/3">Github issues page</a>.</p>
 
 
