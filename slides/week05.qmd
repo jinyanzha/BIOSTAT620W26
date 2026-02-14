@@ -7,7 +7,6 @@ format:
     theme: default
     fig-width: 7
     fig-align: center
-  html:
     embed-resources: true
 echo: TRUE
 engine: knitr
