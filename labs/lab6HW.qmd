@@ -1,0 +1,174 @@
+---
+title: "lab6HW"
+format:
+  html:
+    embed-resources: true
+editor: visual
+output-file: lab6HW.html
+output-dir: labs
+---
+
+1
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidytext)
+library(readr)
+
+data <- read_csv("C:/Users/57146/Desktop/hw/620/labs/mtsamples.csv")
+
+glimpse(data)
+head(data)
+data %>%
+  count(medical_specialty, sort = TRUE)
+
+##there are 40 different medical specialties in the dataset. The categories are related in the sense that they all represent different medical specialties. Each report belongs to only one specialty, so there is no overlap at the observation level. The distribution is not even, some specialties, such as Surgery, appear much more frequently than others.
+```
+
+2
+
+```{r}
+word_counts <- data %>%
+  unnest_tokens(word, transcription) %>%
+  count(word, sort = TRUE)
+
+word_counts %>%
+  slice_head(n = 20) %>%
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 20 Most Frequent Words",
+    x = "Word",
+    y = "Frequency"
+  )
+
+##The most frequent words are common words such as “the,” “and,” “was,” and “of.” These word don't make sense.
+```
+
+3
+
+```{r}
+
+word_counts <- data %>%
+  unnest_tokens(word, transcription) %>%
+  anti_join(stop_words, by = "word") %>%
+  filter(!grepl("^[0-9]+$", word)) %>%
+  count(word, sort = TRUE)
+
+word_counts %>%
+  slice_head(n = 20) %>%
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 20 Most Frequent Words",
+    x = "Word",
+    y = "Frequency"
+  )
+
+## the most 20 words include “patient,” “history,” “procedure,” “pain,” and “normal.” This makes sense because the dataset consists of clinical medical reports. The presence of numerical tokens likely reflects dose information within the transcripts.
+
+##This is better than include stop word
+```
+
+4
+
+```{r}
+library(tidyr)
+
+bigram_counts <- data %>%
+  unnest_tokens(bigram, transcription, token = "ngrams", n = 2) %>%
+  separate(bigram, into = c("word1", "word2"), sep = " ") %>%
+  filter(!word1 %in% stop_words$word,
+         !word2 %in% stop_words$word) %>%
+  filter(!grepl("^[0-9]+$", word1),
+         !grepl("^[0-9]+$", word2)) %>%
+  unite(bigram, word1, word2, sep = " ") %>%
+  count(bigram, sort = TRUE)
+
+bigram_counts %>%
+  slice_head(n = 20) %>%
+  ggplot(aes(x = reorder(bigram, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 20 Bigrams",
+    x = "Bigram",
+    y = "Frequency"
+  )
+
+
+trigram_counts <- data %>%
+  unnest_tokens(trigram, transcription, token = "ngrams", n = 3) %>%
+  separate(trigram, into = c("word1", "word2", "word3"), sep = " ") %>%
+  filter(!word1 %in% stop_words$word,
+         !word2 %in% stop_words$word,
+         !word3 %in% stop_words$word) %>%
+  filter(!grepl("^[0-9]+$", word1),
+         !grepl("^[0-9]+$", word2),
+         !grepl("^[0-9]+$", word3)) %>%
+  unite(trigram, word1, word2, word3, sep = " ") %>%
+  count(trigram, sort = TRUE)
+
+trigram_counts %>%
+  slice_head(n = 20) %>%
+  ggplot(aes(x = reorder(trigram, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 20 trigrams",
+    x = "trigram",
+    y = "Frequency"
+  )
+
+##Compared to unigrams, bigrams has meaningful medical phrases such as “blood pressure” and “medical history.” Trigrams provide even more specific clinical expressions like “past medical history” and “coronary artery disease.” As the n-gram length increases, the phrases become more informative but appear less frequently.
+```
+
+5
+
+```{r}
+bigrams <- data %>%
+  unnest_tokens(bigram, transcription, token = "ngrams", n = 2) %>%
+  separate(bigram, into = c("word1", "word2"), sep = " ")
+before_blood <- bigrams %>%
+  filter(word2 == "blood") %>%
+  count(word1, sort = TRUE)
+after_blood <- bigrams %>%
+  filter(word1 == "blood") %>%
+  count(word2, sort = TRUE)
+before_blood %>% slice_head(n = 10)
+after_blood %>% slice_head(n = 10)
+```
+
+6
+
+```{r}
+top_words_by_specialty <- data %>%
+  select(medical_specialty, transcription) %>%
+  unnest_tokens(word, transcription) %>%
+  anti_join(stop_words, by = "word") %>%
+  filter(!grepl("^[0-9]+$", word)) %>%
+  count(medical_specialty, word, sort = TRUE) %>%
+  group_by(medical_specialty) %>%
+  slice_max(n, n = 5) %>%
+  ungroup()
+top_words_by_specialty
+```
+
+7
+
+```{r}
+word_by_specialty <- data %>%
+  unnest_tokens(word, transcription) %>%
+  anti_join(stop_words, by = "word") %>%
+  filter(!grepl("^[0-9]+$", word)) %>%
+  count(medical_specialty, word)
+
+incision_counts <- word_by_specialty %>%
+  filter(word == "incision") %>%
+  arrange(desc(n))
+incision_counts
+##The word “incision” is heavily concentrated in surgical specialties and appears only minimally in non-surgical fields. This suggests strong domain-specific vocabulary patterns across specialties.
+```
