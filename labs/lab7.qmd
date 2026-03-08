@@ -1,0 +1,128 @@
+---
+title: "lab7"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## 1
+
+```{r}
+library(xml2)
+library(stringr)
+
+website <- read_html("https://pubmed.ncbi.nlm.nih.gov/?term=sars-cov-2")
+
+counts <- xml_find_first(website, "//div[@class='results-amount']")
+counts <- xml_text(counts)
+
+totalcount <- str_extract(counts, "[0-9,]+")
+totalcount <- gsub(",", "", totalcount)
+
+totalcount <- as.numeric(totalcount)
+print(totalcount)
+```
+
+## 2
+
+```{r}
+# read in text, each line is a separate character
+abstracts <- readLines(
+  "C:/Users/57146/Desktop/hw/620/abstract-sars-cov-2-set.txt",
+  warn = FALSE
+)
+
+# combine all text into one character
+abstracts <- paste(abstracts, collapse = "\n")
+
+# split the text whenever 3 new lines occur in a row (indicating two blank lines)
+abstracts <- strsplit(abstracts, "\n\n\n")[[1]]
+
+# replace any remaining "\n" symbols with spaces
+abstracts <- gsub("\n", " ", abstracts)
+
+# replace multiple spaces with single space
+abstracts <- gsub(" +", " ", abstracts)
+abstracts <- trimws(abstracts)
+length(abstracts)
+```
+
+## 3
+
+```{r}
+library(stringr)
+
+institution <- str_extract_all(
+  abstracts,
+  "(?:[A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)* University|[A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)* State University|University of [A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)*|Institute of [A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)*)"
+)
+
+institution <- unlist(institution)
+institution <- institution[!is.na(institution)]
+institution <- str_trim(institution)
+institution <- str_to_title(institution)
+
+institution <- str_replace(
+  institution,
+  "^(University Of [A-Za-z ]+?)( School.*| Medical.*| Department.*| College.*)?$",
+  "\\1"
+)
+
+institution <- institution[institution != "The University"]
+
+sort(table(institution), decreasing = TRUE)[1:10]
+```
+
+The results could be improved by merging sub-units into their parent universities, removing incomplete matches such as “The University,” standardizing capitalization, and using stricter word boundaries in the regular expression.
+
+## 4
+
+```{r}
+abstracts <- readLines(
+  "C:/Users/57146/Desktop/hw/620/abstract-sars-cov-2-set.txt",
+  warn = FALSE
+)
+
+# combine all text into one character
+abstracts <- paste(abstracts, collapse = "\n")
+
+# split the text whenever 3 new lines occur in a row (indicating two blank lines)
+abstracts <- strsplit(abstracts, "\n\n\n")[[1]]
+journal <- str_extract(abstracts, "\\d+\\.\\s.*?(?=\\s20\\d{2})")
+journal <- gsub("^\\d+\\.\\s", "", journal)
+
+titles <- sapply(abstracts, function(x){
+  unlist(strsplit(x, split = "\n\n"))[2]
+}, USE.NAMES = FALSE)
+titles <- gsub("\n", " ", titles)
+titles <- gsub(" +", " ", titles)
+
+authors <- sapply(abstracts, function(x){
+  unlist(strsplit(x, split = "\n\n"))[3]
+}, USE.NAMES = FALSE)
+
+authors <- gsub("\n", " ", authors)
+authors <- gsub(" +", " ", authors)
+
+affiliations <- str_extract(
+  abstracts,
+  "Author information:[\\s\\S]*?(?=\\n\\n)"
+)
+
+affiliations <- gsub("Author information:", "", affiliations)
+affiliations <- gsub("\n", " ", affiliations)
+affiliations <- gsub(" +", " ", affiliations)
+affiliations <- trimws(affiliations)
+
+
+papers <- data.frame(
+  journal = journal,
+  title = titles,
+  authors = substr(authors, 1, 100),
+  affiliations = substr(affiliations, 1, 100),
+  stringsAsFactors = FALSE
+)
+
+knitr::kable(papers[1:5, ])
+```
