@@ -1,0 +1,198 @@
+---
+title: "Midterm"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Introduction
+
+Obesity is a major public health concern in the United States and has been associated with various lifestyle and behavioral factors. Among these factors, physical inactivity has been widely studied as a potential contributor to obesity prevalence. Understanding the relationship between physical inactivity and obesity can provide insights into how lifestyle behaviors may influence population health.
+
+In this project, I analyze state-level data from the Behavioral Risk Factor Surveillance System (BRFSS) provided by the Centers for Disease Control and Prevention (CDC). The primary objective is to examine whether higher levels of physical inactivity are associated with higher obesity prevalence across U.S. states. Through data preparation, exploratory analysis, and visualization, this project explores both the statistical association and the geographic distribution of these two indicators.
+
+## **Data Preparation**
+
+The dataset used in this project was obtained from the CDC's Behavioral Risk Factor Surveillance System (BRFSS) database, specifically the “Nutrition, Physical Activity, and Obesity” dataset. The dataset contains state-level indicators related to obesity, physical activity, and other health behaviors across multiple years.
+
+For this analysis, two indicators were selected:
+
+\- Percent of adults aged 18 years and older who have obesity
+
+\- Percent of adults who engage in no leisure-time physical activity
+
+The data were filtered to retain only the overall population (Total stratification) for each state and year. The dataset was then reshaped from a long format into a wide format so that obesity prevalence and physical inactivity prevalence appear as separate columns. Observations with missing values for either variable were removed to ensure valid comparisons.
+
+```{r echo=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+data <- read_csv("C:/Users/57146/Desktop/hw/111/hn4x-zwk7_version_88.csv")
+unique(data$question)
+dat0 <- data %>%
+  select(
+    yearstart,
+    locationdesc,
+    question,
+    data_value,
+    stratificationcategory1,
+    stratification1
+  )
+dat1 <- dat0 %>%
+  filter(
+    question %in% c(
+      "Percent of adults aged 18 years and older who have obesity",
+      "Percent of adults who engage in no leisure-time physical activity"
+    )
+  )
+dat2 <- dat1 %>%
+  filter(
+    stratificationcategory1 == "Total",
+    stratification1 == "Total"
+  )
+colSums(is.na(dat2))
+dat3 <- dat2 %>%
+  mutate(
+    indicator = case_when(
+      question == "Percent of adults aged 18 years and older who have obesity" ~ "obesity",
+      question == "Percent of adults who engage in no leisure-time physical activity" ~ "inactivity",
+      TRUE ~ NA_character_
+    )
+  )
+dat4 <- dat3 %>%
+  select(yearstart, locationdesc, indicator, data_value)
+analysis_data <- dat4 %>%
+  pivot_wider(
+    names_from = indicator,
+    values_from = data_value
+  )
+head(analysis_data)
+dim(analysis_data)
+```
+
+## **Exploratory Analysis**
+
+The cleaned dataset contains state-level observations on adult obesity prevalence and physical inactivity prevalence in the United States from 2011 to 2023. After removing observations with missing values, the final dataset includes 696 observations across 55 geographic locations.
+
+The key variables used in this analysis are obesity prevalence (%) and physical inactivity prevalence (%). Both variables represent the percentage of adults aged 18 years and older in each state.
+
+To explore the distribution of the variables, summary statistics and visualizations were examined. Histograms were used to visualize the distribution of obesity prevalence.
+
+```{r echo=FALSE}
+range(analysis_data$yearstart)
+length(unique(analysis_data$locationdesc))
+summary(analysis_data[, c("obesity", "inactivity")])
+analysis_clean <- analysis_data %>%
+  filter(!is.na(obesity), !is.na(inactivity))
+dim(analysis_clean)
+library(ggplot2)
+ggplot(analysis_clean, aes(x = obesity)) +
+  geom_histogram(bins = 20) +
+  labs(
+    title = "Distribution of Adult Obesity Prevalence",
+    x = "Obesity prevalence (%)",
+    y = "Count"
+  ) +
+  theme_minimal()
+ggplot(analysis_clean, aes(x = inactivity)) +
+  geom_histogram(bins = 20) +
+  labs(
+    title = "Distribution of Physical Inactivity",
+    x = "Physical inactivity prevalence (%)",
+    y = "Count"
+  ) +
+  theme_minimal()
+ggplot(analysis_clean, aes(x = inactivity, y = obesity)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "Association Between Physical Inactivity and Obesity",
+    x = "Physical inactivity (%)",
+    y = "Obesity prevalence (%)"
+  ) +
+  theme_minimal()
+
+library(maps)
+library(viridis)
+library(patchwork)
+
+latest_year <- max(analysis_clean$yearstart, na.rm = TRUE)
+
+latest_data <- analysis_clean %>%
+  filter(yearstart == latest_year) %>%
+  mutate(locationdesc = tolower(locationdesc))
+
+us_map <- map_data("state")
+
+map_data_join <- us_map %>%
+  left_join(latest_data, by = c("region" = "locationdesc"))
+
+
+map_obesity <- ggplot(
+  map_data_join,
+  aes(long, lat, group = group, fill = obesity)
+) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  coord_fixed(1.3) +
+  scale_fill_viridis_c(option = "C", name = "Percent") +
+  labs(title = paste("Obesity Prevalence", latest_year)) +
+  theme_void()
+
+map_inactivity <- ggplot(
+  map_data_join,
+  aes(long, lat, group = group, fill = inactivity)
+) +
+  geom_polygon(color = "white", linewidth = 0.2) +
+  coord_fixed(1.3) +
+  scale_fill_viridis_c(option = "C", name = "Percent") +
+  labs(title = paste("Physical Inactivity", latest_year)) +
+  theme_void()
+
+# Combine
+map_obesity + map_inactivity
+```
+
+## **Preliminary Results**
+
+To examine the relationship between physical inactivity and obesity prevalence, a scatter plot was created using state-level observations. The plot suggests a positive association between the two variables, where states with higher levels of physical inactivity tend to have higher obesity prevalence.
+
+To quantify this relationship, a Pearson correlation test was conducted. The estimated correlation coefficient is 0.505, indicating a moderate positive relationship between physical inactivity and obesity prevalence. The result is statistically significant (p \< 0.001), suggesting that higher levels of physical inactivity are associated with higher obesity prevalence across states.
+
+Geographic maps were also generated for the most recent year available (2023) to visualize the spatial distribution of both variables. The maps show that several states in the southern region of the United States tend to have relatively higher levels of both obesity prevalence and physical inactivity compared with other regions. In addition, regions with lighter colors in the obesity map often correspond to lighter-colored regions in the physical inactivity map, further suggesting a similar geographic pattern between the two indicators.
+
+```{r echo=FALSE}
+cor.test(analysis_clean$inactivity, analysis_clean$obesity)
+cor_result <- cor.test(analysis_clean$inactivity,
+                       analysis_clean$obesity)
+
+cor_result$estimate
+cor_result$p.value
+
+library(dplyr)
+library(knitr)
+
+summary_table <- analysis_data %>%
+  summarise(
+    variable = c("obesity", "inactivity"),
+    min = c(min(obesity, na.rm = TRUE),
+            min(inactivity, na.rm = TRUE)),
+    max = c(max(obesity, na.rm = TRUE),
+            max(inactivity, na.rm = TRUE)),
+    mean = c(mean(obesity, na.rm = TRUE),
+             mean(inactivity, na.rm = TRUE)),
+    missing = c(sum(is.na(obesity)),
+                sum(is.na(inactivity)))
+  )
+
+kable(summary_table,
+      caption = "Summary Statistics of Key Variables")
+```
+
+## Conclusion
+
+This analysis examined the relationship between physical inactivity and adult obesity prevalence across U.S. states. The results show a moderate positive association between the two variables, indicating that states with higher levels of physical inactivity tend to also have higher obesity prevalence.
+
+Geographic maps further suggest similar spatial patterns between the two indicators, with several southern states showing relatively higher levels of both obesity and physical inactivity. These findings highlight the potential importance of promoting physical activity as part of public health strategies to address obesity.
+
+Future research could further investigate additional factors that may contribute to obesity prevalence, such as diet, socioeconomic conditions, or access to healthcare.
