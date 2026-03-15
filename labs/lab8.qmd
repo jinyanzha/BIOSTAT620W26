@@ -1,0 +1,160 @@
+---
+title: "lab8"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## 1.1
+
+```{r}
+library(microbenchmark)
+fun1 <- function(n = 100, k = 4, lambda = 4) {
+  x <- NULL
+  
+  for (i in 1:n) {
+    x <- rbind(x, rpois(k, lambda))
+  }
+  
+  return(x)
+}
+
+fun1alt <- function(n = 100, k = 4, lambda = 4) {
+  matrix(rpois(n * k, lambda), nrow = n, ncol = k)
+}
+
+set.seed(555)
+x1 <- fun1()
+x2 <- fun1alt()
+
+dim(x1)
+dim(x2)
+
+mean(x1)
+mean(x2)
+
+var(as.vector(x1))
+var(as.vector(x2))
+
+
+microbenchmark(
+  fun1 = fun1(n = 1000, k = 20, lambda = 4),
+  fun1alt = fun1alt(n = 1000, k = 20, lambda = 4),
+  times = 100
+)
+```
+
+## 1.2
+
+```{r}
+# Data Generating Process (10 x 10,000 matrix)
+set.seed(1234)
+x <- matrix(rnorm(1e4), nrow=10)
+
+# Find each column's max value
+fun2 <- function(x) {
+  apply(x, 2, max)
+}
+
+fun2alt <- function(x) {
+  out <- x[1, ]
+  for (i in 2:nrow(x)) {
+    out <- pmax(out, x[i, ])
+  }
+  out
+}
+
+y1 <- fun2(x)
+y2 <- fun2alt(x)
+
+identical(y1, y2)
+all.equal(y1, y2)
+
+microbenchmark(
+  fun2 = fun2(x),
+  fun2alt = fun2alt(x),
+  times = 100
+)
+```
+
+## 2.1
+
+```{r}
+library(parallel)
+
+my_boot <- function(dat, stat, R, ncpus = 1L) {
+
+  # Getting the random indices
+  n <- nrow(dat)
+  idx <- matrix(sample.int(n, n * R, TRUE), nrow = n, ncol = R)
+
+  cl <- makeCluster(ncpus)
+  clusterExport(cl, varlist = c("dat", "idx", "stat"), envir = environment())
+
+  ans <- parLapply(cl, seq_len(R), function(i) {
+    stat(dat[idx[, i], , drop = FALSE])
+  })
+
+  stopCluster(cl)
+
+  # Convert list to matrix
+  ans <- do.call(rbind, ans)
+
+  return(ans)
+}
+
+
+```
+
+## 2.2
+
+```{r}
+# Bootstrap of an OLS
+my_stat <- function(d) coef(lm(y ~ x, data=d))
+
+# DATA SIM
+set.seed(1)
+n <- 500; R <- 1e4
+
+x <- cbind(rnorm(n)); y <- x*5 + rnorm(n)
+
+# Checking if we get something similar as lm
+ans0 <- confint(lm(y~x))
+ans1 <- my_boot(dat = data.frame(x, y), my_stat, R = R, ncpus = 2L)
+
+# You should get something like this
+t(apply(ans1, 2, quantile, c(.025,.975)))
+##                   2.5%      97.5%
+## (Intercept) -0.1372435 0.05074397
+## x            4.8680977 5.04539763
+ans0
+##                  2.5 %     97.5 %
+## (Intercept) -0.1379033 0.04797344
+## x            4.8650100 5.04883353
+```
+
+## 2.3
+
+```{r,warning=FALSE}
+Sys.setlocale("LC_ALL", "English")
+system.time(
+  my_boot(dat = data.frame(x, y), my_stat, R = R, ncpus = 1L)
+)
+
+
+system.time(
+  my_boot(dat = data.frame(x, y), my_stat, R = R, ncpus = 2L)
+)
+
+
+system.time(
+  my_boot(dat = data.frame(x, y), my_stat, R = R, ncpus = 4L)
+)
+```
+
+## 3.1
+
+A problem is suitable for parallelization when the computation can be divided into many independent tasks that do not depend on each other. Each task can then be processed on a different CPU core at the same time.
+
+Vectorization and parallelization are both ways to make code faster. Vectorization speeds up computation by using optimized operations on entire vectors or matrices instead of loops. Parallelization speeds up computation by distributing tasks across multiple CPU cores. Usually best to first use vectorization if possible, since it is simpler and often very efficient, and then use parallelization when the task still takes a long time and can be split into independent parts.
