@@ -1,0 +1,313 @@
+---
+title: "lab10"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## 1
+
+```{r}
+library(ggplot2)
+library(plotly)
+
+
+# load COVID state-level data from NYT
+cv_states <- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
+
+# load state population data
+state_pops <- read.csv("https://raw.githubusercontent.com/COVID19Tracking/associated-data/master/us_census_data/us_census_2018_population_estimates_states.csv")
+
+# merge datasets
+cv_states <- merge(cv_states, state_pops, by.x = "state", by.y = "state_name")
+
+```
+
+## 2
+
+```{r}
+
+dim(cv_states)
+
+head(cv_states)
+
+tail(cv_states)
+
+str(cv_states)
+```
+
+## 3
+
+```{r}
+# format the date
+cv_states$date <- as.Date(cv_states$date)
+
+# format the state and state abbreviation (abb) variables
+cv_states$state <- factor(cv_states$state)
+cv_states$abb <- factor(cv_states$state.y)
+
+# order the data first by state, second by date
+cv_states <- cv_states[order(cv_states$state, cv_states$date),]
+
+# Confirm the variables are now correctly formatted
+str(cv_states)
+head(cv_states)
+tail(cv_states)
+
+# Inspect the range values for each variable.
+head(cv_states)
+summary(cv_states)
+min(cv_states$date)
+max(cv_states$date)
+```
+
+## 4
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(zoo)
+
+state_list <- unique(cv_states$state)
+
+# Add variables for new_cases and new_deaths:
+for (i in 1:length(state_list)) {
+  cv_subset <- subset(cv_states, state == state_list[i])
+  cv_subset <- cv_subset[order(cv_subset$date), ]
+
+  # add starting level for new cases and deaths
+  cv_subset$new_cases <- cv_subset$cases[1]
+  cv_subset$new_deaths <- cv_subset$deaths[1]
+
+  for (j in 2:nrow(cv_subset)) {
+    cv_subset$new_cases[j] <- cv_subset$cases[j] - cv_subset$cases[j - 1]
+    cv_subset$new_deaths[j] <- cv_subset$deaths[j] - cv_subset$deaths[j - 1]
+  }
+
+  # include in main dataset
+  cv_states$new_cases[cv_states$state == state_list[i]] <- cv_subset$new_cases
+  cv_states$new_deaths[cv_states$state == state_list[i]] <- cv_subset$new_deaths
+}
+
+# Focus on recent dates
+cv_states <- cv_states |> dplyr::filter(date >= "2021-06-01")
+
+# Inspect implausible values in new_cases using plotly
+weird_cases <- cv_states |>
+  dplyr::filter(new_cases < 0 | new_cases > quantile(new_cases, 0.995, na.rm = TRUE))
+
+p1 <- ggplot(
+  weird_cases,
+  aes(
+    x = date,
+    y = new_cases,
+    text = paste(
+      "State:", state,
+      "<br>Date:", date,
+      "<br>New cases:", new_cases
+    )
+  )
+) +
+  geom_point(size = 1, alpha = 0.7)
+
+ggplotly(p1, tooltip = "text")
+
+# Inspect implausible values in new_deaths using plotly
+weird_deaths <- cv_states |>
+  dplyr::filter(new_deaths < 0 | new_deaths > quantile(new_deaths, 0.995, na.rm = TRUE))
+
+p2 <- ggplot(
+  weird_deaths,
+  aes(
+    x = date,
+    y = new_deaths,
+    text = paste(
+      "State:", state,
+      "<br>Date:", date,
+      "<br>New deaths:", new_deaths
+    )
+  )
+) +
+  geom_point(size = 1, alpha = 0.7)
+
+ggplotly(p2, tooltip = "text")
+
+# set negative new case or death counts to 0
+cv_states$new_cases[cv_states$new_cases < 0] <- 0
+cv_states$new_deaths[cv_states$new_deaths < 0] <- 0
+
+# Re-calculate cases and deaths as cumulative sum of updated new_cases and new_deaths
+for (i in 1:length(state_list)) {
+  cv_subset <- subset(cv_states, state == state_list[i])
+  cv_subset <- cv_subset[order(cv_subset$date), ]
+
+  # add starting level for new cases and deaths
+  cv_subset$cases[1] <- cv_subset$new_cases[1]
+  cv_subset$deaths[1] <- cv_subset$new_deaths[1]
+
+  for (j in 2:nrow(cv_subset)) {
+    cv_subset$cases[j] <- cv_subset$new_cases[j] + cv_subset$cases[j - 1]
+    cv_subset$deaths[j] <- cv_subset$new_deaths[j] + cv_subset$deaths[j - 1]
+  }
+
+  # include in main dataset
+  cv_states$cases[cv_states$state == state_list[i]] <- cv_subset$cases
+  cv_states$deaths[cv_states$state == state_list[i]] <- cv_subset$deaths
+}
+
+# Smooth new counts
+cv_states$new_cases <- zoo::rollmean(cv_states$new_cases, k = 7, fill = NA, align = "right") |> round(0)
+cv_states$new_deaths <- zoo::rollmean(cv_states$new_deaths, k = 7, fill = NA, align = "right") |> round(0)
+
+# Inspect data again interactively
+recent_deaths <- cv_states |>
+  dplyr::filter(new_deaths > quantile(new_deaths, 0.995, na.rm = TRUE))
+
+p2 <- ggplot(
+  recent_deaths,
+  aes(
+    x = date,
+    y = new_deaths,
+    text = paste(
+      "State:", state,
+      "<br>Date:", date,
+      "<br>Smoothed new deaths:", new_deaths
+    )
+  )
+) +
+  geom_point(size = 1, alpha = 0.7)
+
+ggplotly(p2, tooltip = "text")
+```
+
+**In both variables, there are many negative values, which are not meaningful for daily counts. These negative values likely result from retrospective data corrections or reporting adjustments.**
+
+**Additionally, we observed unusually large spikes in both new cases and new deaths. These spikes may reflect delayed reporting or backlog releases.**
+
+**After correcting the negative values by setting them to zero, we recalculated the cumulative counts to ensure consistency.**
+
+## 5
+
+```{r, warning=FALSE}
+# add population normalized (by 100,000) counts for each variable
+cv_states$per100k <- as.numeric(format(round(cv_states$cases/(cv_states$population/100000), 1), nsmall = 1))
+cv_states$newper100k <- as.numeric(format(round(cv_states$new_cases/(cv_states$population/100000), 1), nsmall = 1))
+cv_states$deathsper100k <- as.numeric(format(round(cv_states$deaths/(cv_states$population/100000), 1), nsmall = 1))
+cv_states$newdeathsper100k <- as.numeric(format(round(cv_states$new_deaths/(cv_states$population/100000), 1), nsmall = 1))
+
+# add a naive_CFR variable = deaths / cases
+cv_states <- cv_states |> mutate(naive_CFR = (deaths / cases))
+
+# create a `cv_states_today` variable
+cv_states_today <- subset(cv_states, date == max(cv_states$date))
+```
+
+## 6
+
+```{r,warning=FALSE}
+# pop_density vs. cases
+cv_states_today |> 
+  plot_ly(x = ~pop_density, y = ~cases, 
+          type = 'scatter', mode = 'markers', color = ~state,
+          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5))
+
+# filter out one outlier state
+cv_states_today_filter <- cv_states_today |> filter(state!="District of Columbia")
+
+# pop_density vs. cases after filtering
+cv_states_today_filter |> 
+  plot_ly(x = ~pop_density, y = ~cases, 
+          type = 'scatter', mode = 'markers', color = ~state,
+          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5))
+
+# pop_density vs. deathsper100k
+cv_states_today_filter |> 
+  plot_ly(x = ~pop_density, y = ~deathsper100k,
+          type = 'scatter', mode = 'markers', color = ~state,
+          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5))
+
+# Adding hoverinfo
+cv_states_today_filter |> 
+  plot_ly(x = ~pop_density, y = ~deathsper100k,
+          type = 'scatter', mode = 'markers', color = ~state,
+          size = ~population, sizes = c(5, 70), marker = list(sizemode='diameter', opacity=0.5),
+          hoverinfo = 'text',
+          text = ~paste(paste(state, ":", sep=""),
+                        paste(" Cases per 100k: ", per100k, sep=""),
+                        paste(" Deaths per 100k: ", deathsper100k, sep=""),
+                        sep = "<br>")) |>
+  layout(title = "Population-normalized COVID-19 deaths (per 100k) vs. population density for US states",
+         yaxis = list(title = "Deaths per 100k"),
+         xaxis = list(title = "Population Density"),
+         hovermode = "compare")
+```
+
+## 7
+
+```{r,warning=FALSE}
+p <- ggplot(cv_states_today_filter, 
+            aes(x = pop_density, y = deathsper100k, size = population)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(se = FALSE, color = "blue")
+
+ggplotly(p)
+```
+
+## 8
+
+```{r}
+MULT_FACTOR <- 50
+
+cv_states |> 
+  filter(state == "Florida") |> 
+  arrange(date) |> 
+  plot_ly(x = ~date, y = ~new_cases / MULT_FACTOR, type = "scatter", mode = "lines", name = "Cases") |> 
+  add_trace(x = ~date, y = ~new_deaths, type = "scatter", mode = "lines", name = "Deaths")
+```
+
+## 9
+
+```{r}
+# Map state, date, and new_cases to a matrix
+library(tidyr)
+cv_states_mat <- cv_states |> select(state, date, new_cases) |> dplyr::filter(date > as.Date("2021-06-15"))
+cv_states_mat2 <- as.data.frame(pivot_wider(cv_states_mat, names_from = state, values_from = new_cases))
+rownames(cv_states_mat2) <- cv_states_mat2$date
+cv_states_mat2$date <- NULL
+cv_states_mat2 <- as.matrix(cv_states_mat2)
+
+# Create a heatmap using plot_ly()
+plot_ly(x = colnames(cv_states_mat2), y = rownames(cv_states_mat2),
+        z = ~cv_states_mat2,
+        type = "heatmap",
+        showscale = TRUE)
+
+# Repeat with newper100k
+cv_states_mat <- cv_states |> select(state, date, newper100k) |> dplyr::filter(date > as.Date("2021-06-15"))
+cv_states_mat2 <- as.data.frame(pivot_wider(cv_states_mat, names_from = state, values_from = newper100k))
+rownames(cv_states_mat2) <- cv_states_mat2$date
+cv_states_mat2$date <- NULL
+cv_states_mat2 <- as.matrix(cv_states_mat2)
+
+plot_ly(x = colnames(cv_states_mat2), y = rownames(cv_states_mat2),
+        z = ~cv_states_mat2,
+        type = "heatmap",
+        showscale = TRUE)
+
+# Create a second heatmap after filtering to only include dates every other week
+filter_dates <- seq(as.Date("2021-06-15"), as.Date("2021-11-01"), by = "2 weeks")
+
+cv_states_mat <- cv_states |> select(state, date, newper100k) |> filter(date %in% filter_dates)
+cv_states_mat2 <- as.data.frame(pivot_wider(cv_states_mat, names_from = state, values_from = newper100k))
+rownames(cv_states_mat2) <- cv_states_mat2$date
+cv_states_mat2$date <- NULL
+cv_states_mat2 <- as.matrix(cv_states_mat2)
+
+# Create a heatmap using plot_ly()
+plot_ly(x = colnames(cv_states_mat2), y = rownames(cv_states_mat2),
+        z = ~cv_states_mat2,
+        type = "heatmap",
+        showscale = TRUE)
+```
