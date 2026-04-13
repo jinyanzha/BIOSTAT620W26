@@ -1,0 +1,362 @@
+---
+title: "hw4"
+author: "Jinyan Zha"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Question 1
+
+```{r}
+fun2 <- function(mat) {
+  n <- nrow(mat)
+  k <- ncol(mat)
+  ans <- mat
+  for (i in 1:n) {
+    for (j in 2:k) {
+      ans[i,j] <- mat[i, j] + ans[i, j - 1]
+    }
+  }
+  ans
+}
+
+fun2alt <- function(mat) {
+  for (j in 2:ncol(mat)) {
+    mat[, j] <- mat[, j] + mat[, j - 1]
+  }
+  mat
+}
+
+set.seed(2315)
+dat <- matrix(rnorm(200 * 100), nrow = 200)
+
+identical(fun2(dat), fun2alt(dat))
+
+library(microbenchmark)
+mb1 <- microbenchmark(
+  fun2    = fun2(dat),
+  fun2alt = fun2alt(dat),
+  times   = 50L
+)
+print(mb1)
+
+library(ggplot2)
+autoplot(mb1) +
+  labs(title = "Q1: fun2 vs fun2alt runtime comparison",
+       x = "Function", y = "Time (microseconds)")
+```
+
+## Question 2
+
+```{r}
+fun3 <- function(x) {
+  out <- numeric(length(x))
+  cumsum_x <- 0
+  for (i in seq_along(x)) {
+    if (x[i] == 0) {
+      cumsum_x <- 0
+    } else {
+      cumsum_x <- cumsum_x + x[i]
+    }
+    out[i] <- cumsum_x
+  }
+  out
+}
+
+fun3alt <- function(x) {
+  cs     <- cumsum(x)
+  credit <- cs * (x == 0)
+  cs - cummax(credit)
+}
+
+set.seed(42)
+x_test <- sample(c(0, 1:5), size = 1000, replace = TRUE, prob = c(0.15, rep(0.85/5, 5)))
+
+identical(fun3(x_test), fun3alt(x_test))
+
+set.seed(99)
+x_large <- sample(c(0, 1:10), size = 100000, replace = TRUE, prob = c(0.1, rep(0.9/10, 10)))
+
+mb2 <- microbenchmark(
+  fun3    = fun3(x_large),
+  fun3alt = fun3alt(x_large),
+  times   = 20L
+)
+print(mb2)
+
+autoplot(mb2) +
+  labs(title = "Q2: fun3 vs fun3alt runtime comparison",
+       x = "Function", y = "Time (microseconds)")
+```
+
+## Question 3
+
+```{r}
+sim_pi <- function(n = 1000, i = NULL) {
+  p <- matrix(runif(n*2), ncol = 2)
+  mean(rowSums(p^2) < 1) * 4
+}
+
+set.seed(156)
+sim_pi(1000)
+
+set.seed(1231)
+time_seq <- system.time({
+  ans_seq <- unlist(lapply(1:4000, sim_pi, n = 10000))
+  print(mean(ans_seq))
+})
+print(time_seq)
+```
+
+```{r}
+library(parallel)
+
+n_cores <- max(1, detectCores() - 1)
+cl <- makeCluster(n_cores)
+clusterExport(cl, "sim_pi")
+
+time_par <- system.time({
+  clusterSetRNGStream(cl, 1231)
+  ans_par <- unlist(parLapply(cl, 1:4000, sim_pi, n = 10000))
+  print(mean(ans_par))
+})
+stopCluster(cl)
+print(time_par)
+```
+
+```{r}
+df_compare <- data.frame(
+  estimate = c(ans_seq, ans_par),
+  method   = rep(c("Sequential", "Parallel"), each = 4000)
+)
+
+ggplot(df_compare, aes(x = estimate, fill = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = pi, linetype = "dashed", color = "red") +
+  labs(title = "Q3: Distribution of pi estimates (Sequential vs Parallel)",
+       x = "Estimated pi", y = "Density", fill = "Method") +
+  theme_minimal()
+
+time_df <- data.frame(
+  method  = c("Sequential", "Parallel"),
+  elapsed = c(time_seq["elapsed"], time_par["elapsed"])
+)
+
+ggplot(time_df, aes(x = method, y = elapsed, fill = method)) +
+  geom_col(width = 0.5, show.legend = FALSE) +
+  geom_text(aes(label = paste0(round(elapsed, 2), "s")), vjust = -0.5) +
+  labs(title = "Q3: Elapsed time - Sequential vs Parallel",
+       x = "Method", y = "Elapsed Time (seconds)") +
+  theme_minimal()
+```
+
+------------------------------------------------------------------------
+
+# SQL
+
+```{r, message=FALSE}
+library(RSQLite)
+library(DBI)
+
+con <- dbConnect(SQLite(), ":memory:")
+
+surveys <- read.csv("surveys.csv")
+species <- read.csv("species.csv")
+plots   <- read.csv("plots.csv")
+
+dbWriteTable(con, "surveys", surveys, overwrite = TRUE)
+dbWriteTable(con, "species", species, overwrite = TRUE)
+dbWriteTable(con, "plots",   plots,   overwrite = TRUE)
+```
+
+## Question 4
+
+```{sql, connection=con}
+PRAGMA table_info(surveys);
+```
+
+```{sql, connection=con}
+SELECT
+  year,
+  month,
+  day,
+  species_id,
+  ROUND(weight / 1000.0, 2) AS weight_kg
+FROM surveys
+WHERE year = 1999
+  AND weight IS NOT NULL
+ORDER BY species_id ASC;
+```
+
+## Question 5
+
+```{sql, connection=con}
+SELECT
+  SUM(weight)  AS total_weight,
+  AVG(weight)  AS avg_weight,
+  MIN(weight)  AS min_weight,
+  MAX(weight)  AS max_weight
+FROM surveys
+WHERE weight IS NOT NULL;
+```
+
+```{sql, connection=con}
+SELECT
+  SUM(weight)  AS total_weight,
+  AVG(weight)  AS avg_weight,
+  MIN(weight)  AS min_weight,
+  MAX(weight)  AS max_weight
+FROM surveys
+WHERE weight BETWEEN 5 AND 10;
+```
+
+## Question 6
+
+```{r}
+q6_result <- DBI::dbGetQuery(con, "
+  SELECT
+    year,
+    species_id,
+    COUNT(*)    AS n_individuals,
+    AVG(weight) AS avg_weight
+  FROM surveys
+  WHERE species_id IS NOT NULL
+    AND species_id != ''
+  GROUP BY year, species_id
+  ORDER BY year, species_id
+")
+
+head(q6_result, 20)
+```
+
+## Question 7
+
+```{sql, connection=con}
+SELECT
+  taxa,
+  COUNT(*) AS n_species
+FROM species
+GROUP BY taxa
+HAVING COUNT(*) > 10;
+```
+
+## Question 8
+
+```{r}
+q8_result <- DBI::dbGetQuery(con, "
+  SELECT
+    su.plot_id,
+    sp.genus,
+    COUNT(*) AS n_individuals
+  FROM surveys su
+  INNER JOIN species sp ON su.species_id = sp.species_id
+  WHERE sp.genus IS NOT NULL
+    AND sp.genus != ''
+  GROUP BY su.plot_id, sp.genus
+  ORDER BY su.plot_id ASC, n_individuals DESC
+")
+
+head(q8_result, 20)
+```
+
+## Question 9
+
+```{sql, connection=con}
+SELECT
+  pl.plot_type,
+  su.species_id,
+  COUNT(*) AS n_caught
+FROM surveys su
+INNER JOIN plots pl ON su.plot_id = pl.plot_id
+WHERE su.species_id IS NOT NULL
+  AND su.species_id != ''
+  AND su.species_id != 'NA'
+GROUP BY pl.plot_type, su.species_id
+ORDER BY pl.plot_type, n_caught DESC;
+```
+
+## Question 10
+
+```{sql, connection=con}
+SELECT
+  su.species_id,
+  sp.genus,
+  sp.species,
+  ROUND(AVG(su.weight), 2) AS avg_weight
+FROM surveys su
+INNER JOIN species sp ON su.species_id = sp.species_id
+WHERE sp.taxa = 'Rodent'
+  AND su.weight IS NOT NULL
+GROUP BY su.species_id, sp.genus, sp.species
+ORDER BY avg_weight DESC;
+```
+
+## Question 11
+
+```{r, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(plotly)
+
+q8_sub <- q8_result[q8_result$plot_id %in% 1:5, ]
+q8_sub$plot_id <- factor(q8_sub$plot_id)
+
+p11 <- ggplot(q8_sub, aes(x = plot_id, y = n_individuals, fill = genus)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Number of Individuals by Genus and Plot (Plot ID 1-5)",
+    x     = "Plot ID",
+    y     = "Number of Individuals",
+    fill  = "Genus"
+  ) +
+  theme_minimal()
+
+ggplotly(p11) %>% layout(barmode = "group")
+```
+
+## Question 12
+
+```{r, message=FALSE, warning=FALSE}
+library(plotly)
+library(dplyr)
+
+well_sampled <- q6_result %>%
+  filter(!is.na(avg_weight)) %>%
+  group_by(species_id) %>%
+  summarise(n_years = n(), .groups = "drop") %>%
+  filter(n_years >= 10)
+
+q6_filtered <- q6_result %>%
+  filter(species_id %in% well_sampled$species_id,
+         !is.na(avg_weight))
+
+species_list <- unique(q6_filtered$species_id)
+
+p12 <- plot_ly()
+
+for (sp in species_list) {
+  sp_data <- q6_filtered[q6_filtered$species_id == sp, ]
+  sp_data <- sp_data[order(sp_data$year), ]
+
+  p12 <- add_trace(
+    p12,
+    x    = sp_data$year,
+    y    = sp_data$avg_weight,
+    type = "scatter",
+    mode = "lines+markers",
+    name = sp,
+    connectgaps = FALSE
+  )
+}
+
+p12 <- layout(
+  p12,
+  title  = "Average Species Weight Over Time",
+  xaxis  = list(title = "Year"),
+  yaxis  = list(title = "Average Weight (g)"),
+  legend = list(title = list(text = "Species"))
+)
+
+p12
+```
