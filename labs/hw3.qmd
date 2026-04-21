@@ -1,0 +1,247 @@
+---
+title: "Assignment 3 - Text Mining"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+```{r setup}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(tidytext)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+
+pubmed <- read.csv("pubmed.csv")
+```
+
+## Question 1
+
+```{r}
+pubmed |>
+  count(term) |>
+  rename(`Search Term` = term, `Number of Abstracts` = n) |>
+  knitr::kable()
+```
+
+```{r}
+tokens <- pubmed |>
+  unnest_tokens(word, abstract)
+
+token_counts <- tokens |>
+  count(term, word, sort = TRUE)
+
+top5_tokens <- token_counts |>
+  group_by(term) |>
+  slice_max(n, n = 5) |>
+  ungroup()
+
+top5_tokens |>
+  arrange(term, desc(n)) |>
+  knitr::kable(col.names = c("Search Term", "Token", "Count"))
+```
+
+The 5 most common tokens across all search terms are dominated by stop words like "the", "of", "and", "in", "to". This is expected since these function words appear very frequently in any English text regardless of topic. A few domain-specific words do break through: "covid" and "19" appear in the top 5 for the covid term, and "cancer" and "prostate" appear in the top 5 for prostate cancer, since these terms occur so frequently in their respective abstracts that they outrank even common stop words.
+
+## Question 2
+
+```{r}
+tokens_no_stop <- tokens |>
+  anti_join(stop_words, by = "word")
+
+token_counts_no_stop <- tokens_no_stop |>
+  count(term, word, sort = TRUE)
+
+top5_no_stop <- token_counts_no_stop |>
+  group_by(term) |>
+  slice_max(n, n = 5) |>
+  ungroup()
+
+top5_no_stop |>
+  arrange(term, desc(n)) |>
+  knitr::kable(col.names = c("Search Term", "Token", "Count"))
+```
+
+Yes, removing stop words substantially changes which tokens appear most frequently. After removing stop words, the top tokens for each search term now reflect the actual subject matter of the abstracts rather than generic function words. Each term's top tokens are now clearly domain-specific — for example, the covid term prominently features disease and clinical terms related to COVID-19, while cystic fibrosis, meningitis, preeclampsia, and prostate cancer each surface their own distinctive medical vocabulary. This shows that stop word removal is essential for meaningful text analysis in biomedical literature.
+
+## Question 3
+
+```{r}
+bigrams <- pubmed |>
+  unnest_tokens(bigram, abstract, token = "ngrams", n = 2)
+
+bigram_counts <- bigrams |>
+  count(bigram, sort = TRUE) |>
+  filter(!is.na(bigram))
+
+top10_bigrams <- bigram_counts |>
+  slice_max(n, n = 10)
+
+top10_bigrams |>
+  knitr::kable(col.names = c("Bigram", "Count"))
+```
+
+```{r}
+top10_bigrams |>
+  mutate(bigram = reorder(bigram, n)) |>
+  ggplot(aes(x = n, y = bigram)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Top 10 Most Common Bigrams in PubMed Abstracts",
+    x = "Count",
+    y = "Bigram"
+  ) +
+  theme_minimal()
+```
+
+## Question 4
+
+```{r}
+tfidf <- token_counts |>
+  bind_tf_idf(word, term, n)
+
+top5_tfidf <- tfidf |>
+  group_by(term) |>
+  slice_max(tf_idf, n = 5) |>
+  ungroup()
+
+top5_tfidf |>
+  arrange(term, desc(tf_idf)) |>
+  select(term, word, n, tf_idf) |>
+  knitr::kable(
+    col.names = c("Search Term", "Token", "Count", "TF-IDF"),
+    digits = 5
+  )
+```
+
+The TF-IDF results are quite different from Question 1:
+
+- In Question 1 (raw token counts), the most common tokens were generic stop words ("the", "of", "and") that appear across all documents. These words have no discriminative power — they appear everywhere.
+
+- TF-IDF penalizes words that appear frequently across all documents. After applying TF-IDF, the top words are highly specific to each search term — each term surfaces its own distinctive clinical and biological vocabulary that does not overlap with other search terms.
+
+TF-IDF is much more useful than raw counts for identifying the characteristic vocabulary of each search term. Unlike raw counts (which are dominated by stop words), TF-IDF highlights the words that are uniquely informative for distinguishing one search term from the others.
+
+## Question 5
+
+```{r}
+nrc <- get_sentiments("nrc")
+
+nrc_sentiment <- tokens_no_stop |>
+  inner_join(nrc, by = "word")
+
+sentiment_counts <- nrc_sentiment |>
+  count(term, sentiment, sort = TRUE)
+
+sentiment_counts |>
+  group_by(term) |>
+  slice_max(n, n = 1) |>
+  ungroup() |>
+  arrange(term) |>
+  knitr::kable(col.names = c("Search Term", "Sentiment", "Count"))
+```
+
+```{r}
+sentiment_counts |>
+  mutate(sentiment = reorder_within(sentiment, n, term)) |>
+  ggplot(aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~term, scales = "free") +
+  scale_x_reordered() +
+  coord_flip() +
+  labs(
+    title = "NRC Sentiment Distribution by Search Term",
+    x = "Sentiment",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+sentiment_no_posneg <- sentiment_counts |>
+  filter(!sentiment %in% c("positive", "negative"))
+
+sentiment_no_posneg |>
+  group_by(term) |>
+  slice_max(n, n = 1) |>
+  ungroup() |>
+  arrange(term) |>
+  knitr::kable(col.names = c("Search Term", "Sentiment", "Count"))
+```
+
+```{r}
+sentiment_no_posneg |>
+  mutate(sentiment = reorder_within(sentiment, n, term)) |>
+  ggplot(aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~term, scales = "free") +
+  scale_x_reordered() +
+  coord_flip() +
+  labs(
+    title = "NRC Emotion Distribution by Search Term (excluding positive/negative)",
+    x = "Emotion",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
+
+When including all sentiments, "positive" is the most common for covid, cystic fibrosis, and preeclampsia, while "negative" dominates for meningitis and prostate cancer. This reflects the heavier focus on adverse outcomes, complications, and mortality in those two literatures.
+
+After removing "positive" and "negative", the dominant emotions differ by term: fear leads for covid, meningitis, and prostate cancer, disgust for cystic fibrosis, and anticipation for preeclampsia. The prevalence of fear across multiple terms is consistent with medical literature's focus on disease severity and risk, while anticipation in preeclampsia may reflect the clinical emphasis on monitoring and early intervention during pregnancy.
+
+## Question 6
+
+```{r}
+afinn <- get_sentiments("afinn")
+
+pubmed_indexed <- pubmed |>
+  mutate(abstract_id = row_number())
+
+tokens_indexed <- pubmed_indexed |>
+  unnest_tokens(word, abstract)
+
+afinn_scores <- tokens_indexed |>
+  inner_join(afinn, by = "word") |>
+  group_by(abstract_id, term) |>
+  summarise(avg_score = mean(value), .groups = "drop")
+
+afinn_scores |>
+  group_by(term) |>
+  summarise(
+    mean_score = round(mean(avg_score), 3),
+    median_score = round(median(avg_score), 3),
+    sd_score = round(sd(avg_score), 3)
+  ) |>
+  knitr::kable(col.names = c("Search Term", "Mean Score", "Median Score", "SD"))
+```
+
+```{r}
+ggplot(afinn_scores, aes(x = term, y = avg_score, fill = term)) +
+  geom_boxplot(alpha = 0.7, show.legend = FALSE) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "Average AFINN Sentiment Score per Abstract by Search Term",
+    x = "Search Term",
+    y = "Average AFINN Score"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 15, hjust = 1))
+```
+
+```{r}
+ggplot(afinn_scores, aes(x = avg_score, fill = term)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "Distribution of AFINN Sentiment Scores by Search Term",
+    x = "Average AFINN Score",
+    y = "Density",
+    fill = "Search Term"
+  ) +
+  theme_minimal()
+```
+
+Most search terms have negative average AFINN scores, suggesting that medical abstracts overall lean toward negative language — consistent with literature centered on disease, risk, and adverse outcomes. Cystic fibrosis is the notable exception with a positive average score, possibly reflecting a more treatment-optimistic tone in that literature.
+
+Prostate cancer stands out as having the most negative average sentiment score, followed by meningitis and covid. Cystic fibrosis is noticeably higher than the others, which is an interesting contrast given the severity of the disease.
